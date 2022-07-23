@@ -1,0 +1,144 @@
+.main-tab__header {
+    position: relative;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    margin-bottom: 0.25rem;
+    font-size: 3em;
+    font-weight: 900;
+    width: 100%;
+    flex: 0 0 auto;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #121212;
+    padding: 0 0.2em;
+}
+
+.search-or-clear-rel {
+    position: relative;
+    flex: 0 0 auto;
+    opacity: 0.33;
+    font-size: 0.5em;
+    width: 1em;
+    height: 1em;
+}
+
+.search-bar-search-icon-wrapper, .search-bar-clear-icon-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+:not(.show-clear-button) > .search-bar-search-icon-wrapper {
+    opacity: 1;
+}
+
+.show-clear-button > .search-bar-clear-icon-wrapper {
+    opacity: 1;
+}
+
+#search-bar-search-icon, #search-bar-clear-icon {
+    width: 100%;
+    font-size: 1em;
+}
+
+.input-container {
+    margin: 0 0.25em;
+    flex: 1 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 0.5em;
+    font-weight: 900;
+    padding: 0.5em 0;
+    color: #ccc;
+    background-color: transparent;
+}
+
+@media (min-width: 1024px) {
+    input {
+        font-size: 0.75em;
+    }
+}
+
+input::placeholder {
+    color: #ccc;
+    opacity: 0.33;
+}
+
+#open-settings-tab {
+    font-size: 0.5em;
+    flex: 0 0 auto;
+}
+
+#open-settings-tab path {
+    fill: #ccc;
+    opacity: 0.33;
+}
+
+/* Taskbar */
+
+.taskbar {
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    margin-top: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75em;
+    font-weight: 500;
+
+    color: #ccc;
+}
+
+/* Describing sort components */
+
+.sort-component {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.sort-button {
+    width: max-content;
+    position: relative;
+    padding: 0.25em 0.5em;
+    color: #b8b8b8;
+    text-transform: uppercase;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort-button:not(:last-child) {
+    margin-right: 5px;
+}
+
+.sort-button.selected {
+    background-color: #999999;
+    color: black;
+}
+
+#result-count {
+    padding: 0.25em 0.5em;
+    background-color: #121212;
+    margin-right: auto;
+}

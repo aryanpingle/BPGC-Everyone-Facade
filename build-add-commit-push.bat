@@ -1,0 +1,1 @@
+cmd /k "npm run build && git add * && git commit && git push remote-student HEAD"

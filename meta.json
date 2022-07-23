@@ -1,0 +1,111 @@
+{
+  "EVERYONE_FIELDS": [
+    "name",
+    "id",
+    "hostel",
+    "room"
+  ],
+  "FILTERS": [
+    {
+      "field": "year",
+      "filter_name": "Year",
+      "filter_toggles": [
+        {
+          "2015": "2015",
+          "2016": "2016",
+          "2017": "2017",
+          "2018": "2018",
+          "2019": "2019",
+          "2020": "2020",
+          "2021": "2021"
+        }
+      ]
+    },
+    {
+      "field": "hostel",
+      "filter_name": "Hostel",
+      "filter_toggles": [
+        {
+          "AH1": "AH1",
+          "AH2": "AH2",
+          "AH3": "AH3",
+          "AH4": "AH4",
+          "AH5": "AH5",
+          "AH6": "AH6",
+          "AH7": "AH7",
+          "AH8": "AH8",
+          "AH9": "AH9"
+        },
+        {
+          "CH1": "CH1",
+          "CH2": "CH2",
+          "CH3": "CH3",
+          "CH4": "CH4",
+          "CH5": "CH5",
+          "CH6": "CH6",
+          "CH7": "CH7"
+        },
+        {
+          "DH1": "DH1",
+          "DH2": "DH2",
+          "DH3": "DH3",
+          "DH4": "DH4",
+          "DH5": "DH5",
+          "DH6": "DH6"
+        }
+      ]
+    },
+    {
+      "field": "degree_be",
+      "filter_name": "B.E. Degree",
+      "filter_toggles": [
+        {
+          "A7": "B.E. CSE",
+          "A3": "B.E. EEE",
+          "A8": "B.E. EnI",
+          "AA": "B.E. ECE",
+          "A1": "B.E. Chemical",
+          "A4": "B.E. Mechanical"
+        }
+      ]
+    },
+    {
+      "field": "degree_msc",
+      "filter_name": "M.Sc. Degree",
+      "filter_toggles": [
+        {
+          "B1": "M.Sc. Biology",
+          "B2": "M.Sc. Chemistry",
+          "B3": "M.Sc. Economics",
+          "B4": "M.Sc. Maths",
+          "B5": "M.Sc. Physics"
+        }
+      ]
+    },
+    {
+      "field": "degree_h",
+      "filter_name": "Higher Degree",
+      "filter_toggles": [
+        {
+          "PHD": "PHD",
+          "H101": "M.E. Chemical",
+          "H103": "M.E. Computer Science",
+          "H106": "M.E. Mechanical",
+          "H112": "M.E. Software Systems",
+          "H123": "M.E. Microelectronics",
+          "H129": "M.E. Biotechnology",
+          "H140": "M.E. Embedded Systems",
+          "H141": "M.E. Design Engineering",
+          "H151": "M.E. Sanitation",
+          "H152": "M.Phil. In Liberal Studies"
+        }
+      ]
+    }
+  ],
+  "IS_ADMIN": false,
+  "PREFETCH_YEARS": [
+    2019,
+    2020,
+    2021
+  ]
+}

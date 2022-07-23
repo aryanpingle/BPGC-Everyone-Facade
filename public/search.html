@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        // If browser supports service workers
+        navigator.serviceWorker && navigator.serviceWorker.register("./service-worker.js")
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | BPGC Everyone</title>
+    <meta name="theme-color" content="#000000">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="./static/images/logos/logo-512.png">
+    <link rel="shortcut icon" href="./static/images/logos/logo.svg" type="image/svg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Open Graph Tags -->
+    <meta name="author" content="Aryan Pingle" />
+    <meta name="description" content="Any hostel, any room, any branch. Find anyone in BITS Goa using BPGC Everyone." />
+    <meta property="og:title" content="BPGC Everyone" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app/" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Find anyone in BITS Goa" />
+    <meta property="og:image" content="" href="https://bpgc-everyone.netlify.app/static/images/logos/logo.jpg" />
+
+    <!-- CSS -->
+    <style>
+        *{box-sizing:border-box;-webkit-font-smoothing:antialiased;font-family:inherit}:root{font-family:'Courier New',Courier,monospace;font-size:20px;font-weight:500;--hue-year:0;--hue-hostel:100;--hue-degree-be:175;--hue-degree-msc:210;--hue-degree-h:250}:root.font-loaded{font-family:'Inconsolata',monospace}@media (max-width:360px){:root{font-size:18px}}@media (min-width:1024px){:root{font-size:22px}}@media (min-width:1250px){:root{font-size:25px}}html,body{height:100%;min-height:-moz-available;min-height:-webkit-fill-available;min-height:fill-available}body{background-color:black;color:whitesmoke;margin:0;padding:0;position:relative}@media (min-width:1024px){body{height:100vh}}.page{position:absolute;top:0;left:0;width:100%;height:100%;background-color:black;display:flex;overflow:hidden}a,a:focus,a:active{text-decoration:none;color:inherit}button{outline:none;border:none;color:inherit;background-color:transparent;margin:0;padding:0;font-weight:500;transition:transform 100ms ease}button[disabled]{user-select:none !important;pointer-events:none !important}@media (min-width:1024px){button{cursor:pointer}button:focus{animation:button-focus 125ms ease forwards}}@keyframes button-focus{from{outline:rgba(255,255,255,0.75) solid 2px;outline-offset:5px}to{outline:rgba(255,255,255,0.75) solid 2px;outline-offset:0px}}input{border:none;outline:none;font-family:inherit}svg{width:100%;height:100%}.single-image-button{position:relative;font-size:1em;height:1em;width:1em;display:flex;justify-content:center;align-items:center}.single-image-button>img{height:0.5em;width:0.5em}.single-image-button>svg{height:100%;width:100%}.underscore{font-size:0.5em;width:100%;border-top:4px solid var(--underscore-color);display:flex;align-items:center;margin-bottom:1em}.underscore::after{content:'';font-size:1.25em;background-color:var(--underscore-color);height:1em;width:3em;border-bottom:4px solid var(--underscore-color);padding-right:2em;clip-path:polygon(0 0,100% 0,calc(100% - 1em) 100%,0 100%)}@media (min-width:1024px){[mobile-only]{display:none !important}}@media (max-width:1023px){[desktop-only]{display:none !important}}.preloader{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background-color:black;overflow:hidden;opacity:1;z-index:999;transition:opacity 250ms ease-in}.preloader.loaded{opacity:0;user-select:none;pointer-events:none}.preloader-icon{width:25vmin;height:25vmin;background-color:black;transition:transform 250ms ease-out}.preloader.loaded .preloader-icon{transform:scale(4)}.settings-tab{position:absolute;top:0;left:0;width:100%;height:100%;background-color:black;color:whitesmoke;display:flex;flex-direction:column;justify-content:center;align-items:stretch;transition:all 125ms ease;opacity:1;transform:translateY(0)}.settings-tab.hidden{transform:translateY(50px);opacity:0;user-select:none;pointer-events:none}@media (min-width:1024px){.settings-tab{transform:none !important;opacity:1 !important;user-select:auto !important;pointer-events:auto !important;position:relative;flex:4 0 0}}.tab-divider{width:0.33rem;height:100%}.main-tab{position:absolute;top:0;left:0;width:100%;height:100%;background-color:black;color:white;display:flex;flex-direction:column;justify-content:center;overflow:auto}@media (min-width:1024px){.page{flex-direction:row-reverse}.main-tab{position:relative;width:auto;flex:6 0 0}}.settings-tab__header{padding:1rem 1rem;font-size:2.5em;font-family:'Inconsolata',monospace;font-weight:900;font-weight:bold;flex:0 0 auto;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;color:whitesmoke}.settings-tab__header span{font-size:1em}@media (min-width:1024px){.settings-tab__header{display:none;justify-content:center}}#close-settings-tab{font-size:0.75em}a#skip-to-main{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.75);z-index:999;transition:all 125ms ease;display:flex;justify-content:center;align-items:center}a#skip-to-main:not(:focus){opacity:0;user-select:none;pointer-events:none}a#skip-to-main:focus{opacity:1;outline:none !important;border:none !important}a#skip-to-main::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%}a#skip-to-main>span{padding:2em;border:5px dashed white;font-size:1.5em;z-index:inherit}.filters-container{flex:1 0 0;overflow:auto;scrollbar-width:none}.filters-container::-webkit-scrollbar{display:none}.popup-component{--popup-hue:0;position:relative;margin:0.5rem 1rem;padding:1em 1rem;border-radius:10px;font-size:0.75em;background-color:hsl(var(--popup-hue),100%,5%);border:2px solid hsl(var(--popup-hue),25%,50%);color:hsl(var(--popup-hue),100%,80%);display:flex;justify-content:center;align-items:flex-start}.popup__cta{margin-left:1rem;position:relative;flex:0 0 auto;font-size:3em;width:1.5em;height:1.5em}.popup__button{position:absolute;top:0;left:0;padding:0.25em;font-size:1em;width:1.5em;height:1.5em;background-color:hsl(var(--popup-hue),100%,75%);border-radius:5px}.popup__text{text-align:left;flex:1 0 0;color:hsl(var(--popup-hue),100%,90%)}.popup__text header{font-size:1.55em;font-weight:900;text-transform:uppercase;display:flex;align-items:center;margin-bottom:0.25em}.popup__text>header>span{display:inline-block;margin-left:0.5em;opacity:0.75;font-size:0.75em;font-weight:500}.popup__text b{font-weight:900}#pwa-install-popup{--popup-hue:195}#pwa-install-button svg *{fill:black !important}@media (display-mode:standalone),(min-width:1024px){#pwa-install-popup{display:none}}#data-download-popup{--popup-hue:var(--hue-year)}#data-download-popup .popup__button{opacity:0;transition:opacity 125ms ease;user-select:none;pointer-events:none}.popup__cta.data-download-ready #data-download-button,.popup__cta.data-loading #data-loading-button,.popup__cta.data-loaded #data-loaded-button{opacity:1;user-select:all;pointer-events:all}#data-loading-button svg{animation:loading-spinner 1s linear infinite}@keyframes loading-spinner{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.filter-component{--filter-hue:0;--filter-hsl:hsl(var(--filter-hue),100%,75%);position:relative;margin:1em 0;padding:1em 1rem;background-color:hsl(var(--filter-hue),100%,3%)}.filter-component[value="year"]{--filter-hue:var(--hue-year)}.filter-component[value="hostel"]{--filter-hue:var(--hue-hostel)}.filter-component[value="degree_be"]{--filter-hue:var(--hue-degree-be)}.filter-component[value="degree_msc"]{--filter-hue:var(--hue-degree-msc)}.filter-component[value="degree_h"]{--filter-hue:var(--hue-degree-h)}.filter-component[value="gender"]{--filter-hue:300}.filter-component::before{--thickness:0.125em;content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(100% - 2 * var(--thickness));height:calc(100% - 2 * var(--thickness));background-color:#121212;clip-path:inherit;z-index:-1}.filter-component>header{position:relative;font-size:2em;font-weight:900;text-transform:uppercase;color:var(--filter-hsl)}.filter-component path{fill:var(--filter-hsl)}.select-all-toggles{position:absolute;top:50%;transform:translateY(-50%);font-size:0.75em;right:0}.filter-component .underscore{--underscore-color:var(--filter-hsl)}.filter-row{position:relative}.filter-toggle{position:relative;margin-top:0.25em;margin-right:0.25em;padding:0.5em;font-size:0.8em;font-weight:500;border:solid 1px var(--filter-hsl);color:var(--filter-hsl);display:inline-block}.filter-toggle.selected{font-weight:900;background-color:var(--filter-hsl);color:black !important}.footer{position:relative;width:100%;padding:0.5em;margin:1rem 0;background-color:hsl(57,0%,3%);display:flex;flex-direction:column;justify-content:center;align-items:center;font-weight:300}.footer__icons{font-size:1.5em;width:100%;display:flex;justify-content:center;align-items:center}.footer__icon{height:1em;width:1em}.footer__icon svg *{fill:#ccc}.footer__credit{padding:0.5em;flex:1 0 0;color:#ccc}.main-tab__header{position:relative;padding:0 1rem;margin:0.5rem 0;margin-bottom:0.25rem;font-size:3em;font-weight:900;width:100%;flex:0 0 auto;text-transform:uppercase;display:flex;align-items:center}.search-bar{border-radius:5px;width:100%;display:flex;justify-content:center;align-items:center;background-color:#121212;padding:0 0.2em}.search-or-clear-rel{position:relative;flex:0 0 auto;opacity:0.33;font-size:0.5em;width:1em;height:1em}.search-bar-search-icon-wrapper,.search-bar-clear-icon-wrapper{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}:not(.show-clear-button)>.search-bar-search-icon-wrapper{opacity:1}.show-clear-button>.search-bar-clear-icon-wrapper{opacity:1}#search-bar-search-icon,#search-bar-clear-icon{width:100%;font-size:1em}.input-container{margin:0 0.25em;flex:1 0 0;display:flex;justify-content:center;align-items:center}input{width:100%;border:none;outline:none;font-size:0.5em;font-weight:900;padding:0.5em 0;color:#ccc;background-color:transparent}@media (min-width:1024px){input{font-size:0.75em}}input::placeholder{color:#ccc;opacity:0.33}#open-settings-tab{font-size:0.5em;flex:0 0 auto}#open-settings-tab path{fill:#ccc;opacity:0.33}.taskbar{padding:0 1rem;margin:0.5rem 0;margin-top:0.25rem;display:flex;justify-content:center;align-items:center;font-size:0.75em;font-weight:500;color:#ccc}.sort-component{display:flex;justify-content:end;align-items:center}.sort-button{width:max-content;position:relative;padding:0.25em 0.5em;color:#b8b8b8;text-transform:uppercase;display:flex;text-align:center;justify-content:center;align-items:center}.sort-button:not(:last-child){margin-right:5px}.sort-button.selected{background-color:#999999;color:black}#result-count{padding:0.25em 0.5em;background-color:#121212;margin-right:auto}.results-section{flex:1 0 0;overflow:auto;scrollbar-width:none}.results-section::-webkit-scrollbar{display:none}.results-container{}.student-component{font-size:1.5em;margin:0.5rem 0;padding:1rem 1rem;background-color:hsl(0,0%,5%);display:flex;flex-direction:column;color:#ccc}@media (min-width:1024px){.student-component{cursor:pointer}}.student--be{background-color:hsl(var(--hue-degree-be),100%,5%)}.student--msc{background-color:hsl(var(--hue-degree-msc),100%,5%)}.student--h{background-color:hsl(var(--hue-degree-h),100%,5%)}.student__id{font-size:0.5em;opacity:0.5;margin-bottom:10px}.student__name{margin-bottom:10px}.student__badges{font-size:0.6em;font-weight:300;display:flex;align-items:center;opacity:0.85}.expanded .student__badges{display:none}.student__badge{margin-right:5px;color:hsl(var(--badge-hue),90%,75%)}.badge-year{--badge-hue:var(--hue-year)}.badge-hostel{--badge-hue:var(--hue-hostel)}.badge-degree_be{--badge-hue:var(--hue-degree-be)}.badge-degree_msc{--badge-hue:var(--hue-degree-msc)}.badge-degree_h{--badge-hue:var(--hue-degree-h)}.badge-hostel{margin-left:auto}.student-info-grid{font-size:0.75em;width:100%;display:none;grid-template-columns:repeat(4,1fr);justify-content:stretch;align-items:stretch}.expanded .student-info-grid{display:grid;grid-gap:5px;gap:5px}.info-tile-wrapper{display:block;grid-column-end:span 2}.info--be,.info--msc,.info--h{grid-column-end:span 4}.info--year{--info-hue:var(--hue-year)}.info--room{--info-hue:var(--hue-hostel)}.info--be{--info-hue:var(--hue-degree-be)}.info--msc{--info-hue:var(--hue-degree-msc)}.info--h{--info-hue:var(--hue-degree-h)}.info--pfp{--info-hue:195}.info--bday{--info-hue:57}.info--cgpa{--info-hue:325}.info--blood{--info-hue:0}.info--gender{--info-hue:300}.info--phone{--info-hue:30}.info--address{--info-hue:170}.info--pfp{grid-row-end:span 2}.student__pfp{position:relative;height:0;padding-top:100%;background-position:center center;background-size:contain;background-repeat:no-repeat}.info--phone{grid-column-end:span 4}.info--address{grid-column-end:span 4}.info-tile{--info-hsl-75:hsl(var(--info-hue),100%,75%);--info-hsl-03:hsla(var(--info-hue),100%,75%,10%);height:100%;padding:0.25em;background-color:var(--info-hsl-03);display:flex;flex-direction:column;justify-content:center;color:var(--info-hsl-75)}.info-tile>span{width:max-content;font-size:0.65em;font-weight:300;margin-bottom:5px}.view-more-section{display:flex;justify-content:space-evenly;align-items:center;width:100%;margin-bottom:1rem;padding:0 1rem}.view-more-section>button{padding:0.5em 0.5em;font-size:1em;background-color:#121212;border:2px solid #ccc1;color:#ccca;text-transform:uppercase;display:none;justify-content:center;align-items:center}.show-view-more .view-more-button,.show-view-all .view-all-button{display:flex}.view-more-section:not(.show-view-more,.show-view-all){display:none}.view-more-section>button>span{opacity:0.5;font-size:0.65em;margin-left:5px}
+    </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- Font Inline -->
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="preloader-icon">
+            <svg width="944" height="944" viewBox="0 0 944 944" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="180.32" cy="342.333" r="109.333" fill="#80DFFF"/><circle cx="764.32" cy="342.333" r="109.333" fill="#FFE380"/><path fill-rule="evenodd" clip-rule="evenodd" d="M674.404 800.127H900.461C915.67 800.127 928 787.797 928 772.588V545.564C928 505.005 895.121 472.127 854.563 472.127H673.437C671.631 472.127 669.84 472.192 668.067 472.32C679.505 493.44 686 517.628 686 543.333V766C686 778.844 681.676 790.679 674.404 800.127Z" fill="#FFE380"/><path fill-rule="evenodd" clip-rule="evenodd" d="M275.933 472.32C264.495 493.44 258 517.628 258 543.333V766C258 778.844 262.324 790.679 269.596 800.127H43.5388C28.3296 800.127 16 787.797 16 772.588V545.564C16 505.005 48.8788 472.127 89.4369 472.127H270.563C272.369 472.127 274.16 472.192 275.933 472.32Z" fill="#80DFFF"/><circle cx="472.374" cy="264" r="128" fill="#FF8084"/><path d="M280 543.953C280 473.261 337.308 415.953 408 415.953H536C606.692 415.953 664 473.261 664 543.953V751.953C664 778.463 642.51 799.953 616 799.953H328C301.49 799.953 280 778.463 280 751.953V543.953Z" fill="#FF8084"/></svg> 
+        </div>
+    </div>
+    <div class="page" style="display: none;">
+        <div class="main-tab" id="main-tab">
+            <!-- Main Tab Header -->
+            <header class="main-tab__header">
+                <div class="search-bar">
+                    <div class="search-or-clear-rel">
+                        <div class="search-bar-search-icon-wrapper">
+                            <button tabindex="-1" class="single-image-button" id="search-bar-search-icon" aria-label="search">
+                                <svg width="209" height="209" viewBox="0 0 209 209" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M93.8889 142.867C120.939 142.867 142.867 120.939 142.867 93.8888C142.867 66.8388 120.939 44.9105 93.8889 44.9105C66.839 44.9105 44.9106 66.8388 44.9106 93.8888C44.9106 120.939 66.839 142.867 93.8889 142.867Z" stroke="#CCCCCC" stroke-width="16"/><path d="M130.38 130.38L160.229 160.229" stroke="#CCCCCC" stroke-width="16" stroke-linecap="square"/></svg>
+                            </button>
+                        </div>
+                        <div class="search-bar-clear-icon-wrapper">
+                            <button tabindex="-1" class="single-image-button" id="search-bar-clear-icon" aria-label="clear">
+                                <svg width="209" height="209" viewBox="0 0 209 209" fill="none" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink"><path fill-rule="evenodd" clip-rule="evenodd" d="M120.256 105.119L173.238 158.1L158.1 173.238L105.119 120.256L52.1375 173.238L37 158.1L89.9813 105.119L37 52.1375L52.1375 37L105.119 89.9813L158.1 37L173.238 52.1375L120.256 105.119Z" fill="#cccccc"/><path fill-rule="evenodd" clip-rule="evenodd" d="M120.256 105.119L173.238 158.1L158.1 173.238L105.119 120.256L52.1375 173.238L37 158.1L89.9813 105.119L37 52.1375L52.1375 37L105.119 89.9813L158.1 37L173.238 52.1375L120.256 105.119Z" fill="#cccccc"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="search-bar" type="text" name="searchbar" placeholder="Search" spellcheck="false" autocomplete="off">
+                    </div>
+                    <button mobile-only class="single-image-button" id="open-settings-tab" aria-label="open settings tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="M21,12a9.143,9.143,0,0,0-.15-1.645L23.893,8.6l-3-5.2L17.849,5.159A9,9,0,0,0,15,3.513V0H9V3.513A9,9,0,0,0,6.151,5.159L3.107,3.4l-3,5.2L3.15,10.355a9.1,9.1,0,0,0,0,3.29L.107,15.4l3,5.2,3.044-1.758A9,9,0,0,0,9,20.487V24h6V20.487a9,9,0,0,0,2.849-1.646L20.893,20.6l3-5.2L20.85,13.645A9.143,9.143,0,0,0,21,12Zm-6,0a3,3,0,1,1-3-3A3,3,0,0,1,15,12Z"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Tab Taskbar -->
+            <div class="taskbar">
+                
+                    <div id="result-count">-</div>
+                
+                <div class="sort-component">
+                    <button class="sort-button selected" id="sort-by-relevance" value="relevant">Relevant</button>
+                    <button class="sort-button" id="sort-by-room" value="room">Room</button>
+                    
+                        <button class="sort-button" id="sort-by-oldest" value="oldest">Batch +</button>
+                    
+                    <button class="sort-button" id="sort-by-youngest" value="youngest">Batch -</button>
+                    
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-container"></div>
+                <div class="view-more-section">
+                    <button class="view-more-button">View More <span class="view-more-button__count">[+0]</span></button>
+                    <button class="view-all-button">View All <span class="view-all-button__count">[+0]</span></button>
+                </div>
+            </div>
+        </div>
+        <div desktop-only class="tab-divider"></div>
+        <div class="settings-tab">
+            <!-- Accessibility link to skip to results -->
+            <a id="skip-to-main" href="#main-tab"><span>Skip to results</span></a>
+
+            <header mobile-only class="settings-tab__header">
+                <span>Settings</span>
+                <button mobile-only class="single-image-button" id="close-settings-tab" aria-label="close settings tab">
+                    <svg width="209" height="209" viewBox="0 0 209 209" fill="none" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink"><path fill-rule="evenodd" clip-rule="evenodd" d="M120.256 105.119L173.238 158.1L158.1 173.238L105.119 120.256L52.1375 173.238L37 158.1L89.9813 105.119L37 52.1375L52.1375 37L105.119 89.9813L158.1 37L173.238 52.1375L120.256 105.119Z" fill="#cccccc"/><path fill-rule="evenodd" clip-rule="evenodd" d="M120.256 105.119L173.238 158.1L158.1 173.238L105.119 120.256L52.1375 173.238L37 158.1L89.9813 105.119L37 52.1375L52.1375 37L105.119 89.9813L158.1 37L173.238 52.1375L120.256 105.119Z" fill="#cccccc"/></svg>
+                </button>
+            </header>
+
+            <div class="filters-container">
+
+                <!-- PWA Install Popup -->
+                <div id="pwa-install-popup" class="popup-component">
+                    <div class="popup__text">
+                        <header>Install</header>
+                        Download the app - it's fast, secure and works offline<br>
+                        <span id="pwa-install-guide">Click on the download button near the URL Bar</span>
+                    </div>
+                    <div class="popup__cta download-ready">
+                        <button id="pwa-install-button" class="popup__button single-image-button">
+                            <svg width="1952" height="735" viewBox="0 0 1952 735" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_101_18)"><path d="M1436.62 603.306L1493.01 460.707H1655.83L1578.56 244.392L1675.2 0.00302124L1952 734.935H1747.87L1700.57 603.306H1436.62Z" fill="black"/><path d="M1262.47 734.937L1558.79 0.00405884L1362.34 0.00503541L1159.64 474.936L1015.5 0.00601197H864.499L709.731 474.936L600.585 258.52L501.812 562.821L602.096 734.937H795.427L935.284 309.027L1068.63 734.937H1262.47Z" fill="#FF8000"/><path d="M186.476 482.646H307.479C344.133 482.646 376.772 478.554 405.396 470.372L436.689 373.965L524.148 104.518C517.484 93.956 509.876 83.9692 501.324 74.5594C456.419 24.8545 390.719 0.00289917 304.222 0.00289917H0V734.935H186.476V482.646ZM346.642 169.081C364.182 186.734 372.951 210.357 372.951 239.952C372.951 269.774 365.238 293.427 349.813 310.909C332.903 330.334 301.766 340.046 256.404 340.046H186.476V142.6H256.918C299.195 142.6 329.103 151.427 346.642 169.081Z" fill="black"/></g><defs><clipPath id="clip0_101_18"><rect width="1952" height="734.935" fill="white"/></clipPath></defs></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Now for normal filter components -->
+
+                
+                    <div class="filter-component" value="year">
+                        <header>
+                            Year
+                                <button class="single-image-button select-all-toggles" value="year" aria-label="Select all years" title="Select All">
+                                    <svg width="358" height="358" viewBox="0 0 358 358" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M66 67H162V163H66V67ZM195 67H291V163H195V67ZM162 195H66V291H162V195ZM195 195H291V291H195V195Z" fill="black"/></svg>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="year" value="2015" aria-label="2015">2015</button><button class="filter-toggle" field="year" value="2016" aria-label="2016">2016</button><button class="filter-toggle" field="year" value="2017" aria-label="2017">2017</button><button class="filter-toggle" field="year" value="2018" aria-label="2018">2018</button><button class="filter-toggle" field="year" value="2019" aria-label="2019">2019</button><button class="filter-toggle" field="year" value="2020" aria-label="2020">2020</button><button class="filter-toggle" field="year" value="2021" aria-label="2021">2021</button>
+                            </div>
+                            
+                    </div>
+                
+                    <div class="filter-component" value="hostel">
+                        <header>
+                            Hostel
+                                <button class="single-image-button select-all-toggles" value="hostel" aria-label="Select all hostels" title="Select All">
+                                    <svg width="358" height="358" viewBox="0 0 358 358" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M66 67H162V163H66V67ZM195 67H291V163H195V67ZM162 195H66V291H162V195ZM195 195H291V291H195V195Z" fill="black"/></svg>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="hostel" value="AH1" aria-label="AH1">AH1</button><button class="filter-toggle" field="hostel" value="AH2" aria-label="AH2">AH2</button><button class="filter-toggle" field="hostel" value="AH3" aria-label="AH3">AH3</button><button class="filter-toggle" field="hostel" value="AH4" aria-label="AH4">AH4</button><button class="filter-toggle" field="hostel" value="AH5" aria-label="AH5">AH5</button><button class="filter-toggle" field="hostel" value="AH6" aria-label="AH6">AH6</button><button class="filter-toggle" field="hostel" value="AH7" aria-label="AH7">AH7</button><button class="filter-toggle" field="hostel" value="AH8" aria-label="AH8">AH8</button><button class="filter-toggle" field="hostel" value="AH9" aria-label="AH9">AH9</button>
+                            </div>
+                            
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="hostel" value="CH1" aria-label="CH1">CH1</button><button class="filter-toggle" field="hostel" value="CH2" aria-label="CH2">CH2</button><button class="filter-toggle" field="hostel" value="CH3" aria-label="CH3">CH3</button><button class="filter-toggle" field="hostel" value="CH4" aria-label="CH4">CH4</button><button class="filter-toggle" field="hostel" value="CH5" aria-label="CH5">CH5</button><button class="filter-toggle" field="hostel" value="CH6" aria-label="CH6">CH6</button><button class="filter-toggle" field="hostel" value="CH7" aria-label="CH7">CH7</button>
+                            </div>
+                            
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="hostel" value="DH1" aria-label="DH1">DH1</button><button class="filter-toggle" field="hostel" value="DH2" aria-label="DH2">DH2</button><button class="filter-toggle" field="hostel" value="DH3" aria-label="DH3">DH3</button><button class="filter-toggle" field="hostel" value="DH4" aria-label="DH4">DH4</button><button class="filter-toggle" field="hostel" value="DH5" aria-label="DH5">DH5</button><button class="filter-toggle" field="hostel" value="DH6" aria-label="DH6">DH6</button>
+                            </div>
+                            
+                    </div>
+                
+                    <div class="filter-component" value="degree_be">
+                        <header>
+                            B.E. Degree
+                                <button class="single-image-button select-all-toggles" value="degree_be" aria-label="Select all b.e. degrees" title="Select All">
+                                    <svg width="358" height="358" viewBox="0 0 358 358" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M66 67H162V163H66V67ZM195 67H291V163H195V67ZM162 195H66V291H162V195ZM195 195H291V291H195V195Z" fill="black"/></svg>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="degree_be" value="A7" aria-label="A7">B.E. CSE</button><button class="filter-toggle" field="degree_be" value="A3" aria-label="A3">B.E. EEE</button><button class="filter-toggle" field="degree_be" value="A8" aria-label="A8">B.E. EnI</button><button class="filter-toggle" field="degree_be" value="AA" aria-label="AA">B.E. ECE</button><button class="filter-toggle" field="degree_be" value="A1" aria-label="A1">B.E. Chemical</button><button class="filter-toggle" field="degree_be" value="A4" aria-label="A4">B.E. Mechanical</button>
+                            </div>
+                            
+                    </div>
+                
+                    <div class="filter-component" value="degree_msc">
+                        <header>
+                            M.Sc. Degree
+                                <button class="single-image-button select-all-toggles" value="degree_msc" aria-label="Select all m.sc. degrees" title="Select All">
+                                    <svg width="358" height="358" viewBox="0 0 358 358" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M66 67H162V163H66V67ZM195 67H291V163H195V67ZM162 195H66V291H162V195ZM195 195H291V291H195V195Z" fill="black"/></svg>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="degree_msc" value="B1" aria-label="B1">M.Sc. Biology</button><button class="filter-toggle" field="degree_msc" value="B2" aria-label="B2">M.Sc. Chemistry</button><button class="filter-toggle" field="degree_msc" value="B3" aria-label="B3">M.Sc. Economics</button><button class="filter-toggle" field="degree_msc" value="B4" aria-label="B4">M.Sc. Maths</button><button class="filter-toggle" field="degree_msc" value="B5" aria-label="B5">M.Sc. Physics</button>
+                            </div>
+                            
+                    </div>
+                
+                    <div class="filter-component" value="degree_h">
+                        <header>
+                            Higher Degree
+                                <button class="single-image-button select-all-toggles" value="degree_h" aria-label="Select all higher degrees" title="Select All">
+                                    <svg width="358" height="358" viewBox="0 0 358 358" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M66 67H162V163H66V67ZM195 67H291V163H195V67ZM162 195H66V291H162V195ZM195 195H291V291H195V195Z" fill="black"/></svg>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        
+                            <div class="filter-row">
+                                <button class="filter-toggle" field="degree_h" value="PHD" aria-label="PHD">PHD</button><button class="filter-toggle" field="degree_h" value="H101" aria-label="H101">M.E. Chemical</button><button class="filter-toggle" field="degree_h" value="H103" aria-label="H103">M.E. Computer Science</button><button class="filter-toggle" field="degree_h" value="H106" aria-label="H106">M.E. Mechanical</button><button class="filter-toggle" field="degree_h" value="H112" aria-label="H112">M.E. Software Systems</button><button class="filter-toggle" field="degree_h" value="H123" aria-label="H123">M.E. Microelectronics</button><button class="filter-toggle" field="degree_h" value="H129" aria-label="H129">M.E. Biotechnology</button><button class="filter-toggle" field="degree_h" value="H140" aria-label="H140">M.E. Embedded Systems</button><button class="filter-toggle" field="degree_h" value="H141" aria-label="H141">M.E. Design Engineering</button><button class="filter-toggle" field="degree_h" value="H151" aria-label="H151">M.E. Sanitation</button><button class="filter-toggle" field="degree_h" value="H152" aria-label="H152">M.Phil. In Liberal Studies</button>
+                            </div>
+                            
+                    </div>
+                
+                <!-- <div class="filter-component" value="field">
+                    <header>Year</header>
+                    <div class="underscore">
+                        <div class="underscore__component"></div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-toggle" value="value"></div>
+                    </div>
+                </div>
+                <div class="filter-component" style="--filter-hue: 195;">
+                    <header>Hostel</header>
+                    <div class="underscore">
+                        <div class="underscore__component"></div>
+                    </div>
+                    <div class="filter-row"></div>
+                </div> -->
+
+                <!-- Footer with credits -->
+                
+                <div class="footer">
+                    <div class="footer__icons">
+                        <a class="footer__icon" href="https://github.com/robo-mop">
+                            <svg width="32" height="32" viewBox="0 0 16 16">    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        </a>
+                    </div>
+                    <div class="footer__credit">v2.0.0 • Made by Aryan Pingle</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden / Templates -->
+    
+    <div id="template-icon-download-svg" style="display: none;">
+        <svg width="320" height="302" viewBox="0 0 320 302" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="175" y="141" width="8" height="153" rx="4" fill="#D9D9D9" stroke="black" stroke-width="8" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M258.683 93.2237L256.687 112.695L274.572 120.648C285.481 125.499 293 136.401 293 149V172C293 189.121 279.121 203 262 203H218V230H262C294.033 230 320 204.033 320 172V149C320 125.349 305.844 105.004 285.542 95.9771C285.845 93.0259 286 90.0311 286 87C286 38.9512 247.049 0 199 0C165.33 0 136.128 19.1265 121.665 47.1071C94.3202 48.6387 71.3227 66.4466 62.2033 91H58C25.9675 91 0 116.967 0 149V172C0 204.033 25.9675 230 58 230H141V203H58C40.8792 203 27 189.121 27 172V149C27 131.879 40.8792 118 58 118H62.2033H80.9773L87.5139 100.401C92.9984 85.6342 106.84 74.9798 123.175 74.0649L138.57 73.2026L145.65 59.5049C155.659 40.1405 175.818 27 199 27C232.137 27 259 53.8629 259 87C259 89.11 258.892 91.1859 258.683 93.2237Z" fill="black"/><rect x="206.19" y="257.312" width="8" height="46.0082" rx="4" transform="rotate(45 206.19 257.312)" fill="#D9D9D9" stroke="black" stroke-width="8" stroke-linejoin="round"/><rect x="146.657" y="263.314" width="8" height="46.0082" rx="4" transform="rotate(-45 146.657 263.314)" fill="#D9D9D9" stroke="black" stroke-width="8" stroke-linejoin="round"/></svg>
+    </div>
+    <div id="template-icon-loading-svg" style="display: none;">
+        <svg width="301" height="302" viewBox="0 0 301 302" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M275.736 175C264.515 233.665 212.935 278 151 278C80.8598 278 24 221.14 24 151C24 80.8598 80.8598 24 151 24C212.935 24 264.515 68.335 275.736 127H300.103C288.606 55.011 226.227 0 151 0C67.605 0 0 67.605 0 151C0 234.395 67.605 302 151 302C226.227 302 288.606 246.989 300.103 175H275.736Z" fill="black"/></svg>
+    </div>
+    <div id="template-icon-loaded-svg" style="display: none;">
+        <svg width="386" height="386" viewBox="0 0 386 386" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M139.619 323.021L138.354 324.286L17 202.933L50.9411 168.992L139.439 257.489L335.928 61L369.869 94.9411L140.704 324.106L139.619 323.021Z" fill="black"/></svg>
+    </div>
+
+    <script>
+        !function(){"use strict";const e=(e,t=(e=>e))=>(e.sort(((e,n)=>t(e)-t(n))),e);function t(e,t){return[...(t||document).querySelectorAll(e)]}function n(e){"vibrate"in navigator&&navigator.vibrate(e)}var o=["name","id","hostel","room"];const r={A1:"B.E. Chemical",A3:"B.E. EEE",A4:"B.E. Mechanical",A7:"B.E. CSE",A8:"B.E. EnI",AA:"B.E. ECE",B1:"M.Sc. Biology",B2:"M.Sc. Chemistry",B3:"M.Sc. Economics",B4:"M.Sc. Maths",B5:"M.Sc. Physics",P:"PHD",PHD:"PHD",H101:"M.E. Chemical",H103:"M.E. Computer Science",H112:"M.E. Software Systems",H123:"M.E. Microelectronics",H129:"M.E. biotechnology",H140:"M.E. Embedded Systems",H141:"M.E. Design Engineering",H106:"M.E. Mechanical",H151:"M.E. Sanitation Science, Technology and Management",H152:"M.Phil. In Liberal Studies","":""},a={};o.forEach((e=>{a[e]=[]}));const s={};async function c(...e){let t=e.map((async e=>await async function(e){let t=await fetch(`./everyone/${e}.json`);t=await t.json(),o.forEach(((e,n)=>{a[e].push(...t[n])}))}(e)));await Promise.all(t)}function i(e,t){if(o.includes(e))return a[e][t];const n=a.id[t],s=n.substring(0,4);if("year"==e)return s;const c=n.substring(4,8),i=c.substring(0,2),l=c.substring(2,4);let d="",u="",m="";if(c.match(/H\d{3}/))m=c;else if("P"==c.charAt(0))m="PHD";else if("PS"!=l&&"TS"!=l||"A"!=i.charAt(0))if("PS"!=l&&"TS"!=l||"B"!=i.charAt(0))if("A"==i.charAt(0)&&"A"==l.charAt(0))d=i;else if("B"==i.charAt(0)&&"A"==l.charAt(0))u=i,d=l;else if("A"==i.charAt(0)&&"B"==l.charAt(0))u=l,d=i;else{if("B"!=i.charAt(0)||"B"!=l.charAt(0))throw new Error(`WTF is their branch: ${n}`);u=i}else u=i;else d=i;const f=e.endsWith("-name");switch(e.replace(/\-name/,"")){case"degree_be":return f?r[d]:d;case"degree_msc":return f?r[u]:u;case"degree_h":return f?r[m]:m}throw new Error(`Field not found: ${e}`)}const l=document.createElement("A");l.setAttribute("download","everyone.csv"),l.style.display="none";let d=[],u=[],m=[],f="relevant";const h=25;function g(e){const t=_(),n=u.length;void 0===e&&(e=n-t);const o=u.slice(t,t+e).map(b).join(""),r=document.createElement("div");r.innerHTML=o,document.querySelector(".results-container").append(...r.children),w(),S()}function p(){d=function(){const e=[],t=a.id.length;for(let n=0;n<t;++n){let t=!0;for(const[e,o]of Object.entries(s))if(0!=o.length&&!o.includes(i(e,n))){t=!1;break}t&&e.push(n)}return e}(),v()}function v(){console.time("resolveQuery");let e=document.querySelector("#search-bar").value.trim().replace(/\s+/g," ");if(e=e.toLowerCase(),m=new Array(d.length).fill(0),/^\d{1,3}$/.test(e))for(let t=0;t<m.length;++t){let n=d[t];m[t]=[$(e,i("room",n)),t]}else if(/\d/.test(e))for(let t=0;t<m.length;++t){let n=d[t];m[t]=[A(e,i("id",n)),t]}else for(let t=0;t<m.length;++t){let n=d[t];m[t]=[E(e,i("name",n)),t]}console.timeEnd("resolveQuery"),y()}function y(t){switch(console.time("sortResults"),t||f){case"relevant":((e,t=(e=>e))=>{e.sort(((e,n)=>{e=t(e),n=t(n);let o=0;for(let t=0;t<e.length;++t)if(o=e[t]-n[t],0!=o)return o;return 0}))})(m,(e=>[-e[0][0],-e[0][1],e[0][2]]));break;case"room":((e,t=(e=>e))=>{e.sort(((e,n)=>t(e).localeCompare(t(n))))})(m,(([e,t])=>i("hostel",d[t])+i("room",d[t])));break;case"youngest":e(m,(([e,t])=>-parseInt(i("year",d[t]))));break;case"oldest":e(m,(([e,t])=>parseInt(i("year",d[t]))));break;case"bday":e(m,(([e,t])=>parseInt(i("bday",d[t]))));break;case"cgpa":e(m,(([e,t])=>{const n=i("cgpa",d[t]);return""==n?0:-parseFloat(n)}))}console.timeEnd("sortResults"),function(e,t){let n=0;for(let o=0;o<e.length;++o)t(e[o])&&(e[n++]=e[o]);e.splice(n)}(m,(e=>e[0][0])),u=new Array(m.length).fill(0);for(let e=0;e<m.length;++e)u[e]=d[m[e][1]];!function(e){document.querySelector("#result-count").innerText=`${function(e){if(0==e)return e;let t="",n=0;for(;0!=e;)t=0!=n&&n%3==0?e%10+","+t:e%10+t,e=Math.floor(e/10),++n;return t}(u.length)}`;const t=e?_():h,n=u.slice(0,t).map(b).join("");document.querySelector(".results-container").innerHTML=n,w(),S()}(!!t)}function b(e){const t=t=>i(t,e),n=(e,n)=>t(e)?n:"";return`\n    <div class="student-component ${`${n("degree_be","be")} ${n("degree_msc","msc")} ${n("degree_h","h")}`.trim().split(" ").map((e=>`student--${e}`)).join(" ")}" everyone-index="${e}">\n        <div class="student__id">${t("id")}</div>\n        <div class="student__name">${t("name")}</div>\n        <div class="student__badges">\n            <div class="student__badge badge-year">${t("year")}</div>\n            ${n("degree_msc",`<div class="student__badge badge-degree_msc">${t("degree_msc")}</div>`)}\n            ${n("degree_be",`<div class="student__badge badge-degree_be">${t("degree_be")}</div>`)}\n            ${n("degree_h",`<div class="student__badge badge-degree_h">${t("degree_h")}</div>`)}\n            ${t("room")?`<div class="student__badge badge-hostel">${t("hostel")} ${t("room")}</div>`:""}\n        </div>\n    </div>\n    `.trim().replace(/\n\s*/g,"")}function w(){t(".student-component").forEach((e=>{e.onclick=o=>{if(n(25),e.classList.contains("expanded"))return void e.classList.remove("expanded");if(e.classList.add("expanded"),e.querySelector(".student-info-grid"))return;const r=parseInt(e.getAttribute("everyone-index"));e.innerHTML+=function(e){const t=t=>i(t,e),n=(e,n)=>t(e)?n:"";return`\n    <div class="student-info-grid">\n        <div class="info-tile-wrapper info--year">\n            <div class="info-tile">\n                <span>Year</span>\n                ${t("year")}\n            </div>\n        </div>\n        ${n("room",`\n        <div class="info-tile-wrapper info--room">\n            <div class="info-tile">\n                <span>Room</span>\n                ${t("hostel")} ${t("room")}\n            </div>\n        </div>\n        `)}\n        ${n("degree_msc",`\n        <div class="info-tile-wrapper info--msc">\n            <div class="info-tile">\n                <span>M.Sc. Degree</span>\n                ${t("degree_msc-name")}\n            </div>\n        </div>\n        `)}\n        ${n("degree_be",`\n        <div class="info-tile-wrapper info--be">\n            <div class="info-tile">\n                <span>B.E. Degree</span>\n                ${t("degree_be-name")}\n            </div>\n        </div>\n        `)}\n        ${n("degree_h",`\n        <div class="info-tile-wrapper info--h">\n            <div class="info-tile">\n                <span>Higher Degree</span>\n                ${t("degree_h-name")}\n            </div>\n        </div>\n        `)}\n        \n    </div>\n    `.trim().replace(/\n\s*/g,"")}(r),t(".student__pfp").forEach((e=>{e.onclick=t=>{t.stopImmediatePropagation(),e.style.backgroundImage=`url('${e.getAttribute("data-pfp")}')`}}))}}))}function _(){return document.querySelector(".results-container").children.length}function S(){const e=_(),t=u.length,n=t-e;n>h?(document.querySelector(".view-more-section").classList.add("show-view-more"),document.querySelector(".view-more-button__count").innerText="[+25]"):document.querySelector(".view-more-section").classList.remove("show-view-more"),0!=n&&(n<=h||t<300)?(document.querySelector(".view-more-section").classList.add("show-view-all"),document.querySelector(".view-all-button__count").innerText=`[+${n}]`):document.querySelector(".view-more-section").classList.remove("show-view-all")}function E(e,t){if(0==e.length)return[1,0,0];t=t.toLowerCase();let n=0,o=[0,0],r=[0,0];for(let a=0;a<t.length;++a)if(t.charAt(a)==e.charAt(n)){r=[1,a];let s=a-1;for(;s>=0&&t.charAt(s)==e.charAt(n-(a-s));)++r[0],r[1]=s,--s;if(++n,(o[0]<r[0]||o[0]==r[0]&&o[1]>r[1])&&(o=r),n==e.length)break}return n==e.length?[n,...o]:[0,0,0]}function A(e,t){return text.includes(e)?[e.length,e.length,text.indexOf(e)]:[0,0,0]}function $(e,t){return text==e?[3,3,0]:[0,0,0]}!async function(){(async function(){"serviceWorker"in navigator&&"ready"in navigator.serviceWorker&&await navigator.serviceWorker.ready;const e=(await window.caches.keys())[0],n=await window.caches.open(e);let o=(await n.keys()).filter((e=>e.url.includes("/everyone/"))).map((e=>e.url.match(/\d+(?=\.json)/)[0]));const r={2015:29.61,2016:27.4,2017:11.6,2018:14.3,2019:15.2,2020:15.2,2021:13.7};0==o.length&&(o=["2019","2020","2021"]);const a=c(...o);if(o.length!=Object.keys(r).length){const e=Object.keys(r).filter((e=>!o.includes(e))),n=e.reduce(((e,t)=>e+r[t]),0);t(".filter-toggle[field='year']").forEach((t=>{e.includes(t.getAttribute("value"))&&t.remove()})),document.querySelector(".filter-component[value='year']").insertAdjacentHTML("afterend",`\n        <div id="data-download-popup" class="popup-component">\n            <div class="popup__text">\n                <header>More Data <span>(${n.toFixed(2)}Kb)</span></header>\n                Click to download data for ${e.map((e=>`<b>${e}</b>`)).join(", ")}\n            </div>\n            <div id="data-download-cta" class="popup__cta data-download-ready">\n                <button id="data-download-button" class="popup__button single-image-button">\n                    ${document.querySelector("#template-icon-download-svg").innerHTML}\n                </button>\n                <button id="data-loading-button" class="popup__button single-image-button">\n                    ${document.querySelector("#template-icon-loading-svg").innerHTML}\n                </button>\n                <button id="data-loaded-button" class="popup__button single-image-button">\n                    ${document.querySelector("#template-icon-loaded-svg").innerHTML}\n                </button>\n            </div>\n        </div>\n        `),function(e){document.querySelector("#data-download-button").onclick=async function(t){const n=e.map((e=>fetch(`./everyone/${e}.json`).then((e=>e.json()))));this.parentElement.classList.add("data-loading"),document.querySelector("#data-download-popup .popup__text").innerHTML="\n        <header>Downloading...</header>\n        This may take a while depending on your internet connection\n        ",await Promise.all(n),this.parentElement.classList.add("data-loaded"),document.querySelector("#data-download-popup .popup__text").innerHTML="\n        <header>Data Downloaded</header>\n        Click here to refresh the app and view the downloaded years\n        ",document.querySelector("#data-loaded-button").onclick=e=>{location.reload()}}}(e)}await a,document.querySelector(".page").style.display="flex",document.querySelector(".preloader").classList.add("loaded"),p()})(),async function(){await navigator.serviceWorker.ready,await fetch("./static/fonts/Inconsolata.woff2");let e="<style>";for(const t of[100,200,300,400,500,600,700,800,900])e+=`\n        @font-face {\n            font-family: 'Inconsolata';\n            font-style: normal;\n            font-display: swap;\n            font-weight: ${t};\n            src: url(./static/fonts/Inconsolata.woff2) format('woff2');\n        }\n        `.trim().replace(/\n\s*/g,"");e+="</style>",document.head.innerHTML+=e,document.documentElement.classList.add("font-loaded")}(),t("svg").forEach((e=>{e.setAttribute("version","1.1")})),function(){const e=navigator.userAgent;let t="";e.match(/samsungbrowser/i)?t="Tap on the download icon near the URL bar":e.match(/chrome|chromium|crios/i)||e.match(/firefox|fxios/i)?t="Go to options and press Install":e.match(/safari/i)?t="Press the share icon and 'Add to Home Screen'":e.match(/opr\//i)?t="IDK figure it out, who tf uses Opera":e.match(/edg/i)&&(t="Go to options and press Install");document.querySelector("#pwa-install-guide").innerText=t}(),document.querySelector("#close-settings-tab").onclick=e=>{n(100),document.querySelector(".settings-tab").classList.add("hidden")},document.querySelector("#open-settings-tab").onclick=e=>{n(100),document.querySelector(".settings-tab").classList.remove("hidden")},t(".filter-toggle").forEach((e=>{e.onclick=t=>{n(50),async function(e,t){if(!(e in s))return void(s[e]=[t]);const n=s[e].indexOf(t);-1==n?s[e].push(t):s[e].splice(n,1)}(e.getAttribute("field"),e.getAttribute("value")),e.classList.toggle("selected"),p()}})),t(".select-all-toggles").forEach((e=>{e.onclick=o=>{n(50);const r=e.getAttribute("value"),a=t(`[value="${r}"] .filter-toggle`);!async function(e,...t){e in s?0==s[e].length?s[e]=t:s[e]=[]:s[e]=t}(r,...a.map((e=>e.getAttribute("value")))),a.some((e=>e.classList.contains("selected")))?a.forEach((e=>e.classList.remove("selected"))):a.forEach((e=>e.classList.add("selected"))),p()}})),function(){document.querySelector(".view-more-button").onclick=e=>g(h);document.querySelector(".view-all-button").onclick=e=>g()}(),t(".sort-button").forEach((e=>{e.onclick=t=>{var o;e.classList.contains("selected")||(n(50),e.parentElement.querySelector(".selected").classList.remove("selected"),e.classList.add("selected"),o=e.getAttribute("value"),f=o,y(f))}})),document.querySelector("#search-bar-clear-icon").onclick=t=>{document.querySelector("input#search-bar").value="",document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button",0!=e.value.length),document.querySelector("input#search-bar").focus(),v()};let e=document.querySelector("input#search-bar");e.addEventListener("keyup",(()=>{document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button",0!=e.value.length),v()}),{passive:!0})}()}();
+
+    </script>
+</body>
+
+</html>

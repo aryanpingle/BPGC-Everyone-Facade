@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-family: inherit;
+}
+
+:root {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 500;
+    
+    /* Variables */
+    --hue-year: 0;
+    --hue-hostel: 100;
+    --hue-degree-be: 175;
+    --hue-degree-msc: 210;
+    --hue-degree-h: 250;
+}
+
+:root.font-loaded {
+    font-family: 'Inconsolata', monospace;
+}
+
+@media (max-width: 360px) {
+    :root {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 1024px) {
+    :root {
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 1250px) {
+    :root {
+        font-size: 25px;
+    }
+}
+
+html, body {
+    height: 100%;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height: fill-available;
+}
+
+body {
+    background-color: black;
+    color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    body {
+        height: 100vh;
+    }
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+
+    overflow: hidden;
+}

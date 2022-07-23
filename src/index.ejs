@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // If browser supports service workers
+        navigator.serviceWorker && navigator.serviceWorker.register("./service-worker.js")
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | BPGC Everyone</title>
+    <meta name="theme-color" content="#000000">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="./static/images/logos/logo.png">
+    <link rel="shortcut icon" href="./static/images/logos/logo.svg" type="image/svg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Open Graph Tags -->
+    <meta name="author" content="Aryan Pingle" />
+    <meta name="description" content="Any hostel, any room, any branch. Find anyone in BITS Goa using BPGC Everyone." />
+    <meta property="og:title" content="BPGC Everyone" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app/" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Find anyone in BITS Goa" />
+    <meta property="og:image" content="" href="bpgc-everyone.netlify.app/static/images/logos/logo.jpg" />
+
+    <!-- Font Preload -->
+    <!-- <link rel="preload" href="./static/fonts/va9C4kDNxMZdWfMOD5Vn9LjJYTI.woff2" as="font" type="font/woff2" crossorigin> -->
+
+    <!-- Font Inline -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./search.css">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- JS -->
+    <link rel="preload" href="./search.js" as="script" type="text/javascript">
+    <script defer src="./search.js"></script>
+</head>
+
+<body>
+    <div class="page page-search">
+        <div id="filters-tab" class="hidden">
+            <header class="filters-tab__child filters-tab__header">
+                FILTERS
+                <img loading="lazy" id="close-filters-tab" src="./static/images/icons/forward.png">
+            </header>
+            <div id="filters-container" class="filters-tab__child">
+                <% FILTERS.forEach(filter => { %>
+                    <div class="filter-section" category="<%= filter['field'] %>">
+                        <header class="filter-section__header">
+                            <category><%= filter['filter-name'].toUpperCase() %></category>
+                            <button class="select-all-button">
+                                <img loading="lazy" src="./static/images/icons/select-all.png" alt="">
+                            </button>
+                        </header>
+                        <div class="filter-toggle-container">
+                            <% filter['filter-toggles'].forEach(row => { %>
+                             <div class="filter-toggles-row">
+                                <% Object.entries(row).forEach(([toggle_value, toggle_name]) => { %><div class="filter-toggle" value="<%= toggle_value %>"><%= toggle_name %></div><% }) %>
+                             </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% }); %>
+                <div class="footer">
+                    <div id="version"><%= APP_VERSION %></div>
+                    <div id="credits">made with ☕ by aryan pingle</div>
+                </div>
+            </div>
+        </div>
+        <div id="results-tab">
+            <header class="results-tab__child">
+                <div class="filters-tab-button">
+                    <img loading="lazy" src="./static/images/icons/filter.png" alt="">
+                </div>
+                <div class="search-input-container">
+                    <input class="input-search" type="text" id="query" placeholder="Search" autocomplete="off" spellcheck="false">
+                    <span class="search-input-clear"></span>
+                </div>
+            </header>
+            <div id="result-options" class="results-tab__child">
+                <div class="result-option" id="download-button" onclick="download_results()">
+                    <img loading="lazy" src="./static/images/icons/excel.png" alt="">
+                    Download
+                </div>
+                <div class="result-option" id="sorting-button">
+                    <img loading="lazy" src="./static/images/icons/sort.png" alt="">
+                    Sort by Room Number
+                </div>
+            </div>
+            <div id="results-container" class="results-tab__child">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

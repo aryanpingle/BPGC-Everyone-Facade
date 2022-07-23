@@ -1,0 +1,230 @@
+/* 
+.results-section
+    .results-container
+        .student-component
+        ...
+    .view-more-section
+        .view-more-button
+        .view-all-button
+*/
+
+.results-section {
+    flex: 1 0 0;
+
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+.results-section::-webkit-scrollbar {
+    display: none;
+}
+
+.results-container {
+    /* No need for anything */
+}
+
+.student-component {
+    font-size: 1.5em;
+    margin: 0.5rem 0;
+    padding: 1rem 1rem;
+    background-color: hsl(0, 0%, 5%);
+
+    display: flex;
+    flex-direction: column;
+
+    color: #ccc;
+}
+
+@media (min-width: 1024px) {
+    .student-component {
+        cursor: pointer;
+    }
+}
+
+.student--be {
+    background-color: hsl(var(--hue-degree-be), 100%, 5%);
+}
+
+.student--msc {
+    background-color: hsl(var(--hue-degree-msc), 100%, 5%);
+}
+
+.student--h {
+    background-color: hsl(var(--hue-degree-h), 100%, 5%);
+}
+
+/* Parts of the student component */
+
+.student__id {
+    font-size: 0.5em;
+    opacity: 0.5;
+    margin-bottom: 10px;
+}
+
+.student__name {
+    margin-bottom: 10px;
+}
+
+.student__badges {
+    font-size: 0.6em;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    opacity: 0.85;
+}
+
+.expanded .student__badges {
+    display: none;
+}
+
+.student__badge {
+    margin-right: 5px;
+    color: hsl(var(--badge-hue), 90%, 75%);
+}
+
+.badge-year { --badge-hue: var(--hue-year); }
+.badge-hostel { --badge-hue: var(--hue-hostel); }
+.badge-degree_be { --badge-hue: var(--hue-degree-be); }
+.badge-degree_msc { --badge-hue: var(--hue-degree-msc); }
+.badge-degree_h { --badge-hue: var(--hue-degree-h); }
+
+.badge-hostel {
+    margin-left: auto;
+}
+
+/* Student Info (shown on .expanded) */
+
+/* 
+.student-info-grid
+    .info-tile-wrapper info--<smth>
+        .info-tile
+            span
+            <text>
+*/
+
+.student-info-grid {
+    font-size: 0.75em;
+    width: 100%;
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.expanded .student-info-grid {
+    display: grid;
+    grid-gap: 5px;
+    gap: 5px;
+}
+
+/* Span 2 (default) */
+.info-tile-wrapper {
+    display: block;
+    grid-column-end: span 2;
+}
+
+/* Span 3 */
+.info--be, .info--msc, .info--h {
+    grid-column-end: span 4;
+}
+
+.info--year { --info-hue: var(--hue-year); }
+.info--room { --info-hue: var(--hue-hostel); }
+.info--be { --info-hue: var(--hue-degree-be); }
+.info--msc { --info-hue: var(--hue-degree-msc); }
+.info--h { --info-hue: var(--hue-degree-h); }
+.info--pfp { --info-hue: 195; }
+.info--bday { --info-hue: 57; }
+.info--cgpa { --info-hue: 325; }
+.info--blood { --info-hue: 0; }
+.info--gender { --info-hue: 300; }
+.info--phone { --info-hue: 30; }
+.info--address { --info-hue: 170; }
+
+/* Some Customs [?] */
+
+.info--pfp {
+    grid-row-end: span 2;
+}
+
+.student__pfp {
+    position: relative;
+    height: 0;
+    padding-top: 100%;
+
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.info--phone {
+    grid-column-end: span 4;
+}
+
+.info--address {
+    grid-column-end: span 4;
+}
+
+/* These are the containers for the actual text per tile */
+
+.info-tile {
+    --info-hsl-75: hsl(var(--info-hue), 100%, 75%);
+    --info-hsl-03: hsla(var(--info-hue), 100%, 75%, 10%);
+
+    height: 100%;
+    padding: 0.25em;
+    background-color: var(--info-hsl-03);
+    /* border: 2px solid var(--info-hsl-75); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: var(--info-hsl-75);
+}
+
+.info-tile > span {
+    width: max-content;
+    font-size: 0.65em;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+/* View More Section */
+
+.view-more-section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+.view-more-section > button {
+    padding: 0.5em 0.5em;
+    font-size: 1em;
+    background-color: #121212;
+    border: 2px solid #ccc1;
+    color: #ccca;
+    text-transform: uppercase;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.show-view-more .view-more-button,
+.show-view-all .view-all-button {
+    display: flex;
+}
+
+.view-more-section:not(.show-view-more, .show-view-all) {
+    display: none;
+}
+
+.view-more-section > button > span {
+    opacity: 0.5;
+    font-size: 0.65em;
+    margin-left: 5px;
+}

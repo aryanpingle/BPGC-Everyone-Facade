@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        // If browser supports service workers
+        navigator.serviceWorker && navigator.serviceWorker.register("./service-worker.js")
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | BPGC Everyone</title>
+    <meta name="theme-color" content="#000000">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="./static/images/logos/logo-512.png">
+    <link rel="shortcut icon" href="./static/images/logos/logo.svg" type="image/svg">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Open Graph Tags -->
+    <meta name="author" content="Aryan Pingle" />
+    <meta name="description" content="Any hostel, any room, any branch. Find anyone in BITS Goa using BPGC Everyone." />
+    <meta property="og:title" content="BPGC Everyone" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app/" />
+    <meta property="og:url" content="https://bpgc-everyone.netlify.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Find anyone in BITS Goa" />
+    <meta property="og:image" content="" href="https://bpgc-everyone.netlify.app/static/images/logos/logo.jpg" />
+
+    <!-- CSS -->
+    <style>
+        <%- getBundledCode("search.css") %>
+    </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- Font Inline -->
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="preloader-icon">
+            <%- get_svg("src/static/images/logos/logo.svg") %> 
+        </div>
+    </div>
+    <div class="page" style="display: none;">
+        <div class="main-tab" id="main-tab">
+            <!-- Main Tab Header -->
+            <header class="main-tab__header">
+                <div class="search-bar">
+                    <div class="search-or-clear-rel">
+                        <div class="search-bar-search-icon-wrapper">
+                            <button tabindex="-1" class="single-image-button" id="search-bar-search-icon" aria-label="search">
+                                <%- get_svg("src/static/images/icons/search.svg") %>
+                            </button>
+                        </div>
+                        <div class="search-bar-clear-icon-wrapper">
+                            <button tabindex="-1" class="single-image-button" id="search-bar-clear-icon" aria-label="clear">
+                                <%- get_svg("src/static/images/icons/cross.svg") %>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="search-bar" type="text" name="searchbar" placeholder="Search" spellcheck="false" autocomplete="off">
+                    </div>
+                    <button mobile-only class="single-image-button" id="open-settings-tab" aria-label="open settings tab">
+                        <%- get_svg("src/static/images/icons/menu.svg") %>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Tab Taskbar -->
+            <div class="taskbar">
+                <% if (!IS_ADMIN) { %>
+                    <div id="result-count">-</div>
+                <% } %>
+                <div class="sort-component">
+                    <button class="sort-button selected" id="sort-by-relevance" value="relevant">Relevant</button>
+                    <button class="sort-button" id="sort-by-room" value="room">Room</button>
+                    <% if (!IS_ADMIN) { %>
+                        <button class="sort-button" id="sort-by-oldest" value="oldest">Batch +</button>
+                    <% } %>
+                    <button class="sort-button" id="sort-by-youngest" value="youngest">Batch -</button>
+                    <% if (IS_ADMIN) { %>
+                        <button class="sort-button" id="sort-by-bday" value="bday">B'day</button>
+                        <button class="sort-button" id="sort-by-cgpa" value="cgpa">CGPA</button>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-container"></div>
+                <div class="view-more-section">
+                    <button class="view-more-button">View More <span class="view-more-button__count">[+0]</span></button>
+                    <button class="view-all-button">View All <span class="view-all-button__count">[+0]</span></button>
+                </div>
+            </div>
+        </div>
+        <div desktop-only class="tab-divider"></div>
+        <div class="settings-tab">
+            <!-- Accessibility link to skip to results -->
+            <a id="skip-to-main" href="#main-tab"><span>Skip to results</span></a>
+
+            <header mobile-only class="settings-tab__header">
+                <span>Settings</span>
+                <button mobile-only class="single-image-button" id="close-settings-tab" aria-label="close settings tab">
+                    <%- get_svg("src/static/images/icons/cross.svg") %>
+                </button>
+            </header>
+
+            <div class="filters-container">
+
+                <!-- PWA Install Popup -->
+                <div id="pwa-install-popup" class="popup-component">
+                    <div class="popup__text">
+                        <header>Install</header>
+                        Download the app - it's fast, secure and works offline<br>
+                        <span id="pwa-install-guide">Click on the download button near the URL Bar</span>
+                    </div>
+                    <div class="popup__cta download-ready">
+                        <button id="pwa-install-button" class="popup__button single-image-button">
+                            <%- get_svg("src/static/images/icons/pwa.svg") %>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Now for normal filter components -->
+
+                <% FILTERS.forEach(({field, filter_name, filter_toggles}, index)=> { %>
+                    <div class="filter-component" value="<%= field %>">
+                        <header>
+                            <%= filter_name %>
+                                <button class="single-image-button select-all-toggles" value="<%= field %>" aria-label="Select all <%= filter_name.toLowerCase() %>s" title="Select All">
+                                    <%- get_svg("src/static/images/icons/select all.svg") %>
+                                </button>
+                        </header>
+                        <div class="underscore">
+                            <div class="underscore__component"></div>
+                        </div>
+                        <% filter_toggles.forEach(filter_row=> { %>
+                            <div class="filter-row">
+                                <% Object.entries(filter_row).forEach(([toggle_value, toggle_name])=> { %><button class="filter-toggle" field="<%= field %>" value="<%= toggle_value %>" aria-label="<%= toggle_value %>"><%= toggle_name %></button><% }) %>
+                            </div>
+                            <% }) %>
+                    </div>
+                <% }) %>
+                <!-- <div class="filter-component" value="field">
+                    <header>Year</header>
+                    <div class="underscore">
+                        <div class="underscore__component"></div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-toggle" value="value"></div>
+                    </div>
+                </div>
+                <div class="filter-component" style="--filter-hue: 195;">
+                    <header>Hostel</header>
+                    <div class="underscore">
+                        <div class="underscore__component"></div>
+                    </div>
+                    <div class="filter-row"></div>
+                </div> -->
+
+                <!-- Footer with credits -->
+                
+                <div class="footer">
+                    <div class="footer__icons">
+                        <a class="footer__icon" href="https://github.com/robo-mop">
+                            <%- get_svg("src/static/images/icons/github.svg") %>
+                        </a>
+                    </div>
+                    <div class="footer__credit">v<%= APP_VERSION %> • Made by Aryan Pingle</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden / Templates -->
+    
+    <div id="template-icon-download-svg" style="display: none;">
+        <%- get_svg("src/static/images/icons/download.svg") %>
+    </div>
+    <div id="template-icon-loading-svg" style="display: none;">
+        <%- get_svg("src/static/images/icons/loading.svg") %>
+    </div>
+    <div id="template-icon-loaded-svg" style="display: none;">
+        <%- get_svg("src/static/images/icons/loaded.svg") %>
+    </div>
+
+    <script>
+        <%- getBundledCode("search.js") %>
+    </script>
+</body>
+
+</html>

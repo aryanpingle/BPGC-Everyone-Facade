@@ -1,0 +1,28 @@
+{
+  "name": "bpgc-everyone",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "ejs": "^3.1.8",
+    "postcss": "^8.4.14",
+    "postcss-minify": "^1.1.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.7",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "sirv-cli": "^2.0.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --port 5500",
+    "build-and-serve": "rollup -c & sirv public --port 5500"
+  },
+  "author": "Aryan Pingle",
+  "license": "ISC"
+}
