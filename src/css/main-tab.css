@@ -12,6 +12,12 @@
     align-items: center;
 }
 
+@media (min-width: 1024px) {
+    .main-tab__header {
+        margin-top: 1rem;
+    }
+}
+
 .search-bar {
     border-radius: 5px;
     width: 100%;
