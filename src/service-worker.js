@@ -70,6 +70,10 @@ self.addEventListener("fetch", request_event => {
 async function get_request(request_event) {
     const request = request_event.request
     const url = request.url
+
+    if(url.includes("gtag") || url.includes("analytic")) {
+        return fetch(request)
+    }
     
     const cache = await caches.open(CACHE_NAME)
 

@@ -22,6 +22,12 @@ async function setup() {
     // BEFORE ANYTHING, make a fetch for the font
     setupFontLoad()
 
+    // Analytics
+    gtag("event", "app_display_mode", {
+        "event_category": "engagement",
+        "event_label": (navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) ? "website" : "standalone"
+    })
+
     querySelectorAll("svg").forEach(svg => {
         svg.setAttribute("version", "1.1")
     })
