@@ -94,13 +94,16 @@ export function get_field_from_person(field, person_idx) {
         "July", "August", "September", "October", "November", "December"]
 
         let bday = parseInt(EVERYONE["bday"][person_idx])
-        let day = parseInt(bday % 100)
-        bday /= 100
-        let month = parseInt(bday % 100)
-        bday /= 100
+        // Convert MMDDYY into its respective parts
         let year = parseInt(bday % 100)
         if(year > 50) year += 1900
         else year += 2000
+
+        bday /= 100
+        let day = parseInt(bday % 100)
+        
+        bday /= 100
+        let month = parseInt(bday % 100)
 
         return `${day} ${MONTH_NAMES[month - 1]}, ${year}`
     }
