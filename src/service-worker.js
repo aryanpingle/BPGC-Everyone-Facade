@@ -8,7 +8,7 @@
 import APP_VERSION from "inject:APP_VERSION"
 
 // Document Cache is a cache of document files - html, js, css, etc
-const CACHE_NAME = `CACHE-v${APP_VERSION}`
+const CACHE_NAME = `CACHE-v${APP_VERSION.substring(0, APP_VERSION.lastIndexOf("."))}`
 
 // Custom extensions
 String.prototype.endsWithAny = function (...ends) {
