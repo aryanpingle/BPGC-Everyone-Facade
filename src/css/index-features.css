@@ -1,0 +1,135 @@
+.features-section {
+    width: 100%;
+    padding: 10%;
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    gap: 1em;
+}
+
+@media (min-width: 720px) {
+    .features-section {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.feature-component-wrapper {
+    margin: 0.5em;
+    height: 100%;
+    display: block;
+}
+
+.feature-component {
+    --feature-accent: var(--bits-red);
+    position: relative;
+    padding: 2em;
+    height: 100%;
+
+    background-color: #242424;
+    
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+    .feature-component {
+        /* flex: 0 0 30ch; */
+    }
+}
+
+.feature--pwa { --feature-accent: var(--bits-blue); }
+.feature--open-source { --feature-accent: var(--bits-yellow); }
+.feature--offline { --feature-accent: var(--bits-red); }
+
+.feature-icon {
+    flex: 0 0 auto;
+    height: auto;
+    width: 100%;
+    font-size: 3em;
+    height: 1em;
+    width: 1em;
+    border-radius: 5px;
+    align-self: center;
+    justify-self: center;
+}
+
+.feature-icon svg {
+    height: 100%;
+    width: 100%;
+}
+
+:not(.feature--pwa) > .feature-icon svg > * {
+    fill: var(--feature-accent);
+}
+
+.feature--pwa svg path {
+    fill: var(--feature-accent);
+}
+
+.feature--pwa svg rect {
+    stroke: var(--feature-accent);
+}
+
+.feature--pwa g rect {
+    fill: var(--feature-accent);
+}
+
+.feature-description {
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+}
+
+.feature-title {
+    margin: 0.5em 0;
+    /* color: var(--feature-accent); */
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+}
+
+.feature-text {
+    color: #ccc;
+}
+
+.feature-subtitle {
+    font-weight: 100;
+    text-align: center;
+}
+
+.feature-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    background-color: var(--feature-accent);
+    color: #000;
+    font-size: 1.5em;
+    font-weight: 900;
+    text-align: center;
+    user-select: contain;
+
+    opacity: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity 250ms ease;
+}
+
+.feature-component:hover .feature-popup {
+    opacity: 1;
+}
