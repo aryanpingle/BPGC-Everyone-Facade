@@ -25,10 +25,12 @@ async function setup() {
 
     // Analytics
     if(!IS_DEV) {
-        gtag("event", "app_display_mode", {
-            "event_category": "engagement",
-            "event_label": (navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) ? "website" : "standalone"
-        })
+        if(navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) {
+            gtag("event", "pwa_use", {
+                "event_category": "engagement",
+                "value": 1
+            })
+        }
     }
 
     querySelectorAll("svg").forEach(svg => {
