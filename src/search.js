@@ -70,29 +70,29 @@ function setupPWAPopup() {
     let install_text = ""
     if (ua.match(/samsungbrowser/i)) {
         // Fkin Samsung Internet
-        install_text = "Tap on the download icon near the URL bar"
+        install_text = "Download button (near URL)"
     }
     else if(ua.match(/chrome|chromium|crios/i)) {
         // Chrome
-        install_text = "Go to options and press Install"
+        install_text = "Options > Install App"
     }
-    else if(ua.match(/firefox|fxios/i)){
+    else if(ua.match(/firefox|fxios/i)) {
         // Firefox
-        install_text = "Go to options and press Install"
+        install_text = "Options > Install App"
     }
-    else if(ua.match(/safari/i)){
+    else if(ua.match(/safari/i)) {
         // Safari
-        install_text = "Press the share icon and 'Add to Home Screen'"
+        install_text = "Share > Add to Home Screen"
     }
-    else if(ua.match(/opr\//i)){
+    else if(ua.match(/opr\//i)) {
         // Opera
         install_text = "IDK figure it out, who tf uses Opera"
     }
-    else if(ua.match(/edg/i)){
+    else if(ua.match(/edg/i)) {
         // Edge
-        install_text = "Go to options and press Install"
+        install_text = "Options > Install App"
     }
-    else{
+    else {
         // Unknown / Unsupported Browser
     }
 

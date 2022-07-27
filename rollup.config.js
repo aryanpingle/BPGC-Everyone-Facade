@@ -45,9 +45,12 @@ function serve() {
 export default [
 	// JS Files (Also handles CSS Files)
 	{
-		input: ["src/search.js"],
+		input: [
+			"src/search.js",
+			"src/index.js"
+		],
 		output: {
-			format: 'iife',
+			format: 'cjs',
 			dir: "public",
 			entryFileNames: "[name].js",
 		},
@@ -58,7 +61,13 @@ export default [
 		
 			// Minify CSS Files
 			handle_css({
-				"index.css": ["src/index.css"],
+				"index.css": [
+					"src/css/basic.css",
+					"src/css/presets.css",
+					"src/css/custom.css",
+					"src/css/index-main.css",
+					"src/css/index-features.css",
+				],
 				"search.css": [
 					"src/css/basic.css",
 					"src/css/presets.css",
@@ -73,7 +82,7 @@ export default [
 			// Generate index.html
 			renderEJS({
 				...GLOBAL_DATA
-			}, "src/search.ejs"),
+			}, "src/search.ejs", "src/index.ejs"),
 		
 			// Copy images and everyone.json
 			copy({
