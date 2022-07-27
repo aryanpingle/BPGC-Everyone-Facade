@@ -1,9 +1,21 @@
 "use strict"
 
+import IS_DEV from "inject:IS_DEV"
+
 setup()
 
 async function setup() {
     setupFontLoad()
+
+    // Analytics
+    if(!IS_DEV) {
+        if(navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) {
+            gtag("event", "pwa_use", {
+                "event_category": "engagement",
+                "value": 1
+            })
+        }
+    }
 
     fetch("./search.html")
     
