@@ -18,7 +18,8 @@ const GLOBAL_DATA = {
 	"APP_VERSION": APP_VERSION,
 	"EVERYONE_FIELDS": EVERYONE_FIELDS,
 	"FILTERS": FILTERS,
-	"IS_ADMIN": IS_ADMIN
+	"IS_ADMIN": IS_ADMIN,
+	"IS_DEV": !production
 }
 
 function serve() {

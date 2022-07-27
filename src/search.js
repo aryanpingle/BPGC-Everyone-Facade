@@ -3,6 +3,7 @@
 import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers } from "./js/helpers";
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
+import IS_DEV from "inject:IS_DEV"
 
 let filtered = []
 let results = []
@@ -23,10 +24,12 @@ async function setup() {
     setupFontLoad()
 
     // Analytics
-    gtag("event", "app_display_mode", {
-        "event_category": "engagement",
-        "event_label": (navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) ? "website" : "standalone"
-    })
+    if(!IS_DEV) {
+        gtag("event", "app_display_mode", {
+            "event_category": "engagement",
+            "event_label": (navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches) ? "website" : "standalone"
+        })
+    }
 
     querySelectorAll("svg").forEach(svg => {
         svg.setAttribute("version", "1.1")
