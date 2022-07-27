@@ -22,18 +22,25 @@
 	],
 	"screenshots": [
 		{
-			"src": "./static/images/screenshots/filters.jpg",
+			"src": "./static/images/screenshots/settings.jpg",
 			"type": "image/jpg",
-			"sizes": "540x1170",
+			"sizes": "800x1600",
 			"platform": "android",
-			"label": "Filters view"
+			"label": "Settings"
 		},
 		{
-			"src": "./static/images/screenshots/search.jpg",
+			"src": "./static/images/screenshots/room-sort.jpg",
 			"type": "image/jpg",
-			"sizes": "540x1170",
+			"sizes": "800x1600",
 			"platform": "android",
-			"label": "Search view"
+			"label": "View hostel residents"
+		},
+		{
+			"src": "./static/images/screenshots/aryan-search.jpg",
+			"type": "image/jpg",
+			"sizes": "800x1600",
+			"platform": "android",
+			"label": "Search for anyone"
 		}
 	]
 }
