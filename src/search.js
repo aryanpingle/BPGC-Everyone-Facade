@@ -421,7 +421,7 @@ function sortResults(force_sorting) {
         case "room":
             sort_strings(results_with_score, ([_, filtered_idx]) => {
                 // Place homeless people at the bottom of room sort
-                if(get_field_from_person("hostel", filtered[filtered_idx]) == "") return "ZZZ"
+                if(get_field_from_person("hostel", filtered[filtered_idx]).replace("0.0", "") == "") return "ZZZ"
                 return get_field_from_person("hostel", filtered[filtered_idx]) + get_field_from_person("room", filtered[filtered_idx])
             })
             break
