@@ -120,7 +120,7 @@ async function handleDownloadingYears() {
         await navigator.serviceWorker.ready
     }
 
-    const cache_name = (await window.caches.keys())[0]
+    const cache_name = (await window.caches.keys()).filter(cache_name => cache_name !== "undefined")[0]
     const cache = await window.caches.open(cache_name)
     let downloaded_years = (await cache.keys()).filter(req => req.url.includes("/everyone/")).map(req => req.url.match(/\d+(?=\.json)/)[0])
 
