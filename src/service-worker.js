@@ -77,7 +77,7 @@ async function get_request(request_event) {
     
     const cache = await caches.open(CACHE_NAME)
 
-    if(url.endsWith(".html")) {
+    if(url.endsWith(".html") || url.endsWith("/")) {
         // HTML File -> Send cache, fetch in background
         const cache_match = await cache.match(request)
         if(cache_match) {
