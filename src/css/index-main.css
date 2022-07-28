@@ -16,6 +16,7 @@
 }
 
 .hero-section {
+    flex: 0 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -26,7 +27,6 @@
 @media (min-width: 1024px) {
     .hero-section {
         flex-direction: row;
-        flex: 0 0 auto;
         height: 100%;
     }
 }
