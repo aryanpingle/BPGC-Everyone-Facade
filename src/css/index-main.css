@@ -16,6 +16,7 @@
 }
 
 .hero-section {
+    flex: 0 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -26,7 +27,6 @@
 @media (min-width: 1024px) {
     .hero-section {
         flex-direction: row;
-        flex: 0 0 auto;
         height: 100%;
     }
 }
@@ -113,6 +113,14 @@
     
     font-weight: 900;
 
+    -webkit-clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 50%,
+        calc(100% - 1em) 100%,
+        1em 100%,
+        0 50%
+    );
     clip-path: polygon(
         0 0,
         100% 0,
@@ -148,8 +156,14 @@
     top: 50%;
     transform: translateY(-50%);
     height: 1em;
+    width: 1em;
     background-color: black;
-    aspect-ratio: 1 / 1;
+    
+    -webkit-clip-path: polygon(
+        50% 0.25em,
+        100% 50%,
+        50% 0.75em
+    );
     clip-path: polygon(
         50% 0.25em,
         100% 50%,
@@ -182,6 +196,14 @@
         color: black;
         filter: none;
 
+        -webkit-clip-path: polygon(
+            2em 0,
+            100% 0,
+            100% 100%,
+            2em 100%,
+            0 calc(100% - 2em),
+            0 2em
+        );
         clip-path: polygon(
             2em 0,
             100% 0,
