@@ -419,7 +419,11 @@ function sortResults(force_sorting) {
             sort_multiple(results_with_score, element=>[-element[0][0], -element[0][1], element[0][2]])
             break
         case "room":
-            sort_strings(results_with_score, ([_, filtered_idx]) => get_field_from_person("hostel", filtered[filtered_idx]) + get_field_from_person("room", filtered[filtered_idx]))
+            sort_strings(results_with_score, ([_, filtered_idx]) => {
+                // Place homeless people at the bottom of room sort
+                if(get_field_from_person("hostel", filtered[filtered_idx]) == "") return "ZZZ"
+                return get_field_from_person("hostel", filtered[filtered_idx]) + get_field_from_person("room", filtered[filtered_idx])
+            })
             break
         case "youngest":
             sort_numbers(results_with_score, ([_, filtered_idx]) => -parseInt(get_field_from_person("year", filtered[filtered_idx])))
