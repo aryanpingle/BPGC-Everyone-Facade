@@ -107,6 +107,17 @@ export function get_field_from_person(field, person_idx) {
 
         return `${day} ${MONTH_NAMES[month - 1]}, ${year}`
     }
+    if(IS_ADMIN && field == "bday-day") {
+        let bday = parseInt(EVERYONE["bday"][person_idx])
+        // Convert MMDDYY into month and day
+        bday /= 100
+        let day = parseInt(bday % 100)
+        
+        bday /= 100
+        let month = parseInt(bday % 100)
+
+        return getDay(month, day)
+    }
 
     const person_id = EVERYONE["id"][person_idx]
     const year = person_id.substring(0, 4)
@@ -168,6 +179,18 @@ export function get_field_from_person(field, person_idx) {
     }
 
     throw new Error(`Field not found: ${field}`)
+}
+
+const DAYS_PER_MONTH = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]
+
+/**
+ * Returns the number of days the given date is from the start of the year
+ * @param {number} month 
+ * @param {number} date 
+ */
+
+export function getDay(month, date) {
+    return date + DAYS_PER_MONTH[month-1]
 }
 
 /**

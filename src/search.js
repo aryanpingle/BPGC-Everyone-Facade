@@ -1,7 +1,7 @@
 "use strict"
 
 import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers } from "./js/helpers";
-import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field } from "./js/everyone";
+import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
 
@@ -432,7 +432,10 @@ function sortResults(force_sorting) {
             sort_numbers(results_with_score, ([_, filtered_idx]) => parseInt(get_field_from_person("year", filtered[filtered_idx])))
             break
         case "bday":
-            sort_numbers(results_with_score, ([_, filtered_idx]) => parseInt(get_field_from_person("bday", filtered[filtered_idx])))
+            const today = getDay(new Date().getMonth()+1, new Date().getDate())
+            sort_numbers(results_with_score, ([_, filtered_idx]) => {
+                return (366 + get_field_from_person("bday-day", filtered[filtered_idx]) - today) % 366
+            })
             break
         case "cgpa":
             sort_numbers(results_with_score, ([_, filtered_idx]) => {
