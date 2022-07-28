@@ -41,6 +41,12 @@
     width: 3em;
     border-bottom: 4px solid var(--underscore-color);
     padding-right: 2em;
+    -webkit-clip-path: polygon(
+        0 0,
+        100% 0,
+        calc( 100% - 1em ) 100%,
+        0 100%
+    );
     clip-path: polygon(
         0 0,
         100% 0,

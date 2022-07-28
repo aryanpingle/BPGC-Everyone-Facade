@@ -113,6 +113,14 @@
     
     font-weight: 900;
 
+    -webkit-clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 50%,
+        calc(100% - 1em) 100%,
+        1em 100%,
+        0 50%
+    );
     clip-path: polygon(
         0 0,
         100% 0,
@@ -150,6 +158,11 @@
     height: 1em;
     background-color: black;
     aspect-ratio: 1 / 1;
+    -webkit-clip-path: polygon(
+        50% 0.25em,
+        100% 50%,
+        50% 0.75em
+    );
     clip-path: polygon(
         50% 0.25em,
         100% 50%,
@@ -182,6 +195,14 @@
         color: black;
         filter: none;
 
+        -webkit-clip-path: polygon(
+            2em 0,
+            100% 0,
+            100% 100%,
+            2em 100%,
+            0 calc(100% - 2em),
+            0 2em
+        );
         clip-path: polygon(
             2em 0,
             100% 0,

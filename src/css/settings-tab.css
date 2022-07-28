@@ -240,6 +240,7 @@ a#skip-to-main > span {
     height: calc(100% - 2 * var(--thickness));
     background-color: #121212;
 
+    -webkit-clip-path: inherit;
     clip-path: inherit;
     z-index: -1;
 }
