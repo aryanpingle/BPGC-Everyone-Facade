@@ -125,6 +125,7 @@ input::placeholder {
 }
 
 .sort-button {
+    font-size: 0.90em;
     width: max-content;
     position: relative;
     padding: 0.25em 0.5em;
