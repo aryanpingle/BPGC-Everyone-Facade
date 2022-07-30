@@ -22,9 +22,15 @@ async function setup() {
     setupPWAGuide()
 }
 
+/**
+ * Asynchronously loads the Inconsolata font, then adds a `font-loaded` class to HTML document
+ */
+
 async function setupFontLoad() {
-    // Wait for the service worker to activate
-    await navigator.serviceWorker.ready
+    // Wait till the service worker is ready
+    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
+        await navigator.serviceWorker.ready
+    }
 
     await fetch("./static/fonts/Inconsolata.woff2")
     
@@ -37,7 +43,8 @@ async function setupFontLoad() {
             font-style: normal;
             font-display: swap;
             font-weight: ${weight};
-            src: url(./static/fonts/Inconsolata.woff2) format('woff2');
+            src: url(./static/fonts/Inconsolata.woff2) format('woff2'),
+                url(./static/fonts/Inconsolata.woff) format('woff');
         }
         `.trim().replace(/\n\s*/g, "")
     }
@@ -46,6 +53,8 @@ async function setupFontLoad() {
     document.head.innerHTML += css
     
     document.documentElement.classList.add("font-loaded")
+
+    console.log("Font Loaded")
 }
 
 function setupPWAGuide() {

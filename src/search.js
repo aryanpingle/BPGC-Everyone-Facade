@@ -1,6 +1,6 @@
 "use strict"
 
-import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers } from "./js/helpers";
+import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad } from "./js/helpers";
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
@@ -220,36 +220,6 @@ function attachDownloadYearsOnclick(not_downloaded_years) {
             location.reload()
         }
     }
-}
-
-async function setupFontLoad() {
-    // Wait till the service worker is ready
-    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
-        await navigator.serviceWorker.ready
-    }
-
-    await fetch("./static/fonts/Inconsolata.woff2")
-    
-    // After the font loads, add the CSS font family to document.head
-    let css = "<style>"
-    for(const weight of [100, 200, 300, 400, 500, 600, 700, 800, 900]) {
-        css += `
-        @font-face {
-            font-family: 'Inconsolata';
-            font-style: normal;
-            font-display: swap;
-            font-weight: ${weight};
-            src: url(./static/fonts/Inconsolata.woff2) format('woff2');
-        }
-        `.trim().replace(/\n\s*/g, "")
-    }
-    css += "</style>"
-
-    document.head.innerHTML += css
-    
-    document.documentElement.classList.add("font-loaded")
-
-    print("Font Loaded")
 }
 
 function setup_close_settings_tab() {
