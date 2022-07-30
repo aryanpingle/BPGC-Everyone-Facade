@@ -133,7 +133,7 @@ a#skip-to-main > span {
 
 .popup__text {
     text-align: left;
-    font-weight: 100;
+    font-weight: 300;
     flex: 1 0 0;
     color: hsl(var(--popup-hue), 100%, 90%);
 }
@@ -313,9 +313,7 @@ span#pwa-install-guide {
     justify-content: center;
     align-items: center;
 
-    /* font-weight: 900; */
     font-weight: 300;
-    /* text-transform: uppercase; */
 }
 
 .footer__icons {
