@@ -99,7 +99,7 @@ a#skip-to-main > span {
     position: relative;
     margin: 0.5rem 1rem;
     padding: 1em 1rem;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 0.75em;
     background-color: hsl(var(--popup-hue), 100%, 5%);
     border: 2px solid hsl(var(--popup-hue), 25%, 50%);
@@ -133,14 +133,14 @@ a#skip-to-main > span {
 
 .popup__text {
     text-align: left;
+    font-weight: 100;
     flex: 1 0 0;
-    /* margin-left: 1.5rem; */
     color: hsl(var(--popup-hue), 100%, 90%);
 }
 
 .popup__text header {
     font-size: 1.55em;
-    font-weight: 900;
+    font-weight: 500;
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -156,7 +156,11 @@ a#skip-to-main > span {
 }
 
 .popup__text b {
-    font-weight: 900;
+    font-weight: 500;
+}
+
+span#pwa-install-guide {
+    font-weight: 500;
 }
 
 /* Popup for Installing PWA */
@@ -169,6 +173,10 @@ a#skip-to-main > span {
     #pwa-install-popup {
         display: none;
     }
+}
+
+#pwa-install-popup header {
+    justify-content: center;
 }
 
 /* Popup for Downloading Data */
