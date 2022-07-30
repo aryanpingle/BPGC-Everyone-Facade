@@ -219,8 +219,10 @@ function attachDownloadYearsOnclick(not_downloaded_years) {
 }
 
 async function setupFontLoad() {
-    // Wait for the service worker to activate
-    await navigator.serviceWorker.ready
+    // Wait till the service worker is ready
+    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
+        await navigator.serviceWorker.ready
+    }
 
     await fetch("./static/fonts/Inconsolata.woff2")
     
