@@ -340,3 +340,8 @@ span#pwa-install-guide {
     flex: 1 0 0;
     color: #ccc;
 }
+
+.footer__credit span {
+    text-decoration: underline;
+    color: cyan;
+}

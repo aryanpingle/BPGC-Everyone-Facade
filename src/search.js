@@ -60,6 +60,10 @@ async function setup() {
         document.querySelector("input#search-bar").focus()
         resolve_query()
     }
+    // Contact me link
+    document.querySelector("#contact-me").onclick = event => {
+        window.open("https://wa.me/919920424045?text=You are a God.", "_blank")
+    }
 
     // Setup the search bar
     let search_bar = document.querySelector("input#search-bar")
