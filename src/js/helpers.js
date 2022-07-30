@@ -1,5 +1,12 @@
 export const print = console.log
 export const lerp = (val,lb,ub,lv,uv)=>lv + (val-lb)*(uv-lv)/(ub-lb)
+export const summation = (iterable, key = e => e) => {
+    let sum = 0
+    for(let i = 0; i < iterable.length; ++i) {
+        sum += key(iterable[i])
+    }
+    return sum
+}
 export const sort_numbers = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a)-key(b)); return arr;}
 export const sort_strings = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a).localeCompare(key(b))); return arr;}
 export const sort_multiple = (arr, key=e=>e) => {
@@ -46,4 +53,37 @@ export function vibrate(ms) {
     if("vibrate" in navigator) {
         navigator.vibrate(ms)
     }
+}
+
+/**
+ * Asynchronously loads the Inconsolata font, then adds a `font-loaded` class to HTML document
+ */
+
+export async function setupFontLoad() {
+    // Wait till the service worker is ready
+    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
+        await navigator.serviceWorker.ready
+    }
+
+    await fetch("./static/fonts/Inconsolata.woff2")
+    
+    // After the font loads, add the CSS font family to document.head
+    let css = "<style>"
+    for(const weight of [100, 200, 300, 400, 500, 600, 700, 800, 900]) {
+        css += `
+        @font-face {
+            font-family: 'Inconsolata';
+            font-style: normal;
+            font-display: swap;
+            font-weight: ${weight};
+            src: url(./static/fonts/Inconsolata.woff2) format('woff2'),
+                url(./static/fonts/Inconsolata.woff) format('woff');
+        }
+        `.trim().replace(/\n\s*/g, "")
+    }
+    css += "</style>"
+
+    document.head.innerHTML += css
+    
+    document.documentElement.classList.add("font-loaded")
 }
