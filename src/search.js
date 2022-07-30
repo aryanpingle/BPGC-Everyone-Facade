@@ -73,7 +73,11 @@ async function setup() {
 function setupPWAPopup() {
     const ua = navigator.userAgent
     let install_text = ""
-    if (ua.match(/samsungbrowser/i)) {
+    if(['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform)) {
+        // iOS + not Safari
+        install_text = "[In Safari] Share > Add to Home Screen"
+    }
+    else if (ua.match(/samsungbrowser/i)) {
         // Fkin Samsung Internet
         install_text = "Download button (near URL)"
     }
@@ -84,10 +88,6 @@ function setupPWAPopup() {
     else if(ua.match(/firefox|fxios/i)) {
         // Firefox
         install_text = "Options > Install App"
-    }
-    else if(ua.match(/safari/i)) {
-        // Safari
-        install_text = "Share > Add to Home Screen"
     }
     else if(ua.match(/opr\//i)) {
         // Opera
