@@ -57,6 +57,7 @@ async function setup() {
     document.querySelector("#search-bar-clear-icon").onclick = event => {
         document.querySelector("input#search-bar").value = ""
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
+        document.querySelector("#sort-by-relevance").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         document.querySelector("input#search-bar").focus()
         resolve_query()
     }
@@ -70,6 +71,7 @@ async function setup() {
 
     search_bar.addEventListener("keyup", () => {
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
+        document.querySelector("#sort-by-relevance").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
     }, { passive: true })
 }
