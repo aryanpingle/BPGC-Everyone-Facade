@@ -126,6 +126,10 @@ async function handleDownloadingYears() {
         await navigator.serviceWorker.ready
     }
 
+    if(!("caches" in window)) {
+        console.log("Cache API not supported")
+    }
+    
     const cache_name = (await window.caches.keys()).filter(cache_name => cache_name !== "undefined")[0]
     const cache = await window.caches.open(cache_name)
     let downloaded_years = (await cache.keys()).filter(req => req.url.includes("/everyone/")).map(req => req.url.match(/\d+(?=\.json)/)[0])
@@ -244,6 +248,8 @@ async function setupFontLoad() {
     document.head.innerHTML += css
     
     document.documentElement.classList.add("font-loaded")
+
+    print("Font Loaded")
 }
 
 function setup_close_settings_tab() {
