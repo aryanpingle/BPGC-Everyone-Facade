@@ -1,5 +1,12 @@
 export const print = console.log
 export const lerp = (val,lb,ub,lv,uv)=>lv + (val-lb)*(uv-lv)/(ub-lb)
+export const summation = (iterable, key = e => e) => {
+    let sum = 0
+    for(let i = 0; i < iterable.length; ++i) {
+        sum += key(iterable[i])
+    }
+    return sum
+}
 export const sort_numbers = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a)-key(b)); return arr;}
 export const sort_strings = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a).localeCompare(key(b))); return arr;}
 export const sort_multiple = (arr, key=e=>e) => {
@@ -79,6 +86,4 @@ export async function setupFontLoad() {
     document.head.innerHTML += css
     
     document.documentElement.classList.add("font-loaded")
-
-    print("Font Loaded")
 }

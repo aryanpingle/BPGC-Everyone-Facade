@@ -42,9 +42,17 @@ const FILTERS = {}
 export async function load_years(...years) {
     let fetch_promises = years.map(async year => await load_year(year))
     await Promise.all(fetch_promises)
+    
+    let ls_val = localStorage.getItem("downloaded-years")
+    if(ls_val === null) ls_val = []
+    else ls_val = JSON.parse(ls_val)
+
+    // Something already in LS
+    ls_val = Array.from(new Set([...ls_val, ...years]))
+    localStorage.setItem("downloaded-years", JSON.stringify(ls_val))
 }
 
-export async function load_year(year) {
+async function load_year(year) {
     let data = await fetch(`./everyone/${year}.json`)
     data = await data.json()
     

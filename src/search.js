@@ -1,6 +1,6 @@
 "use strict"
 
-import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad } from "./js/helpers";
+import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad, summation } from "./js/helpers";
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
@@ -129,33 +129,44 @@ async function handleDownloadingYears() {
     if(!("caches" in window)) {
         console.log("Cache API not supported")
     }
-    
-    const cache_name = (await window.caches.keys()).filter(cache_name => cache_name !== "undefined")[0]
-    const cache = await window.caches.open(cache_name)
-    let downloaded_years = (await cache.keys()).filter(req => req.url.includes("/everyone/")).map(req => req.url.match(/\d+(?=\.json)/)[0])
 
-    const YEARS_WITH_SIZE = {
-        "2015": 29.61,
-        "2016": 27.4,
+    const YEARS_WITH_SIZE_GZIPPED = {
+        "2015": 8.0,
+        "2016": 8.1,
         "2017": 11.6,
         "2018": 14.3,
         "2019": 15.2,
-        "2020": 15.2,
+        "2020": 14.8,
         "2021": 13.7
     }
-
-    if(downloaded_years.length == 0) {
-        downloaded_years = ["2019", "2020", "2021"]
+    
+    const VERY_IMPORTANT_YEARS = ["2019", "2020", "2021"]
+    let years_to_be_downloaded = []
+    const localstorage_years = localStorage.getItem("downloaded-years")
+    if(localstorage_years == null) {
+        // Either first time on site / cache has been cleared
+        // Download the very important years
+        print("Found no years in localStorage")
+        years_to_be_downloaded = VERY_IMPORTANT_YEARS
     }
+    else {
+        // Some years have already been downloaded
+        // Download the union of these files + the very important ones
+        print("Found some years in localStorage")
+        years_to_be_downloaded = Array.from(new Set([
+            ...VERY_IMPORTANT_YEARS,
+            ...JSON.parse(localstorage_years)
+        ]))
+    }
+    
+    print(`Years to be downloaded: ${years_to_be_downloaded.join(", ")}`)
 
-    const load_promise = load_years(...downloaded_years)
+    const load_promise = load_years(...years_to_be_downloaded)
 
-    // Handle showing the download component
-
-    // If some years aren't downloaded, show the download component
-    if(downloaded_years.length != Object.keys(YEARS_WITH_SIZE).length) {
-        const not_downloaded_years = Object.keys(YEARS_WITH_SIZE).filter(year => !downloaded_years.includes(year))
-        const size_to_download = not_downloaded_years.reduce((acc, val) => acc + YEARS_WITH_SIZE[val], 0)
+    // Show the download component if there are some years in YEARS_WITH_SIZE_GZIPPED that aren't in years_to_be_downloaded
+    if(years_to_be_downloaded.length != Object.keys(YEARS_WITH_SIZE_GZIPPED).length) {
+        const not_downloaded_years = Object.keys(YEARS_WITH_SIZE_GZIPPED).filter(year => !years_to_be_downloaded.includes(year))
+        const size_to_download = summation(not_downloaded_years, year => YEARS_WITH_SIZE_GZIPPED[year])
 
         querySelectorAll(".filter-toggle[field='year']").forEach(toggle => {
             if(not_downloaded_years.includes(toggle.getAttribute("value"))) {
@@ -166,7 +177,7 @@ async function handleDownloadingYears() {
         document.querySelector(".filter-component[value='year']").insertAdjacentHTML("afterend", `
         <div id="data-download-popup" class="popup-component">
             <div class="popup__text">
-                <header>More Data <span>(${size_to_download.toFixed(2)}Kb)</span></header>
+                <header>More Data <span>(${size_to_download.toFixed(1)}Kb)</span></header>
                 Click to download data for ${not_downloaded_years.map(year => `<b>${year}</b>`).join(", ")}
             </div>
             <div id="data-download-cta" class="popup__cta data-download-ready">
@@ -197,7 +208,7 @@ async function handleDownloadingYears() {
 function attachDownloadYearsOnclick(not_downloaded_years) {
     document.querySelector("#data-download-button").onclick = async function(event) {
         // Fetch all files
-        const load_promises = not_downloaded_years.map(year => fetch(`./everyone/${year}.json`).then(data => data.json()))
+        const load_promise = load_years(...not_downloaded_years)
 
         // Show spinner and change text
         this.parentElement.classList.add("data-loading")
@@ -207,7 +218,7 @@ function attachDownloadYearsOnclick(not_downloaded_years) {
         `
         
         // Wait till the files are downloaded
-        await Promise.all(load_promises)
+        await load_promise
 
         // Show loaded icon and change text
         this.parentElement.classList.add("data-loaded")
