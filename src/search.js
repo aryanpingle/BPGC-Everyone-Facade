@@ -319,7 +319,7 @@ function setupSortingButtons() {
         button.onclick = event => {
             if(button.classList.contains("selected")) return
 
-            vibrate(50)
+            vibrate(25)
             button.parentElement.querySelector(".selected").classList.remove("selected")
             button.classList.add("selected")
 
