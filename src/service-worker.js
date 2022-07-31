@@ -30,7 +30,7 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("activate", event => {
-    log("Service Worker activated")
+    console.log("Service Worker activated")
     // Remove obsolete caches
     event.waitUntil((async () => {
         await clients.claim()
