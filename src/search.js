@@ -731,14 +731,14 @@ function scorer_name(query, text) {
 }
 
 function scorer_id(query, id) {
-    if(text.includes(query)) {
-        return [query.length, query.length, text.indexOf(query)]
+    if(id.includes(query)) {
+        return [query.length, query.length, id.indexOf(query)]
     }
     return [0, 0, 0]
 }
 
 function scorer_room(query, room) {
-    if(text == query) {
+    if(room == query) {
         return [3, 3, 0]
     }
     return [0, 0, 0]
