@@ -1,5 +1,12 @@
 export const print = console.log
 export const lerp = (val,lb,ub,lv,uv)=>lv + (val-lb)*(uv-lv)/(ub-lb)
+
+/**
+ * Returns the arithmetic sum of all elements in the array
+ * @param {Iterable} iterable The array to be operated on
+ * @param {Function} key Function that converts each element of the array into an addable value
+ * @returns {Number}
+ */
 export const summation = (iterable, key = e => e) => {
     let sum = 0
     for(let i = 0; i < iterable.length; ++i) {
@@ -7,8 +14,42 @@ export const summation = (iterable, key = e => e) => {
     }
     return sum
 }
-export const sort_numbers = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a)-key(b)); return arr;}
-export const sort_strings = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a).localeCompare(key(b))); return arr;}
+
+/**
+ * 
+ * @param {*} arr 
+ * @param {*} key 
+ * @returns 
+ */
+export const sort_numbers = (arr, key=e=>e) => {
+    arr.sort((a,b) => key(a)-key(b))
+}
+
+/**
+ * Sorts an array in-place
+ * @param {Iterable} arr The array to be sorted
+ * @param {Function} hash_function A function that converts each element of the array into a unique ID
+ * @param {Function} key A function that maps an element of the array into a string that is sorted by
+ * @returns {void}
+ */
+export const sort_strings = (arr, hash_function, key) => {
+    // Kinda complicated, but way better for performance than arr.sort((a,b) => key(a).localeCompare(key(b)))
+    // The previous code would call key() during the sorting technique, so definitely more than N times
+    // This stacks up for complicated key() functions
+    // Instead, we'll precompute key() for every element. It can be accessed through the element's hashmap
+
+    // hash_to_key is a hashmap that maps a hash to the key() result for every element
+    let hash_to_key = {}
+    // Create the hashmap
+    for(let i = 0; i < arr.length; ++i) {
+        hash_to_key[hash_function(arr[i])] = key(arr[i])
+    }
+
+    arr.sort((a,b) => {
+        return hash_to_key[hash_function(a)].localeCompare(hash_to_key[hash_function(b)])
+    })
+}
+
 export const sort_multiple = (arr, key=e=>e) => {
     arr.sort((a,b) => {
         a = key(a)
