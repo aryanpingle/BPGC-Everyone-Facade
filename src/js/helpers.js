@@ -1,5 +1,12 @@
 export const print = console.log
 export const lerp = (val,lb,ub,lv,uv)=>lv + (val-lb)*(uv-lv)/(ub-lb)
+
+/**
+ * Returns the arithmetic sum of all elements in the array
+ * @param {Iterable} iterable The array to be operated on
+ * @param {Function} key Function that converts each element of the array into an addable value
+ * @returns {Number}
+ */
 export const summation = (iterable, key = e => e) => {
     let sum = 0
     for(let i = 0; i < iterable.length; ++i) {
@@ -7,7 +14,16 @@ export const summation = (iterable, key = e => e) => {
     }
     return sum
 }
-export const sort_numbers = (arr, key=e=>e)=>{arr.sort((a,b)=>key(a)-key(b)); return arr;}
+
+/**
+ * 
+ * @param {*} arr 
+ * @param {*} key 
+ * @returns 
+ */
+export const sort_numbers = (arr, key=e=>e) => {
+    arr.sort((a,b) => key(a)-key(b))
+}
 
 /**
  * Sorts an array in-place
