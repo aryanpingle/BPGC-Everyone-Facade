@@ -112,6 +112,7 @@
 }
 
 .expanded .student-info-grid {
+    display: flex; /* Grid fallback for legacy browsers. Gotta show something right? */
     display: grid;
     grid-gap: 5px;
     gap: 5px;
