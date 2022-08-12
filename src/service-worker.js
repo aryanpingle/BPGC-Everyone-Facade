@@ -141,15 +141,15 @@ async function cache_with_headers(cache, request, response) {
 }
 
 /**
- * Returns true or false if the response headers says it is older than 1 day or not respectively
+ * Returns true or false if the response headers says it is older than 15 days or not respectively
  */
 
 function isCachedResponseExpired(response) {
     let fetched_on = response.headers.get("sw-fetched-on")
     if(!fetched_on) return true
     
-    // Basically, 1 day
-    const TIMEOUT_IN_MS = 24 * 3600 * 1000
+    // Basically, 15 days
+    const TIMEOUT_IN_MS = 15 * 24 * 3600 * 1000
 
     if(new Date().getTime() - parseFloat(fetched_on) >= TIMEOUT_IN_MS) return true
 
