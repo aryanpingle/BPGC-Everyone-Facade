@@ -288,7 +288,7 @@ span#pwa-install-guide {
     padding: 0.5em;
     font-size: 0.8em;
     font-weight: 500;
-    border: solid 1px var(--filter-hsl);
+    border: solid 1px hsla(var(--filter-hue), 100%, 75%, 50%);
     color: var(--filter-hsl);
     display: inline-block;
 }
