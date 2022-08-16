@@ -93,81 +93,107 @@ a#skip-to-main > span {
 /*-------------------------------*/
 
 .popup-component {
-    /* This variable should be overriden */
-    --popup-hue: 0;
-
-    position: relative;
-    margin: 0.5rem 1rem;
-    padding: 1em 1rem;
-    border-radius: 5px;
-    font-size: 0.75em;
-    background-color: hsl(var(--popup-hue), 100%, 5%);
-    border: 2px solid hsl(var(--popup-hue), 25%, 50%);
-    color: hsl(var(--popup-hue), 100%, 80%);
-
+    --popup-height: 100px;
+    margin: 0 1rem;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.popup__cta {
-    margin-left: 1rem;
-    position: relative;
-    flex: 0 0 auto;
-    font-size: 3em;
-    width: 1.5em;
-    height: 1.5em;
-}
-
-.popup__button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0.25em;
-    font-size: 1em;
-    width: 1.5em;
-    height: 1.5em;
-    background-color: hsl(var(--popup-hue), 100%, 75%);
-    border-radius: 5px;
-}
-
-.popup__text {
-    text-align: left;
-    font-weight: 300;
-    flex: 1 0 0;
-    color: hsl(var(--popup-hue), 100%, 90%);
-}
-
-.popup__text header {
-    font-size: 1.55em;
-    font-weight: 500;
-    text-transform: uppercase;
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 0.25em;
+    overflow: hidden;
+    opacity: 0;
+    height: auto;
+    background-color: hsl(var(--popup-hue), 100%, 3%);
 }
 
-.popup__text > header > span {
-    display: inline-block;
-    margin-left: 0.5em;
-    opacity: 0.75;
+#pwa-install-popup { --popup-hue: 195; }
+#data-download-popup { --popup-hue: 0; }
+
+.settings-tab:not(.hidden) .popup-component {
+    height: 0;
+    animation: show-popup 125ms linear forwards 250ms;
+}
+
+@keyframes show-popup {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        height: var(--popup-height);
+    }
+}
+
+.popup-component > * {
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.popup-header {
+    color: hsl(var(--popup-hue), 100%, 75%);
+    font-size: 100;
+    font-size: 0.5em;
+    background-color: black;
+}
+
+.popup-divider {
+    margin: 4px 0;
+    height: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-divider::before, .popup-divider::after {
+    content: '';
+    height: 100%;
+    flex: 0 0 auto;
+    width: 10%;
+    background-color: hsl(var(--popup-hue), 100%, 75%);
+}
+
+.popup-divider__main {
+    margin: 0 5px;
+    height: 100%;
+    flex: 1 0 0;
+    background-color: hsl(var(--popup-hue), 100%, 10%);
+}
+
+.popup-title {
+    margin: 0.25em 0;
+    font-size: 1.5em;
+    text-align: center;
+    color: hsl(var(--popup-hue), 100%, 75%);
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.popup-description {
+    margin: 0.25em 0;
+    padding: 0 0.25em;
+    color: hsl(var(--popup-hue), 100%, 75%);
     font-size: 0.75em;
+    font-weight: 300;
+    text-align: center;
+}
+
+.popup-description > b {
     font-weight: 500;
 }
 
-.popup__text b {
+.popup-cta {
+    margin: 0.25em 0;
+    padding: 0.5em 0.25em;
+    user-select: none;
+    width: 92%;
     font-weight: 500;
+    font-size: 1em;
+    background-color: hsla(var(--popup-hue), 100%, 75%, 75%);
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
 }
 
-span#pwa-install-guide {
-    font-weight: 500;
-}
-
-/* Popup for Installing PWA */
-
-#pwa-install-popup {
-    --popup-hue: 195;
-}
+/* PWA Install Popup */
 
 @media (display-mode: standalone), (min-width: 1024px) {
     #pwa-install-popup {
@@ -175,44 +201,17 @@ span#pwa-install-guide {
     }
 }
 
-#pwa-install-popup header {
-    justify-content: center;
-}
+/* Data Download Popup */
 
-/* Popup for Downloading Data */
-
-#data-download-popup {
-    --popup-hue: var(--hue-year);
-}
-
-#data-download-popup .popup__button {
-    opacity: 0;
-    transition: opacity 125ms ease;
-
-    user-select: none;
-    pointer-events: none;
-}
-
-.popup__cta.data-download-ready #data-download-button,
-.popup__cta.data-loading #data-loading-button,
-.popup__cta.data-loaded #data-loaded-button {
-    opacity: 1;
-    user-select: all;
-    pointer-events: all;
-}
-
-/* Rotate the loading button */
-
-#data-loading-button svg {
-    animation: loading-spinner 1s linear infinite;
-}
-
-@keyframes loading-spinner {
-    from {
-        transform: rotate(0deg);
+@media (min-width: 1024px) {
+    #data-download-popup {
+        opacity: 1;
+        height: auto !important;
+        animation: none;
     }
-    to {
-        transform: rotate(360deg);
+
+    #data-download-popup .popup-cta {
+        cursor: pointer;
     }
 }
 

@@ -81,7 +81,7 @@ function setupPWAPopup() {
     let install_text = ""
     if(['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform)) {
         // iOS + not Safari
-        install_text = "[In Safari] Share > Add to Home Screen"
+        install_text = "[In Safari] Share - Add to Home Screen"
     }
     else if (ua.match(/samsungbrowser/i)) {
         // Fkin Samsung Internet
@@ -89,19 +89,19 @@ function setupPWAPopup() {
     }
     else if(ua.match(/chrome|chromium|crios/i)) {
         // Chrome
-        install_text = "Options > Install App"
+        install_text = "Options (⋮) - Install App"
     }
     else if(ua.match(/firefox|fxios/i)) {
         // Firefox
-        install_text = "Options > Install App"
+        install_text = "Options (⋮) - Install App"
     }
     else if(ua.match(/opr\//i)) {
         // Opera
-        install_text = "IDK figure it out, who tf uses Opera"
+        install_text = "It's 2022. Stop using Opera."
     }
     else if(ua.match(/edg/i)) {
         // Edge
-        install_text = "Options > Install App"
+        install_text = "Options (⋮) - Install App"
     }
     else {
         // Unknown / Unsupported Browser
@@ -166,7 +166,6 @@ async function handleDownloadingYears() {
     // Show the download component if there are some years in YEARS_WITH_SIZE_GZIPPED that aren't in years_to_be_downloaded
     if(years_to_be_downloaded.length != Object.keys(YEARS_WITH_SIZE_GZIPPED).length) {
         const not_downloaded_years = Object.keys(YEARS_WITH_SIZE_GZIPPED).filter(year => !years_to_be_downloaded.includes(year))
-        const size_to_download = summation(not_downloaded_years, year => YEARS_WITH_SIZE_GZIPPED[year])
 
         querySelectorAll(".filter-toggle[field='year']").forEach(toggle => {
             if(not_downloaded_years.includes(toggle.getAttribute("value"))) {
@@ -175,22 +174,15 @@ async function handleDownloadingYears() {
         })
         
         document.querySelector(".filter-component[value='year']").insertAdjacentHTML("afterend", `
-        <div id="data-download-popup" class="popup-component">
-            <div class="popup__text">
-                <header>More Data <span>(${size_to_download.toFixed(1)}Kb)</span></header>
-                Click to download data for ${not_downloaded_years.map(year => `<b>${year}</b>`).join(", ")}
+        <div class="popup-component" id="data-download-popup">
+            <div class="popup-header">// [PROMPT] DATA</div>
+            <div class="popup-divider"><div class="popup-divider__main"></div></div>
+            <div class="popup-title">More People</div>
+            <div class="popup-description">
+                Download data for batches ${not_downloaded_years.map(year => `<b>${year}</b>`).join(", ")}
             </div>
-            <div id="data-download-cta" class="popup__cta data-download-ready">
-                <button id="data-download-button" class="popup__button single-image-button">
-                    ${document.querySelector("#template-icon-download-svg").innerHTML}
-                </button>
-                <button id="data-loading-button" class="popup__button single-image-button">
-                    ${document.querySelector("#template-icon-loading-svg").innerHTML}
-                </button>
-                <button id="data-loaded-button" class="popup__button single-image-button">
-                    ${document.querySelector("#template-icon-loaded-svg").innerHTML}
-                </button>
-            </div>
+            <div class="popup-cta">Download</div>
+            <div class="popup-divider"><div class="popup-divider__main"></div></div>
         </div>
         `)
 
@@ -206,31 +198,29 @@ async function handleDownloadingYears() {
 }
 
 function attachDownloadYearsOnclick(not_downloaded_years) {
-    document.querySelector("#data-download-button").onclick = async function(event) {
+    document.querySelector("#data-download-popup .popup-cta").onclick = async function(event) {
         // Fetch all files
         const load_promise = load_years(...not_downloaded_years)
 
-        // Show spinner and change text
-        this.parentElement.classList.add("data-loading")
-        document.querySelector("#data-download-popup .popup__text").innerHTML = `
-        <header>Downloading...</header>
-        This may take a while depending on your internet connection
-        `
+        // Change text
+        this.innerText = "Downloading..."
         
         // Wait till the files are downloaded
         await load_promise
 
-        // Show loaded icon and change text
-        this.parentElement.classList.add("data-loaded")
-        document.querySelector("#data-download-popup .popup__text").innerHTML = `
-        <header>Data Downloaded</header>
-        Click here to refresh the app and view the downloaded years
-        `
+        // Change text
+        this.innerText = "Done - Press to reload"
 
-        document.querySelector("#data-loaded-button").onclick = event => {
-            location.reload()
-        }
+        this.onclick = _ => location.reload()
     }
+}
+
+function calculatePopupSizes() {
+    querySelectorAll(".popup-component").forEach(popup => {
+        if(popup.classList.contains("popup--height-set")) return
+        popup.style.setProperty("--popup-height", `${popup.clientHeight}px`)
+        popup.classList.add("popup--height-set")
+    })
 }
 
 function setup_close_settings_tab() {
@@ -243,6 +233,7 @@ function setup_close_settings_tab() {
 function setup_open_settings_tab() {
     document.querySelector("#open-settings-tab").onclick = event => {
         vibrate(100)
+        calculatePopupSizes()
         document.querySelector(".settings-tab").classList.remove("hidden")
     }
 }
