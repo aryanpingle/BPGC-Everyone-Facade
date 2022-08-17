@@ -107,9 +107,9 @@ a#skip-to-main > span {
 #pwa-install-popup { --popup-hue: 195; }
 #data-download-popup { --popup-hue: 0; }
 
-.settings-tab:not(.hidden) .popup-component {
+.popup-component.popup--shown {
     height: 0;
-    animation: show-popup 125ms linear forwards 250ms;
+    animation: show-popup 250ms linear forwards 250ms;
 }
 
 @keyframes show-popup {
@@ -224,7 +224,7 @@ a#skip-to-main > span {
     --filter-hsl: hsl(var(--filter-hue), 100%, 75%);
 
     position: relative;
-    margin: 1em 0;
+    margin: 0.5em 0;
     padding: 1em 1rem;
     background-color: hsl(var(--filter-hue), 100%, 3%);
 }

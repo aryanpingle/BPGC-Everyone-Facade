@@ -215,11 +215,11 @@ function attachDownloadYearsOnclick(not_downloaded_years) {
     }
 }
 
-function calculatePopupSizes() {
+function animatePopups() {
     querySelectorAll(".popup-component").forEach(popup => {
-        if(popup.classList.contains("popup--height-set")) return
+        if(popup.classList.contains("popup--shown")) return
         popup.style.setProperty("--popup-height", `${popup.clientHeight}px`)
-        popup.classList.add("popup--height-set")
+        popup.classList.add("popup--shown")
     })
 }
 
@@ -233,7 +233,7 @@ function setup_close_settings_tab() {
 function setup_open_settings_tab() {
     document.querySelector("#open-settings-tab").onclick = event => {
         vibrate(100)
-        calculatePopupSizes()
+        animatePopups()
         document.querySelector(".settings-tab").classList.remove("hidden")
     }
 }
