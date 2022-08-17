@@ -1,47 +1,52 @@
 .main-tab__header {
     position: relative;
-    padding: 0 0.5rem;
+    margin: 0 10px;
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
-    font-size: 3.5em;
+    font-size: 3em;
     font-weight: 900;
-    width: 100%;
+    width: auto;
     flex: 0 0 auto;
-    text-transform: uppercase;
     display: flex;
-    align-items: center;
+    text-transform: uppercase;
+    --searchbar-hue: 200;
+
+    overflow: hidden;
 }
 
 @media (min-width: 1024px) {
     .main-tab__header {
         font-size: 3em;
-        padding: 0;
-        margin-top: 1rem;
     }
 }
 
 .search-bar {
-    border-radius: 10px;
+    flex: 1 0 0;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    background-color: #121212;
-    transition: background-color 100ms ease;
-    padding: 0 0.2em;
+    transition: filter 100ms ease;
+    background-color: hsla(var(--searchbar-hue), 50%, 60%, 10%);
 }
 
 .search-bar:focus-within {
-    background-color: #181818;
+    filter: saturate(1.5);
 }
 
 .search-or-clear-rel {
+    opacity: 0.75;
     position: relative;
     flex: 0 0 auto;
-    opacity: 0.33;
-    font-size: 0.5em;
     width: 1em;
     height: 1em;
+}
+
+.search-or-clear-rel path {
+    stroke: #ccc;
+    transform-origin: center center;
+    transform: scale(0.5);
 }
 
 .search-bar-search-icon-wrapper, .search-bar-clear-icon-wrapper {
@@ -67,7 +72,6 @@
 }
 
 .input-container {
-    margin: 0 0.25em;
     flex: 1 0 0;
     display: flex;
     justify-content: center;
@@ -92,18 +96,21 @@ input {
 }
 
 input::placeholder {
-    color: #ccc;
-    opacity: 0.33;
+    color: inherit;
+    opacity: 0.5;
 }
 
 #open-settings-tab {
-    font-size: 0.5em;
-    flex: 0 0 auto;
+    margin-left: 10px;
+    box-sizing: content-box;
+    font-size: 1em;
+    background-color: hsla(var(--searchbar-hue), 50%, 60%, 10%);
 }
 
 #open-settings-tab path {
+    transform-origin: center center;
+    transform: scale(0.5);
     fill: #ccc;
-    opacity: 0.33;
 }
 
 /* Taskbar */
