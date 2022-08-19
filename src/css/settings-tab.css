@@ -64,11 +64,9 @@ a#skip-to-main::before {
     left: 0;
     width: 100%;
     height: 100%;
-    /* backdrop-filter: blur(10px); */
 }
 
 a#skip-to-main > span {
-    /* background-color: red; */
     padding: 2em;
     border: 5px dashed white;
     font-size: 1.5em;
@@ -95,13 +93,11 @@ a#skip-to-main > span {
 .popup-component {
     --popup-height: 100px;
     margin: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    gap: 2px;
     overflow: hidden;
     opacity: 0;
     height: auto;
-    background-color: hsl(var(--popup-hue), 100%, 3%);
 }
 
 #pwa-install-popup { --popup-hue: 195; }
@@ -135,27 +131,48 @@ a#skip-to-main > span {
     background-color: black;
 }
 
+.popup-contents {
+    position: relative;
+    padding: 0.25em;
+    background-color: hsl(var(--popup-hue), 100%, 5%);
+
+    display: grid;
+    justify-items: center;
+}
+
 .popup-divider {
-    margin: 4px 0;
-    height: 2px;
+    position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 1px;
+    height: 1px;
+    background-color: hsl(var(--popup-hue), 100%, 10%);
 }
+
+.popup-divider.popup-divider--horizontal {
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+}
+
+.popup-divider.popup-divider--vertical {
+    top: 0;
+    height: 100%;
+    flex-direction: column;
+}
+
+.popup-divider.popup-divider--top { top: 0; }
+.popup-divider.popup-divider--bottom { bottom: 0; }
+.popup-divider.popup-divider--left { left: 0; }
+.popup-divider.popup-divider--right { right: 0; }
 
 .popup-divider::before, .popup-divider::after {
     content: '';
+    flex: 0 0 8%;
     height: 100%;
-    flex: 0 0 auto;
-    width: 10%;
+    width: 100%;
     background-color: hsl(var(--popup-hue), 100%, 75%);
-}
-
-.popup-divider__main {
-    margin: 0 5px;
-    height: 100%;
-    flex: 1 0 0;
-    background-color: hsl(var(--popup-hue), 100%, 10%);
 }
 
 .popup-title {
@@ -184,7 +201,7 @@ a#skip-to-main > span {
     margin: 0.25em 0;
     padding: 0.5em 0.25em;
     user-select: none;
-    width: 92%;
+    width: 90%;
     font-weight: 500;
     font-size: 1em;
     background-color: hsla(var(--popup-hue), 100%, 75%, 75%);

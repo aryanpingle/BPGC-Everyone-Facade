@@ -176,13 +176,17 @@ async function handleDownloadingYears() {
         document.querySelector(".filter-component[value='year']").insertAdjacentHTML("afterend", `
         <div class="popup-component" id="data-download-popup">
             <div class="popup-header">// [PROMPT] DATA</div>
-            <div class="popup-divider"><div class="popup-divider__main"></div></div>
-            <div class="popup-title">More People</div>
-            <div class="popup-description">
-                Download data for batches ${not_downloaded_years.map(year => `<b>${year}</b>`).join(", ")}
+            <div class="popup-contents">
+                <div class="popup-divider popup-divider--horizontal popup-divider--top"></div>
+                <div class="popup-divider popup-divider--horizontal popup-divider--bottom"></div>
+                <div class="popup-divider popup-divider--vertical popup-divider--left"></div>
+                <div class="popup-divider popup-divider--vertical popup-divider--right"></div>
+                <div class="popup-title">More People</div>
+                <div class="popup-description">
+                    Download data for batches ${not_downloaded_years.map(year => `<b>${year}</b>`).join(", ")}
+                </div>
+                <div class="popup-cta">Download</div>
             </div>
-            <div class="popup-cta">Download</div>
-            <div class="popup-divider"><div class="popup-divider__main"></div></div>
         </div>
         `)
 
