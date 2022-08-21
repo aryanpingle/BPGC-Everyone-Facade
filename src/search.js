@@ -130,17 +130,9 @@ async function handleDownloadingYears() {
         console.log("Cache API not supported")
     }
 
-    const YEARS_WITH_SIZE_GZIPPED = {
-        "2015": 8.0,
-        "2016": 8.1,
-        "2017": 11.6,
-        "2018": 14.3,
-        "2019": 15.2,
-        "2020": 14.8,
-        "2021": 13.7
-    }
-    
+    const ALL_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021"]
     const VERY_IMPORTANT_YEARS = ["2019", "2020", "2021"]
+    
     let years_to_be_downloaded = []
     const localstorage_years = localStorage.getItem("downloaded-years")
     if(localstorage_years == null) {
@@ -163,9 +155,9 @@ async function handleDownloadingYears() {
 
     const load_promise = load_years(...years_to_be_downloaded)
 
-    // Show the download component if there are some years in YEARS_WITH_SIZE_GZIPPED that aren't in years_to_be_downloaded
-    if(years_to_be_downloaded.length != Object.keys(YEARS_WITH_SIZE_GZIPPED).length) {
-        const not_downloaded_years = Object.keys(YEARS_WITH_SIZE_GZIPPED).filter(year => !years_to_be_downloaded.includes(year))
+    // Show the download component if there are some years in ALL_YEARS that aren't in years_to_be_downloaded
+    if(years_to_be_downloaded.length != ALL_YEARS.length) {
+        const not_downloaded_years = ALL_YEARS.filter(year => !years_to_be_downloaded.includes(year))
 
         querySelectorAll(".filter-toggle[field='year']").forEach(toggle => {
             if(not_downloaded_years.includes(toggle.getAttribute("value"))) {
