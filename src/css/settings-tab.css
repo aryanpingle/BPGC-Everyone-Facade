@@ -133,7 +133,7 @@ a#skip-to-main > span {
 
 .popup-contents {
     position: relative;
-    padding: 0.25em;
+    padding: 0.5em;
     background-color: hsl(var(--popup-hue), 100%, 5%);
 
     display: grid;
@@ -176,7 +176,7 @@ a#skip-to-main > span {
 }
 
 .popup-title {
-    margin: 0.25em 0;
+    margin-bottom: 0.25em;
     font-size: 1.5em;
     text-align: center;
     color: hsl(var(--popup-hue), 100%, 75%);

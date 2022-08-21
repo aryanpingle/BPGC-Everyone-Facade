@@ -27,20 +27,18 @@
     padding: 2em;
     height: 100%;
 
-    background-color: #242424;
+    background-color: #121212;
     
-    border-radius: 10px;
     overflow: hidden;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
 }
 
 @media (min-width: 1024px) {
     .feature-component {
-        /* flex: 0 0 30ch; */
+        cursor: pointer;
     }
 }
 
@@ -87,12 +85,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 
 .feature-title {
     margin: 0.25em 0;
-    /* color: var(--feature-accent); */
     font-size: 1.5em;
     font-weight: 700;
     text-align: center;
