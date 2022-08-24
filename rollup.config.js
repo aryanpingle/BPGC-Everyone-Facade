@@ -8,6 +8,7 @@ import injectionPlugin from './utils/plugin-injections';
 import copy from 'rollup-plugin-copy';
 import { EVERYONE_FIELDS, FILTERS, IS_ADMIN } from "./meta.json";
 import handle_css from './utils/plugin-minify-css';
+import createVersionFile from './utils/create-version-file';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -94,6 +95,9 @@ export default [
 					{ src: 'src/everyone/', dest: 'public/' },
 				]
 			}),
+
+			// Create file containing version number
+			createVersionFile(APP_VERSION),
 			
 			resolve({ browser: true, }),
 
