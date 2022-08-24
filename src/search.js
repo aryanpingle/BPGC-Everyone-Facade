@@ -4,6 +4,7 @@ import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
+import APP_VERSION from "inject:APP_VERSION"
 
 let filtered = []
 let results = []
@@ -17,6 +18,9 @@ async function setup() {
     // CAVEAT
     // ------
     // The first two calls result in a promise, so everything after their first await is executed after setup() is finished running
+
+    // BEFORE BEFORE BEFORE ANYTHING, async'ly check if an update is available (ignore patch)
+    checkForUpdate()
 
     // BEFORE BEFORE ANYTHING, FETCH THOSE DAMN FILES
     handleDownloadingYears()
@@ -74,6 +78,31 @@ async function setup() {
         document.querySelector("#sort-by-relevance").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
     }, { passive: true })
+}
+
+async function checkForUpdate() {
+    let fetched_version = await fetch("version.txt").then(data => data.text())
+    // Exit if the network fails
+    if(fetched_version == null || fetched_version == undefined) {
+        print("Could not fetch latest version")
+        return
+    }
+
+    // Print fetched and current versions for posterity
+    console.log(`Current version: ${APP_VERSION}\nFetched version: ${fetched_version}`)
+
+    // Remove the patch level from fetched and current versions
+    fetched_version = fetched_version.substring(0, fetched_version.lastIndexOf("."))
+    let current_version = APP_VERSION.substring(0, APP_VERSION.lastIndexOf("."))
+
+    // If the current version is the latest, exit
+    if(fetched_version == current_version) {
+        print("No updates available")
+        return
+    }
+
+    // At this point, we know that the latest version is ahead of the current version
+    console.log("%cUpdate available", "color: greenyellow; background-color: black; font-weight: 900;")
 }
 
 function setupPWAPopup() {
@@ -138,13 +167,11 @@ async function handleDownloadingYears() {
     if(localstorage_years == null) {
         // Either first time on site / cache has been cleared
         // Download the very important years
-        print("Found no years in localStorage")
         years_to_be_downloaded = VERY_IMPORTANT_YEARS
     }
     else {
         // Some years have already been downloaded
         // Download the union of these files + the very important ones
-        print("Found some years in localStorage")
         years_to_be_downloaded = Array.from(new Set([
             ...VERY_IMPORTANT_YEARS,
             ...JSON.parse(localstorage_years)
