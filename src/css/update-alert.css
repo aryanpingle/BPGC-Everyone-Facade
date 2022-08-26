@@ -1,0 +1,120 @@
+.update-alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 90%);
+    opacity: 0;
+
+    --hue: 195;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    user-select: none;
+    pointer-events: none;
+    
+    transition: opacity 250ms ease 250ms;
+}
+
+.preloader.loaded + .page > .update-alert.shown {
+    user-select: auto;
+    pointer-events: auto;
+
+    opacity: 1;
+}
+
+.update-alert-contents {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: 3rem;
+    padding: 0.5em 1em;
+    padding-top: 1em;
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(var(--hue), 75%, 10%);
+
+    border: 2px solid hsl(var(--hue), 100%, 25%);
+    border-right: none;
+    border-left: none;
+}
+
+.update-alert-icon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 3em;
+    width: 3em;
+
+    --accent: hsl(var(--hue), 100%, 50%);
+}
+
+.update-alert-icon path:first-of-type {
+    fill: black;
+}
+
+.update-alert-icon svg *[fill] {
+    fill: var(--accent);
+}
+
+.update-alert-icon svg *[stroke] {
+    stroke: var(--accent);
+}
+
+.update-alert-title {
+    margin: 0.5em 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2em;
+    font-weight: 100;
+    color: hsl(var(--hue), 75%, 50%);
+}
+
+.update-alert-description {
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-weight: 100;
+}
+
+.update-alert-cta {
+    margin: 0.75em 0;
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 1em;
+}
+
+.update-alert-cta > button {
+    width: 100%;
+    font-size: 1em;
+    padding: 0.5em 0.25em;
+    text-transform: uppercase;
+    font-weight: 300;
+    background-color: rgba(255, 255, 255, 10%);
+    color: rgba(255, 255, 255, 75%);
+    max-width: 400px;
+
+    justify-self: right;
+}
+
+@media (min-width: 1024px) {
+    .update-alert-cta > button {
+        cursor: pointer;
+    }
+}
+
+#update-alert--update {
+    background-color: hsla(var(--hue), 100%, 50%, 20%);
+    border: 1px solid hsla(var(--hue), 100%, 50%, 50%);
+    color: white;
+
+    justify-self: left;
+}

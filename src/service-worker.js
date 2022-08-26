@@ -71,7 +71,7 @@ async function get_request(request_event) {
     const request = request_event.request
     const url = request.url
 
-    if(url.includes("gtag") || url.includes("analytic") || url.includes("screenshots/")) {
+    if(url.includes("gtag") || url.includes("analytic") || url.includes("screenshots/") || url.includes("version.txt")) {
         return fetch(request)
     }
     
