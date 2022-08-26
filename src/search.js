@@ -19,9 +19,6 @@ async function setup() {
     // ------
     // The first two calls result in a promise, so everything after their first await is executed after setup() is finished running
 
-    // BEFORE BEFORE BEFORE ANYTHING, async'ly check if an update is available (ignore patch)
-    checkForUpdate()
-
     // BEFORE BEFORE ANYTHING, FETCH THOSE DAMN FILES
     handleDownloadingYears()
     // BEFORE ANYTHING, make a fetch for the font
@@ -81,7 +78,8 @@ async function setup() {
 }
 
 async function checkForUpdate() {
-    let fetched_version = await fetch("version.txt").then(data => data.text())
+    let fetched_version = await fetch("version.txt").then(data => data.text()).catch(err => null)
+    
     // Exit if the network fails
     if(fetched_version == null || fetched_version == undefined) {
         print("Could not fetch latest version")
@@ -102,7 +100,18 @@ async function checkForUpdate() {
     }
 
     // At this point, we know that the latest version is ahead of the current version
-    console.log("%cUpdate available", "color: greenyellow; background-color: black; font-weight: 900;")
+    print("%cUpdate available", "color: greenyellow; background-color: black; font-weight: 900;")
+
+    // Show the Update Alert
+    document.querySelector(".update-alert").classList.add("shown")
+    // Setup the Ignore Button
+    document.querySelector("#update-alert--ignore").onclick = event => {
+        document.querySelector(".update-alert").classList.remove("shown")
+    }
+    // Setup the Update Button
+    document.querySelector("#update-alert--update").onclick = event => {
+        location.reload()
+    }
 }
 
 function setupPWAPopup() {
@@ -216,6 +225,9 @@ async function handleDownloadingYears() {
 
     document.querySelector(".page").style.display = "flex"
     document.querySelector(".preloader").classList.add("loaded")
+    
+    // Now that the preloader is shown, check if there's an update available
+    checkForUpdate()
 
     apply_filters()
 }

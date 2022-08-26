@@ -77,7 +77,8 @@ export default [
 					"src/css/search.css",
 					"src/css/settings-tab.css",
 					"src/css/main-tab.css",
-					"src/css/search-results.css"
+					"src/css/search-results.css",
+					"src/css/update-alert.css"
 				]
 			}),
 
