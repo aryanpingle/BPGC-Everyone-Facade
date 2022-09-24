@@ -168,8 +168,8 @@ async function handleDownloadingYears() {
         console.log("Cache API not supported")
     }
 
-    const ALL_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021"]
-    const VERY_IMPORTANT_YEARS = ["2019", "2020", "2021"]
+    const ALL_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+    const VERY_IMPORTANT_YEARS = ["2019", "2020", "2021", "2022"]
     
     let years_to_be_downloaded = []
     const localstorage_years = localStorage.getItem("downloaded-years")
