@@ -9,6 +9,7 @@ import copy from 'rollup-plugin-copy';
 import { EVERYONE_FIELDS, FILTERS, IS_ADMIN } from "./meta.json";
 import handle_css from './utils/plugin-minify-css';
 import createVersionFile from './utils/create-version-file';
+import { readFileSync } from 'fs';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -20,7 +21,8 @@ const GLOBAL_DATA = {
 	"EVERYONE_FIELDS": EVERYONE_FIELDS,
 	"FILTERS": FILTERS,
 	"IS_ADMIN": IS_ADMIN,
-	"IS_DEV": !production
+	"IS_DEV": !production,
+	"CURRENT_CHANGELOG": JSON.parse(readFileSync("./changelog.json")),
 }
 
 function serve() {
@@ -92,8 +94,8 @@ export default [
 				targets: [
 					{ src: 'src/static/', dest: 'public/' },
 					{ src: 'src/root/*', dest: 'public/' },
-					{ src: 'src/everyone.json', dest: 'public/' },
 					{ src: 'src/everyone/', dest: 'public/' },
+					{ src: 'changelog.json', dest: 'public/' },
 				]
 			}),
 

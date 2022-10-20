@@ -1,10 +1,11 @@
 "use strict"
 
-import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad, summation } from "./js/helpers";
+import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad } from "./js/helpers";
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
 import APP_VERSION from "inject:APP_VERSION"
+import CURRENT_CHANGELOG from "inject:CURRENT_CHANGELOG"
 
 let filtered = []
 let results = []
@@ -77,7 +78,47 @@ async function setup() {
     }, { passive: true })
 }
 
-async function checkForUpdate() {
+async function checkChangelog() {
+    const years_to_be_downloaded = getYearsToBeDownloaded()
+    let FETCHED_CHANGELOG = await fetch("./changelog.json").then(data => data.json()).catch(err => null)
+
+    // Exit if the network fails
+    if(FETCHED_CHANGELOG === null || FETCHED_CHANGELOG === undefined) {
+        checkForUpdates()
+        return
+    }
+
+    // Compare with CURRENT_CHANGELOG
+    let modified_data_years = []
+    for(let [year, hash] of Object.entries(FETCHED_CHANGELOG)) {
+        if(hash != CURRENT_CHANGELOG[year]) {
+            modified_data_years.push(year)
+        }
+    }
+
+    modified_data_years = modified_data_years.filter(year => years_to_be_downloaded.includes(year))
+
+    // If there are no changes available, exit
+    if(modified_data_years.length == 0) {
+        checkForUpdates()
+        return
+    }
+
+    // At this point, there are definitely changes to be downloaded
+    
+    const promise_array = modified_data_years.map(year => {
+        return fetch(`./everyone/${year}.json`, {
+            method: "POST"
+        })
+    })
+
+    // await download of all the files
+    await Promise.all(promise_array)
+    
+    showUpdatePrompt()
+}
+
+async function checkForUpdates() {
     let fetched_version = await fetch("version.txt").then(data => data.text()).catch(err => null)
     
     // Exit if the network fails
@@ -87,7 +128,7 @@ async function checkForUpdate() {
     }
 
     // Print fetched and current versions for posterity
-    console.log(`Current version: ${APP_VERSION}\nFetched version: ${fetched_version}`)
+    print(`Current version: ${APP_VERSION}\nFetched version: ${fetched_version}`)
 
     // Remove the patch level from fetched and current versions
     fetched_version = fetched_version.substring(0, fetched_version.lastIndexOf("."))
@@ -102,6 +143,10 @@ async function checkForUpdate() {
     // At this point, we know that the latest version is ahead of the current version
     print("%cUpdate available", "color: greenyellow; background-color: black; font-weight: 900;")
 
+    showUpdatePrompt()
+}
+
+function showUpdatePrompt() {
     // Show the Update Alert
     document.querySelector(".update-alert").classList.add("shown")
     // Setup the Ignore Button
@@ -148,27 +193,12 @@ function setupPWAPopup() {
     document.querySelector("#pwa-install-guide").innerText = install_text
 }
 
-async function handleDownloadingYears() {
-    /**
-     * Here's the game plan:
-     * 1.   See how many everyone-files are in cache
-     *      Possibly using service worker postmessage in case sw is updating? IDK
-     * 2. 
-     *      a. If there are non-zero cached files, fetch them all and load
-     *      b. If there aren't any such files, await fetch the latest two
-     *         In the background, fetch all the other files (DON'T .json() THEM)
-     */
+/**
+ * Returns an array of String elements, which are the years to be downloaded
+ * @returns {String[]} A list of years to be downloaded
+ */
 
-    // Wait till the service worker is ready
-    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
-        await navigator.serviceWorker.ready
-    }
-
-    if(!("caches" in window)) {
-        console.log("Cache API not supported")
-    }
-
-    const ALL_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+function getYearsToBeDownloaded() {
     const VERY_IMPORTANT_YEARS = ["2019", "2020", "2021", "2022"]
     
     let years_to_be_downloaded = []
@@ -186,6 +216,33 @@ async function handleDownloadingYears() {
             ...JSON.parse(localstorage_years)
         ]))
     }
+
+    return years_to_be_downloaded
+}
+
+async function handleDownloadingYears() {
+    /**
+     * Here's the game plan:
+     * 1.   See how many everyone-files are in cache
+     *      Possibly using service worker postmessage in case sw is updating? IDK
+     * 2. 
+     *      a. If there are non-zero cached files, fetch them all and load
+     *      b. If there aren't any such files, await fetch the latest two
+     *         In the background, fetch all the other files (DON'T .json() THEM)
+     */
+
+    // Wait till the service worker is ready
+    if("serviceWorker" in navigator && "ready" in navigator.serviceWorker) {
+        await navigator.serviceWorker.ready
+    }
+
+    if(!("caches" in window)) {
+        print("Cache API not supported")
+    }
+
+    const ALL_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+    
+    let years_to_be_downloaded = getYearsToBeDownloaded()
     
     print(`Years to be downloaded: ${years_to_be_downloaded.join(", ")}`)
 
@@ -227,7 +284,7 @@ async function handleDownloadingYears() {
     document.querySelector(".preloader").classList.add("loaded")
     
     // Now that the preloader is shown, check if there's an update available
-    checkForUpdate()
+    checkChangelog()
 
     apply_filters()
 }

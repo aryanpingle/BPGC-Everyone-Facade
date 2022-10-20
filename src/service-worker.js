@@ -9,6 +9,7 @@ import APP_VERSION from "inject:APP_VERSION"
 
 // Document Cache is a cache of document files - html, js, css, etc
 const CACHE_NAME = `CACHE-v${APP_VERSION.substring(0, APP_VERSION.lastIndexOf("."))}`
+const EVERYONE_CACHE_NAME = `EVERYONE-CACHE`
 
 // Custom extensions
 String.prototype.endsWithAny = function (...ends) {
@@ -41,7 +42,10 @@ self.addEventListener("activate", event => {
 async function delete_obsolete_caches() {
     let cache_names = await caches.keys()
     await Promise.all(cache_names.map(cache_name => {
-        if(cache_name != CACHE_NAME) {
+        // IF this is not the cache associated with the current version
+        // and not the cache holding the 'everyone data'
+        // THEN delete it
+        if(cache_name != CACHE_NAME && (cache_name != EVERYONE_CACHE_NAME)) {
             log(`Deleting obsolete cache: '${cache_name}'`, "rgb(255, 128, 128)")
             return caches.delete(cache_name)
         }
@@ -71,8 +75,13 @@ async function get_request(request_event) {
     const request = request_event.request
     const url = request.url
 
-    if(url.includes("gtag") || url.includes("analytic") || url.includes("screenshots/") || url.includes("version.txt")) {
+    // For some files, there should be no caching
+    if(url.containsAny("gtag", "analytic", "screenshots/", "version.txt", "changelog.json", "livereload")) {
         return fetch(request)
+    }
+
+    if(url.includes("/everyone/")) {
+        return handleEveryoneDataRequest(request)
     }
     
     const cache = await caches.open(CACHE_NAME)
@@ -111,6 +120,28 @@ async function get_request(request_event) {
         cache_with_headers(cache, request, data)
         return data
     })
+}
+
+async function handleEveryoneDataRequest(request) {
+    const EVERYONE_CACHE = await caches.open(EVERYONE_CACHE_NAME)
+    const requestMethod = request.method
+
+    const cache_match = await EVERYONE_CACHE.match(request)
+
+    // 3 conditions for doing a network request:
+    // 1. If the request is a POST request
+    // 2. If there is nothing in the cache
+    // 3. If a server error is cached instead of the actual data
+    if(requestMethod == "POST" || !cache_match || cache_match.status == 400) {
+        // Network Request + Cache
+        return await fetch(request.url).then(response => {
+            const response_clone = response.clone()
+            EVERYONE_CACHE.put(new Request(request.url), response_clone)
+            return response
+        })
+    }
+
+    return cache_match
 }
 
 /**
