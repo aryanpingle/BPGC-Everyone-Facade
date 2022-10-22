@@ -69,18 +69,18 @@ export default [
 					"src/css/basic.css",
 					"src/css/presets.css",
 					"src/css/custom.css",
-					"src/css/index-main.css",
-					"src/css/index-features.css",
+					"src/css/index/main.css",
+					"src/css/index/features.css",
 				],
 				"search.css": [
 					"src/css/basic.css",
 					"src/css/presets.css",
 					"src/css/custom.css",
-					"src/css/search.css",
-					"src/css/settings-tab.css",
-					"src/css/main-tab.css",
-					"src/css/search-results.css",
-					"src/css/update-alert.css"
+					"src/css/search/search.css",
+					"src/css/search/settings-tab.css",
+					"src/css/search/main-tab.css",
+					"src/css/search/search-results.css",
+					"src/css/search/update-alert.css"
 				]
 			}),
 
