@@ -546,10 +546,8 @@ function sortResults(force_sorting) {
 }
 
 function displayResults(preserve_count) {
-    if(!IS_ADMIN) {
-        // Show the number of results
-        document.querySelector("#result-count").innerText = `${formattedNumber(results.length)}`
-    }
+    // Show the number of results
+    document.querySelector("#result-count").innerText = `${formattedNumber(results.length)}`
     
     // Get the HTML of the results
     const CURRENT_RESULT_COUNT = preserve_count ? get_current_result_count() : MAX_RESULT_COUNT

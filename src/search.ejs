@@ -93,20 +93,22 @@
 
             <!-- Main Tab Taskbar -->
             <div class="taskbar">
-                <% if (!IS_ADMIN) { %>
+                <div class="taskbar__item">
                     <div id="result-count">-</div>
-                <% } %>
-                <div class="sort-component">
-                    <button class="sort-button selected" id="sort-by-relevance" value="relevant">Default</button>
-                    <button class="sort-button" id="sort-by-room" value="room">Room</button>
-                    <% if (!IS_ADMIN) { %>
-                        <button class="sort-button" id="sort-by-oldest" value="oldest">Batch +</button>
-                    <% } %>
-                    <button class="sort-button" id="sort-by-youngest" value="youngest">Batch -</button>
-                    <% if (IS_ADMIN) { %>
-                        <button class="sort-button" id="sort-by-bday" value="bday">B'day</button>
-                        <button class="sort-button" id="sort-by-cgpa" value="cgpa">CGPA</button>
-                    <% } %>
+                </div>
+                <div class="taskbar__item">
+                    <div class="sort-component">
+                        <button class="sort-button selected" id="sort-by-relevance" value="relevant">Default</button>
+                        <button class="sort-button" id="sort-by-room" value="room">Room</button>
+                        <% if (!IS_ADMIN) { %>
+                            <button class="sort-button" id="sort-by-oldest" value="oldest">Batch +</button>
+                        <% } %>
+                        <button class="sort-button" id="sort-by-youngest" value="youngest">Batch -</button>
+                        <% if (IS_ADMIN) { %>
+                            <button class="sort-button" id="sort-by-bday" value="bday">B'day</button>
+                            <button class="sort-button" id="sort-by-cgpa" value="cgpa">CGPA</button>
+                        <% } %>
+                    </div>
                 </div>
             </div>
 
