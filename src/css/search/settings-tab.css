@@ -253,22 +253,6 @@ a#skip-to-main > span {
 .filter-component[value="degree_h"] { --filter-hue: var(--hue-degree-h); }
 .filter-component[value="gender"] { --filter-hue: 300; }
 
-.filter-component::before {
-    --thickness: 0.125em; 
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 2 * var(--thickness));
-    height: calc(100% - 2 * var(--thickness));
-    background-color: #121212;
-
-    -webkit-clip-path: inherit;
-    clip-path: inherit;
-    z-index: -1;
-}
-
 .filter-component > header {
     position: relative;
     font-size: 2em;
