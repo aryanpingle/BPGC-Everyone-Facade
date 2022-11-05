@@ -9,8 +9,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    color: whitesmoke;
 }
 
 .settings-tab__header span {
@@ -128,7 +126,6 @@ a#skip-to-main > span {
     color: hsl(var(--popup-hue), 100%, 75%);
     font-size: 100;
     font-size: 0.5em;
-    background-color: black;
 }
 
 .popup-contents {
