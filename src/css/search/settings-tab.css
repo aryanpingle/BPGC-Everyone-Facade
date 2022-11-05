@@ -271,6 +271,7 @@ a#skip-to-main > span {
     transform: translateY(-50%);
     font-size: 0.75em;
     right: 0;
+    outline-color: var(--filter-hsl) !important;
 }
 
 .filter-component .underscore {
@@ -291,6 +292,8 @@ a#skip-to-main > span {
     border: solid 1px hsla(var(--filter-hue), 100%, 75%, 50%);
     color: var(--filter-hsl);
     display: inline-block;
+
+    outline-color: var(--filter-hsl) !important;
 }
 
 .filter-toggle.selected {
