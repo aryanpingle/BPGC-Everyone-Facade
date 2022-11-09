@@ -9,6 +9,5 @@ export function getBundledCode(bundle, filename) {
         if(bundle[filename].type == "asset") return bundle[filename]["source"]
         return bundle[filename]["code"]
     }
-    console.log(bundle)
     return null
 }
