@@ -1,4 +1,4 @@
-.update-alert {
+#update-alert {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,7 +19,7 @@
     transition: opacity 250ms ease 250ms;
 }
 
-.preloader.loaded + .page > .update-alert.shown {
+.preloader.loaded + .page > #update-alert.shown {
     user-select: auto;
     pointer-events: auto;
 

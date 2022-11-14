@@ -148,10 +148,10 @@ async function checkForUpdates() {
 
 function showUpdatePrompt() {
     // Show the Update Alert
-    document.querySelector(".update-alert").classList.add("shown")
+    document.querySelector("#update-alert").classList.add("shown")
     // Setup the Ignore Button
     document.querySelector("#update-alert--ignore").onclick = event => {
-        document.querySelector(".update-alert").classList.remove("shown")
+        document.querySelector("#update-alert").classList.remove("shown")
     }
     // Setup the Update Button
     document.querySelector("#update-alert--update").onclick = event => {
