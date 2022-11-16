@@ -96,6 +96,7 @@ export default [
 					{ src: 'src/static/', dest: 'public/' },
 					{ src: 'src/root/*', dest: 'public/' },
 					{ src: 'src/everyone/', dest: 'public/' },
+					{ src: 'src/notifications.json', dest: 'public/' },
 					{ src: 'changelog.json', dest: 'public/' },
 				]
 			}),
