@@ -195,18 +195,11 @@
                 </div>
             </div>
         </div>
+        <div id="notification-overlay" class="page__overlay"></div>
     </div>
 
-    <!-- Hidden / Templates -->
-    
-    <div id="template-icon-download-svg" style="display: none;">
-        <%- get_svg("src/static/images/icons/download.svg") %>
-    </div>
-    <div id="template-icon-loading-svg" style="display: none;">
-        <%- get_svg("src/static/images/icons/loading.svg") %>
-    </div>
-    <div id="template-icon-loaded-svg" style="display: none;">
-        <%- get_svg("src/static/images/icons/loaded.svg") %>
+    <div style="display: none" id="template-svg">
+        <%- get_svg("src/static/images/icons/cross.svg") %>
     </div>
 
     <script>

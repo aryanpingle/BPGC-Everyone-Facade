@@ -1,10 +1,11 @@
-{
-    "50k": {
+[
+    {
+        "id": "50k",
         "title": "50K (^_^)",
         "description": "BPGC Everyone just hit 50,000 views, thank you for your support and feedback!",
         "hue": 47,
         "icon-name": "trophy.png",
         "start-date": "",
-        "end-time": "Sun Nov 20 2022 00:00:00 GMT+0530"
+        "end-time": "Mon Nov 21 2022 00:00:00 GMT+0530"
     }
-}
+]
