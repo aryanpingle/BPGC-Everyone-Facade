@@ -16,6 +16,8 @@
 
 @media (min-width: 1024px) {
     .main-tab__header {
+        margin-right: 0;
+        margin-left: 0;
         font-size: 3em;
     }
 }
