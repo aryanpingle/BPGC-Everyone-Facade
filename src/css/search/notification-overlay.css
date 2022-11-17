@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 90%);
-    /* opacity: 0; */
+    opacity: 0;
 
     user-select: none;
     pointer-events: none;
@@ -46,7 +46,7 @@
 .notification-component {
     --notification-hue: 100;
     --notification-animation-duration: 200ms;
-    --notification-animation-delay: 500ms;
+    --notification-animation-delay: 0ms;
 
     position: relative;
 
@@ -72,14 +72,20 @@
     background-color: hsl(var(--notification-hue), 75%, 50%);
     transform-origin: center center;
     transform: scaleY(0);
+}
 
-    animation-duration: var(--notification-animation-duration);
+.notification-wrapper--active .notification-background {
     animation-name: scale-up;
+    animation-duration: var(--notification-animation-duration);
     animation-fill-mode: forwards;
     animation-delay: var(--notification-animation-delay);
 }
 
 .notification-wrapper--closed .notification-background {
+    animation-name: scale-up;
+    animation-duration: var(--notification-animation-duration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--notification-animation-delay);
     animation-direction: reverse;
 }
 
@@ -138,6 +144,9 @@
     width: 100%;
     height: 100%;
 
+    user-select: none;
+    pointer-events: none;
+
     stroke-width: 1px;
 }
 
@@ -146,7 +155,7 @@
 }
 
 .notification__svg-border > path {
-    stroke: hsl(var(--notification-hue), 75%, 50%);
+    stroke: hsl(var(--notification-hue), 75%, 75%);
 }
 
 .notification__content::before, .notification__content::after {
@@ -158,7 +167,9 @@
     background-color: hsl(var(--notification-hue), 75%, 50%);
 
     z-index: 1;
+}
 
+.notification-wrapper--active .notification__content::before, .notification-wrapper--active .notification__content::after {
     animation-name: scale-up;
     animation-duration: var(--notification-animation-duration);
     animation-direction: reverse;
@@ -183,6 +194,7 @@
     font-size: 1.5em;
     margin-top: 0.5em;
     margin-right: 0.5em;
+    background-color: hsl(var(--notification-hue), 75%, 75%);
 }
 
 .notification__close button {
@@ -190,7 +202,7 @@
 }
 
 .notification__close path {
-    fill: hsl(var(--notification-hue), 75%, 50%);
+    fill: black;
 }
 
 .notification__image-container {
@@ -209,7 +221,7 @@
     width: 100%;
     padding: 0.25em;
     text-align: center;
-    background-color: hsl(var(--notification-hue), 75%, 50%);
+    background-color: hsl(var(--notification-hue), 75%, 75%);
     color: black;
     font-size: 2em;
     text-transform: uppercase;
@@ -220,4 +232,8 @@
     text-align: center;
     color: hsl(var(--notification-hue), 50%, 75%);
     line-height: 1.1;
+}
+
+.notification__description a {
+    text-decoration: underline;
 }

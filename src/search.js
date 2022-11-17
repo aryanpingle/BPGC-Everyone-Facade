@@ -175,8 +175,6 @@ function showUpdatePrompt() {
 async function handleNotifications() {
     await notifications_promise
 
-    print("Notifications: ", notifications)
-
     /*
     notifications = {
         "id": {
@@ -195,8 +193,6 @@ async function handleNotifications() {
     if(!closed_notifications) closed_notifications = "[]"
     closed_notifications = JSON.parse(closed_notifications)
 
-    print("Closed Notifications: ", closed_notifications)
-
     // Get current time
     const now = new Date()
 
@@ -212,7 +208,7 @@ async function handleNotifications() {
         return true
     })
     
-    print("Viable notifications", viable_notifications)
+    if(viable_notifications.length == 0) return
 
     // Add viable notifications to the DOM
     let notification_src = ""
@@ -226,14 +222,28 @@ async function handleNotifications() {
     querySelectorAll(".notification__close-button").forEach(button => {
         const notif_id = button.getAttribute("notification-id")
         button.onclick = event => {
+            // Get the current active wrapper
             let current_wrapper = document.querySelector(".notification-wrapper--active")
-            print("Current wrapper: ", current_wrapper)
+            // Remove the active modifier class
             current_wrapper.classList.remove("notification-wrapper--active")
+            // Add the closed modifier class
             current_wrapper.classList.add("notification-wrapper--closed")
+
+            // Add this notification id to the closed notifications list
+            {
+                let closed_notifications = localStorage.getItem("closed-notifications")
+                if(!closed_notifications) closed_notifications = []
+                else closed_notifications = JSON.parse(closed_notifications)
+
+                closed_notifications.push(notif_id)
+
+                localStorage.setItem("closed-notifications", JSON.stringify(closed_notifications))
+            }
             
             // If this one has a sibling, show it
             if(current_wrapper.previousElementSibling) {
                 current_wrapper.previousElementSibling.classList.add("notification-wrapper--active")
+                current_wrapper.previousElementSibling.focus()
                 return
             }
 
@@ -244,12 +254,16 @@ async function handleNotifications() {
 
     // Finally, show the notification overlay
     document.querySelector("#notification-overlay").classList.add("shown")
-    document.querySelector(".notification-wrapper:last-of-type").classList.add("notification-wrapper--active")
+    setTimeout(() => {
+        let first_notification = document.querySelector(".notification-wrapper:last-of-type")
+        first_notification.classList.add("notification-wrapper--active")
+        first_notification.focus()
+    }, 250);
 }
 
 function getNotificationHTML(notif) {
     return `
-    <div class="notification-wrapper" id="notification--id-${notif['id']}">
+    <div class="notification-wrapper" id="notification--id-${notif['id']}" tabindex="-1">
         <div class="notification-component" style="--notification-hue: ${notif['hue']};">
             <div class="notification-background"></div>
             <div class="notification__content">
