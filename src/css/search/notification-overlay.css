@@ -1,0 +1,241 @@
+#notification-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 90%);
+    opacity: 0;
+
+    user-select: none;
+    pointer-events: none;
+    
+    transition: opacity 250ms ease;
+}
+
+.preloader.loaded + .page > #notification-overlay.shown {
+    user-select: auto;
+    pointer-events: auto;
+
+    transition-delay: 250ms;
+
+    opacity: 1;
+}
+
+.notification-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    user-select: none;
+    pointer-events: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    outline: none !important;
+}
+
+.notification-wrapper--active {
+    user-select: auto;
+    pointer-events: auto;
+}
+
+.notification-component {
+    --notification-hue: 100;
+    --notification-animation-duration: 200ms;
+    --notification-animation-delay: 0ms;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em;
+}
+
+@media (min-width: 720px) {
+    .notification-component {
+        width: 60ch;
+    }
+}
+
+.notification-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(var(--notification-hue), 75%, 50%);
+    transform-origin: center center;
+    transform: scaleY(0);
+}
+
+.notification-wrapper--active .notification-background {
+    animation-name: scale-up;
+    animation-duration: var(--notification-animation-duration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--notification-animation-delay);
+}
+
+.notification-wrapper--closed .notification-background {
+    animation-name: scale-up;
+    animation-duration: var(--notification-animation-duration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--notification-animation-delay);
+    animation-direction: reverse;
+}
+
+@keyframes scale-up {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.notification__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+
+    background-color: hsl(var(--notification-hue), 100%, 2%);
+
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: min-content;
+    justify-items: center;
+    /* align-items: center; */
+    gap: 1em;
+
+    opacity: 0;
+}
+
+.notification-wrapper--active .notification__content {
+    animation-duration: 0s;
+    animation-name: notif-op;
+    animation-fill-mode: forwards;
+    animation-delay: calc(var(--notification-animation-duration) + var(--notification-animation-delay));
+}
+
+.notification-wrapper--closed .notification__content {
+    animation-play-state: running;
+    animation-direction: reverse;
+}
+
+@keyframes notif-op {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.notification__svg-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    user-select: none;
+    pointer-events: none;
+
+    stroke-width: 1px;
+}
+
+.notification__svg-border > rect {
+    stroke: hsl(var(--notification-hue), 75%, 10%);
+}
+
+.notification__svg-border > path {
+    stroke: hsl(var(--notification-hue), 75%, 75%);
+}
+
+.notification__content::before, .notification__content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: hsl(var(--notification-hue), 75%, 50%);
+
+    z-index: 1;
+}
+
+.notification-wrapper--active .notification__content::before, .notification-wrapper--active .notification__content::after {
+    animation-name: scale-up;
+    animation-duration: var(--notification-animation-duration);
+    animation-direction: reverse;
+    animation-fill-mode: forwards;
+    animation-delay: calc(var(--notification-animation-duration) + var(--notification-animation-delay));
+}
+
+.notification__content::before {
+    top: 0;
+    transform-origin: center top;
+}
+
+.notification__content::after {
+    bottom: 0;
+    transform-origin: center bottom;
+}
+
+.notification__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    background-color: hsl(var(--notification-hue), 75%, 75%);
+}
+
+.notification__close button {
+    outline-color: hsl(var(--notification-hue), 75%, 50%) !important;
+}
+
+.notification__close path {
+    fill: black;
+}
+
+.notification__image-container {
+    width: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification__image {
+    width: 100%;
+}
+
+.notification__title {
+    width: 100%;
+    padding: 0.25em;
+    text-align: center;
+    background-color: hsl(var(--notification-hue), 75%, 75%);
+    color: black;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+.notification__description {
+    padding: 0.25em 0;
+    text-align: center;
+    color: hsl(var(--notification-hue), 50%, 75%);
+    line-height: 1.1;
+}
+
+.notification__description a {
+    text-decoration: underline;
+}

@@ -12,6 +12,8 @@ let results = []
 let results_with_score = []
 let SORTING = "relevant"
 const MAX_RESULT_COUNT = 25
+let notifications_promise = null
+let notifications = null
 
 setup()
 
@@ -80,6 +82,13 @@ async function setup() {
 
 async function checkChangelog() {
     const years_to_be_downloaded = getYearsToBeDownloaded()
+
+    // Weird place, but fetch notifications.json
+    notifications_promise = fetch("./notifications.json").then(data => data.json()).then(data => {
+        notifications = data
+        return 1
+    })
+
     let FETCHED_CHANGELOG = await fetch("./changelog.json").then(data => data.json()).catch(err => null)
 
     // Exit if the network fails
@@ -137,6 +146,10 @@ async function checkForUpdates() {
     // If the current version is the latest, exit
     if(fetched_version == current_version) {
         print("No updates available")
+
+        // Now that we know there are no updates, handle notifications
+        handleNotifications()
+
         return
     }
 
@@ -157,6 +170,124 @@ function showUpdatePrompt() {
     document.querySelector("#update-alert--update").onclick = event => {
         location.reload()
     }
+}
+
+async function handleNotifications() {
+    await notifications_promise
+
+    /*
+    notifications = {
+        "id": {
+            "title": "",
+            "description": "",
+            "hue": 0,
+            "icon-name": "",
+            "start-time": ""
+            "end-time": ""
+        }
+    }
+    */
+
+    // Get the ids of all notifications that have been closed
+    let closed_notifications = localStorage.getItem("closed-notifications")
+    if(!closed_notifications) closed_notifications = "[]"
+    closed_notifications = JSON.parse(closed_notifications)
+
+    // Get current time
+    const now = new Date()
+
+    // Filter out invalid notifications
+    let viable_notifications = notifications.filter(notif => {
+        // Exclude closed ones
+        if(closed_notifications.includes(notif["id"])) return false
+        // Exclude expired ones
+        if(notif["end-time"] && now > new Date(notif["end-time"])) return false
+        // Exclude future ones
+        if(notif["start-time"] && now < new Date(notif["start-time"])) return false
+
+        return true
+    })
+    
+    if(viable_notifications.length == 0) return
+
+    // Add viable notifications to the DOM
+    let notification_src = ""
+    for (const notif of viable_notifications) {
+        notification_src = getNotificationHTML(notif) + notification_src
+    }
+    // Add HTML code to the DOM
+    document.querySelector("#notification-overlay").innerHTML += notification_src
+
+    // Setup the close buttons
+    querySelectorAll(".notification__close-button").forEach(button => {
+        const notif_id = button.getAttribute("notification-id")
+        button.onclick = event => {
+            // Get the current active wrapper
+            let current_wrapper = document.querySelector(".notification-wrapper--active")
+            // Remove the active modifier class
+            current_wrapper.classList.remove("notification-wrapper--active")
+            // Add the closed modifier class
+            current_wrapper.classList.add("notification-wrapper--closed")
+
+            // Add this notification id to the closed notifications list
+            {
+                let closed_notifications = localStorage.getItem("closed-notifications")
+                if(!closed_notifications) closed_notifications = []
+                else closed_notifications = JSON.parse(closed_notifications)
+
+                closed_notifications.push(notif_id)
+
+                localStorage.setItem("closed-notifications", JSON.stringify(closed_notifications))
+            }
+            
+            // If this one has a sibling, show it
+            if(current_wrapper.previousElementSibling) {
+                current_wrapper.previousElementSibling.classList.add("notification-wrapper--active")
+                current_wrapper.previousElementSibling.focus()
+                return
+            }
+
+            // Close notification overlay
+            document.querySelector("#notification-overlay").classList.remove("shown")
+        }
+    })
+
+    // Finally, show the notification overlay
+    document.querySelector("#notification-overlay").classList.add("shown")
+    setTimeout(() => {
+        let first_notification = document.querySelector(".notification-wrapper:last-of-type")
+        first_notification.classList.add("notification-wrapper--active")
+        first_notification.focus()
+    }, 250);
+}
+
+function getNotificationHTML(notif) {
+    return `
+    <div class="notification-wrapper" id="notification--id-${notif['id']}" tabindex="-1">
+        <div class="notification-component" style="--notification-hue: ${notif['hue']};">
+            <div class="notification-background"></div>
+            <div class="notification__content">
+                <svg class="notification__svg-border" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100%" height="100%" fill="none" />
+                    <path d="M 10,0 L 0,0 L 0,10" fill="none" />
+                    <path d="M 90,0 L 100,0 L 100,10" fill="none" />
+                    <path d="M 100,90 L 100,100 L 90,100" fill="none" />
+                    <path d="M 10,100 L 0,100 L 0,90" fill="none" />
+                </svg>
+                <div class="notification__close">
+                    <button class="single-image-button notification__close-button" notification-id="${notif['id']}">
+                        ${document.querySelector("#template-svg").innerHTML}
+                    </button>
+                </div>
+                <div class="notification__image-container">
+                    <img class="notification__image-container" src="./static/images/icons/${notif['icon-name']}" alt="">
+                </div>
+                <div class="notification__title">${notif['title']}</div>
+                <div class="notification__description">${notif['description']}</div>
+            </div>
+        </div>
+    </div>
+    `
 }
 
 function setupPWAPopup() {

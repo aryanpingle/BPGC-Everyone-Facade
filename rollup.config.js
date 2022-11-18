@@ -80,7 +80,8 @@ export default [
 					"src/css/search/settings-tab.css",
 					"src/css/search/main-tab.css",
 					"src/css/search/search-results.css",
-					"src/css/search/update-alert.css"
+					"src/css/search/update-alert.css",
+					"src/css/search/notification-overlay.css",
 				]
 			}),
 
@@ -95,6 +96,7 @@ export default [
 					{ src: 'src/static/', dest: 'public/' },
 					{ src: 'src/root/*', dest: 'public/' },
 					{ src: 'src/everyone/', dest: 'public/' },
+					{ src: 'src/notifications.json', dest: 'public/' },
 					{ src: 'changelog.json', dest: 'public/' },
 				]
 			}),

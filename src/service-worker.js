@@ -76,7 +76,7 @@ async function get_request(request_event) {
     const url = request.url
 
     // For some files, there should be no caching
-    if(url.containsAny("gtag", "analytic", "screenshots/", "version.txt", "changelog.json", "livereload")) {
+    if(url.containsAny("gtag", "analytic", "screenshots/", "version.txt", "changelog.json", "livereload", "notifications.json")) {
         return fetch(request)
     }
 
