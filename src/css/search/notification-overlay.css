@@ -106,11 +106,11 @@
     height: 100%;
     padding: 1em;
 
-    /* border: 1px solid hsl(var(--notification-hue), 75%, 10%); */
     background-color: hsl(var(--notification-hue), 100%, 2%);
 
     display: grid;
     grid-auto-flow: row;
+    grid-auto-rows: min-content;
     justify-items: center;
     /* align-items: center; */
     gap: 1em;
