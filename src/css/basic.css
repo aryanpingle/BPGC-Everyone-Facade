@@ -15,6 +15,8 @@
     --hue-degree-be: 175;
     --hue-degree-msc: 210;
     --hue-degree-h: 250;
+    --natural-border-radius: 5px;
+    --section-border-radius: 15px;
 }
 
 :root.font-loaded {
