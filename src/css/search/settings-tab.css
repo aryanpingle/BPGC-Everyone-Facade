@@ -321,10 +321,10 @@ a#skip-to-main > span {
 
 .footer {
     position: relative;
-    width: 100%;
-    padding: 0.5em;
-    margin: 1rem 0;
-    background-color: hsl(57, 0%, 3%);
+    margin: 0 0.5em;
+    margin-bottom: 0.5em;
+    padding: 1em 1rem;
+    background-color: hsl(57, 0%, 5%);
     border-radius: var(--section-border-radius);
 
     display: flex;
