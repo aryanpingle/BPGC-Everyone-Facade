@@ -89,7 +89,7 @@
     font-size: 1.1em;
     border: 1px solid hsla(var(--badge-hue), 100%, 75%, 10%);
     background-color: hsla(var(--badge-hue), 100%, 75%, 10%);
-    color: hsl(var(--badge-hue), 100%, 75%);
+    color: hsl(var(--badge-hue), 100%, 80%);
 }
 
 .badge-year { --badge-hue: var(--hue-year); }
