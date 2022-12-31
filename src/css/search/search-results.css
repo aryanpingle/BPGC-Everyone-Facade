@@ -26,9 +26,9 @@
 .student-component {
     font-size: 1.5em;
     margin: 0.5rem;
-    padding: 1rem 1rem;
-    background-color: hsl(0, 0%, 5%);
-    border: 1px solid hsl(0, 0%, 8%);
+    padding: 0.5rem 0.5rem;
+    background-color: hsl(0, 0%, 8%);
+    border: 1px solid hsl(0, 0%, 10%);
     border-radius: var(--section-border-radius);
 
     display: flex;
@@ -67,11 +67,11 @@
 }
 
 .student__name {
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
 }
 
 .student__badges {
-    font-size: 0.6em;
+    font-size: 0.5em;
     font-weight: 300;
     display: flex;
     align-items: center;
@@ -84,7 +84,12 @@
 
 .student__badge {
     margin-right: 5px;
-    color: hsl(var(--badge-hue), 90%, 75%);
+    border-radius: var(--natural-border-radius);
+    padding: 0.25em 0.5em;
+    font-size: 1.1em;
+    border: 1px solid hsla(var(--badge-hue), 100%, 75%, 10%);
+    background-color: hsla(var(--badge-hue), 100%, 75%, 10%);
+    color: hsl(var(--badge-hue), 100%, 75%);
 }
 
 .badge-year { --badge-hue: var(--hue-year); }
