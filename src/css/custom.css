@@ -41,6 +41,7 @@
     width: 3em;
     border-bottom: 4px solid var(--underscore-color);
     padding-right: 2em;
+    transform: translateY(-1px);
     -webkit-clip-path: polygon(
         0 0,
         100% 0,

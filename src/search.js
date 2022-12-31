@@ -10,7 +10,7 @@ import CURRENT_CHANGELOG from "inject:CURRENT_CHANGELOG"
 let filtered = []
 let results = []
 let results_with_score = []
-let SORTING = "relevant"
+let SORTING = "relevance"
 const MAX_RESULT_COUNT = 25
 let notifications_promise = null
 let notifications = null
@@ -55,13 +55,15 @@ async function setup() {
     setup_select_all_toggles()
     // View More and View All Buttons
     setupViewMoreSection()
+    // Sorting Dropdown
+    setupSortingDropdown()
     // Sorting Buttons
     setupSortingButtons()
     // Clear input button
     document.querySelector("#search-bar-clear-icon").onclick = event => {
         document.querySelector("input#search-bar").value = ""
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
-        document.querySelector("#sort-by-relevance").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
+        document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         document.querySelector("input#search-bar").focus()
         resolve_query()
     }
@@ -75,7 +77,7 @@ async function setup() {
 
     search_bar.addEventListener("keyup", () => {
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
-        document.querySelector("#sort-by-relevance").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
+        document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
     }, { passive: true })
 }
@@ -528,6 +530,25 @@ function viewMoreResults(number_of_extra_results) {
     updateViewMoreSection()
 }
 
+function setupSortingDropdown() {
+    document.querySelector("#sort-dropdown-button").onclick = event => {
+        let s = document.querySelector("#sort-dropdown-button").innerHTML
+        if(s.includes("▲")) {
+            // Close dropdown
+            s = s.replace("▲", "▼")
+        }
+        else {
+            // Open dropdown
+            s = s.replace("▼", "▲")
+        }
+        document.querySelector("#sort-dropdown-button").innerHTML = s
+
+        document.querySelector(".sort-dropdown-wrapper").classList.toggle("shown")
+
+        vibrate(25)
+    }
+}
+
 function setupSortingButtons() {
     querySelectorAll(".sort-button").forEach(button => {
         button.onclick = event => {
@@ -536,6 +557,9 @@ function setupSortingButtons() {
             vibrate(25)
             button.parentElement.querySelector(".selected").classList.remove("selected")
             button.classList.add("selected")
+
+            // Update the sorting type indicator
+            document.querySelector("#sort-type-indicator").innerText = `Sort (${button.getAttribute("value")})`
 
             change_sorting(button.getAttribute("value"))
         }
@@ -624,7 +648,7 @@ function fast_filter(iterable, condition) {
 function sortResults(force_sorting) {
     console.time("sortResults")
     switch(force_sorting || SORTING) {
-        case "relevant":
+        case "relevance":
             sort_multiple(results_with_score, element=>[-element[0][0], -element[0][1], element[0][2]])
             break
         case "room":
@@ -678,7 +702,7 @@ function sortResults(force_sorting) {
 
 function displayResults(preserve_count) {
     // Show the number of results
-    document.querySelector("#result-count").innerText = `${formattedNumber(results.length)}`
+    document.querySelector("#result-count").innerText = `${formattedNumber(results.length)} result${results.length==1?"":"s"}`
     
     // Get the HTML of the results
     const CURRENT_RESULT_COUNT = preserve_count ? get_current_result_count() : MAX_RESULT_COUNT

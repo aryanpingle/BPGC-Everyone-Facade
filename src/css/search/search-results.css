@@ -25,9 +25,11 @@
 
 .student-component {
     font-size: 1.5em;
-    margin: 0.5rem 0;
-    padding: 1rem 1rem;
-    background-color: hsl(0, 0%, 5%);
+    margin: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    background-color: hsl(0, 0%, 8%);
+    border: 1px solid hsl(0, 0%, 10%);
+    border-radius: var(--section-border-radius);
 
     display: flex;
     flex-direction: column;
@@ -37,10 +39,12 @@
 
 @media (min-width: 1024px) {
     .student-component {
+        margin: 0.5rem 0;
         cursor: pointer;
     }
 }
 
+/*
 .student--be {
     background-color: hsl(var(--hue-degree-be), 100%, 5%);
 }
@@ -52,6 +56,7 @@
 .student--h {
     background-color: hsl(var(--hue-degree-h), 100%, 5%);
 }
+*/
 
 /* Parts of the student component */
 
@@ -62,11 +67,11 @@
 }
 
 .student__name {
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
 }
 
 .student__badges {
-    font-size: 0.6em;
+    font-size: 0.5em;
     font-weight: 300;
     display: flex;
     align-items: center;
@@ -79,7 +84,12 @@
 
 .student__badge {
     margin-right: 5px;
-    color: hsl(var(--badge-hue), 90%, 75%);
+    border-radius: var(--natural-border-radius);
+    padding: 0.25em 0.5em;
+    font-size: 1.1em;
+    border: 1px solid hsla(var(--badge-hue), 100%, 75%, 10%);
+    background-color: hsla(var(--badge-hue), 100%, 75%, 10%);
+    color: hsl(var(--badge-hue), 100%, 80%);
 }
 
 .badge-year { --badge-hue: var(--hue-year); }
@@ -121,6 +131,8 @@
 /* Span 2 (default) */
 .info-tile-wrapper {
     display: block;
+    border-radius: var(--natural-border-radius);
+    overflow: hidden;
     grid-column-end: span 2;
 }
 

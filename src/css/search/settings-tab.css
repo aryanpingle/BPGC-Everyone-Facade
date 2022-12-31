@@ -76,12 +76,19 @@ a#skip-to-main > span {
 
 .filters-container {
     flex: 1 0 0;
+    padding-top: 0.5em;
     overflow: auto;
     scrollbar-width: none;
 }
 
 .filters-container::-webkit-scrollbar {
     display: none;
+}
+
+@media (min-width: 1024px) {
+    .filters-container {
+        padding-top: 0;
+    }
 }
 
 /*-------------------------------*/
@@ -91,6 +98,7 @@ a#skip-to-main > span {
 .popup-component {
     --popup-height: 100px;
     margin: 0 1rem;
+    margin-bottom: 1em;
     display: grid;
     gap: 2px;
     overflow: hidden;
@@ -235,12 +243,14 @@ a#skip-to-main > span {
 
 .filter-component {
     --filter-hue: 0;
-    --filter-hsl: hsl(var(--filter-hue), 100%, 75%);
+    --filter-hsl: hsl(var(--filter-hue), 80%, 70%);
 
     position: relative;
-    margin: 0.5em 0;
+    margin: 0 0.5em;
+    margin-bottom: 0.5em;
     padding: 1em 1rem;
-    background-color: hsl(var(--filter-hue), 100%, 3%);
+    border-radius: var(--section-border-radius);
+    background-color: hsl(var(--filter-hue), 100%, 5%);
 }
 
 .filter-component[value="year"] { --filter-hue: var(--hue-year); }
@@ -249,6 +259,13 @@ a#skip-to-main > span {
 .filter-component[value="degree_msc"] { --filter-hue: var(--hue-degree-msc); }
 .filter-component[value="degree_h"] { --filter-hue: var(--hue-degree-h); }
 .filter-component[value="gender"] { --filter-hue: 300; }
+
+@media (min-width: 1024px) {
+    .filter-component {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
 
 .filter-component > header {
     position: relative;
@@ -287,6 +304,7 @@ a#skip-to-main > span {
     font-size: 0.8em;
     font-weight: 500;
     border: solid 1px hsla(var(--filter-hue), 100%, 75%, 50%);
+    border-radius: var(--natural-border-radius);
     color: var(--filter-hsl);
     display: inline-block;
 
@@ -303,10 +321,11 @@ a#skip-to-main > span {
 
 .footer {
     position: relative;
-    width: 100%;
-    padding: 0.5em;
-    margin: 1rem 0;
-    background-color: hsl(57, 0%, 3%);
+    margin: 0 0.5em;
+    margin-bottom: 0.5em;
+    padding: 1em 1rem;
+    background-color: hsl(57, 0%, 5%);
+    border-radius: var(--section-border-radius);
 
     display: flex;
     flex-direction: column;

@@ -93,20 +93,23 @@
 
             <!-- Main Tab Taskbar -->
             <div class="taskbar">
-                <div class="taskbar__item">
-                    <div id="result-count">-</div>
-                </div>
-                <div class="taskbar__item">
-                    <div class="sort-component">
-                        <button class="sort-button selected" id="sort-by-relevance" value="relevant">Default</button>
-                        <button class="sort-button" id="sort-by-room" value="room">Room</button>
-                        <button class="sort-button" id="sort-by-oldest" value="oldest">Batch +</button>
-                        <button class="sort-button" id="sort-by-youngest" value="youngest">Batch -</button>
-                        <% if (IS_ADMIN) { %>
-                            <button class="sort-button" id="sort-by-bday" value="bday">B'day</button>
-                            <button class="sort-button" id="sort-by-cgpa" value="cgpa">CGPA</button>
-                        <% } %>
-                    </div>
+                <span id="result-count">-</span>
+                <button id="sort-dropdown-button">
+                    <span id="sort-type-indicator">Sort (default)</span>&nbsp;&#9660;
+                </button>
+            </div>
+
+            <!-- Sort Dropdown -->
+            <div class="sort-dropdown-wrapper">
+                <div class="sort-dropdown">
+                    <button class="sort-button selected" value="relevance">Default</button>
+                    <button class="sort-button" value="room">Room</button>
+                    <button class="sort-button" value="oldest">Oldest</button>
+                    <button class="sort-button" value="youngest">Youngest</button>
+                    <% if (IS_ADMIN) { %>
+                        <button class="sort-button" value="bday">B'day</button>
+                        <button class="sort-button" value="cgpa">CGPA</button>
+                    <% } %>
                 </div>
             </div>
 
