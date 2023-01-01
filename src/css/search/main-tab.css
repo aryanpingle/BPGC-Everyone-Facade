@@ -82,6 +82,7 @@
 #search-bar-search-icon, #search-bar-clear-icon {
     width: 100%;
     font-size: 1em;
+    border-radius: 999px;
 }
 
 .input-container {

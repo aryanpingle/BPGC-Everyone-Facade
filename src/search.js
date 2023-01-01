@@ -484,7 +484,6 @@ function setupToggles() {
 function setupSelectAllToggles() {
     querySelectorAll(".select-all-toggles").forEach(button => {
         button.onclick = event => {
-            vibrate(50)
             const field = button.getAttribute("value")
             const toggles = querySelectorAll(`[value="${field}"] .filter-toggle`)
             const toggle_values = toggles.map(ele => ele.getAttribute("value"))
@@ -502,6 +501,8 @@ function setupSelectAllToggles() {
                 toggles.forEach(ele => ele.classList.add("selected"))
             }
             apply_filters()
+            
+            vibrate(50)
         }
     })
 }
