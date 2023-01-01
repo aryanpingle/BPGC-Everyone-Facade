@@ -7,5 +7,14 @@
         "icon-name": "trophy.png",
         "start-date": "",
         "end-time": "Sun Nov 27 2022 00:00:00 GMT+0530"
+    },
+    {
+        "id": "2023",
+        "title": "Hello, 2023",
+        "description": "New Year, New Everyone. Feedback is always appreciated - let me know if you have any features you want me to implement!",
+        "hue": 180,
+        "icon-name": "2023.png",
+        "start-date": "",
+        "end-time": "Mon Jan 16 2023 00:00:00 GMT+0530"
     }
 ]
