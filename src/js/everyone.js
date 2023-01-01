@@ -34,6 +34,9 @@ EVERYONE_FIELDS.forEach(field => {
 })
 const FILTERS = {}
 
+// boolean to check whether only single degree students should be shown
+let exclusiveDegreeBoolean = false
+
 /**
  * Loads data for the given years in parallel
  * @param  {...string} years Data is downloaded for these years in parallel
@@ -59,6 +62,10 @@ async function load_year(year) {
     EVERYONE_FIELDS.forEach((field, index) => {
         EVERYONE[field].push(...data[index])
     })
+}
+
+export async function setExclusiveDegreeBoolean(bool) {
+    exclusiveDegreeBoolean = bool
 }
 
 export async function toggle_filter(field, value) {
@@ -209,7 +216,13 @@ export function filter() {
     const indices = []
     const EVERYONE_LENGTH = EVERYONE["id"].length
     for(let person_idx = 0; person_idx < EVERYONE_LENGTH; ++person_idx) {
+        // is_valid checks if the person passes all the filter tests
         let is_valid = true
+
+        if(exclusiveDegreeBoolean && !isSingleDegree(get_field_from_person("id", person_idx))) {
+            continue
+        }
+
         for(const [field, possible_values] of Object.entries(FILTERS)) {
             if(possible_values.length == 0) continue
 
@@ -221,6 +234,10 @@ export function filter() {
         if(is_valid) indices.push(person_idx)
     }
     return indices
+}
+
+function isSingleDegree(id) {
+    return !id.includes("B")
 }
 
 const DOWNLOAD_EXPORT_LINK = document.createElement("A")

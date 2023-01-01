@@ -1,7 +1,7 @@
 "use strict"
 
 import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad } from "./js/helpers";
-import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay } from "./js/everyone";
+import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay, setExclusiveDegreeBoolean } from "./js/everyone";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
 import APP_VERSION from "inject:APP_VERSION"
@@ -50,9 +50,11 @@ async function setup() {
     // To open the settings tab
     setup_open_settings_tab()
     // Filter Toggles
-    setup_toggles()
+    setupToggles()
     // 'select-all-toggles' Buttons
-    setup_select_all_toggles()
+    setupSelectAllToggles()
+    // Create & Setup Binary Toggles
+    createBinaryToggles()
     // View More and View All Buttons
     setupViewMoreSection()
     // Sorting Dropdown
@@ -450,23 +452,22 @@ function animatePopups() {
 
 function setup_close_settings_tab() {
     document.querySelector("#close-settings-tab").onclick = event => {
-        vibrate(100)
         document.querySelector(".settings-tab").classList.add("hidden")
+        vibrate(100)
     }
 }
 
 function setup_open_settings_tab() {
     document.querySelector("#open-settings-tab").onclick = event => {
-        vibrate(100)
         animatePopups()
         document.querySelector(".settings-tab").classList.remove("hidden")
+        vibrate(100)
     }
 }
 
-function setup_toggles() {
+function setupToggles() {
     querySelectorAll(".filter-toggle").forEach(toggle => {
         toggle.onclick = event => {
-            vibrate(50)
             toggle_filter(
                 toggle.getAttribute("field"),
                 toggle.getAttribute("value")
@@ -474,11 +475,13 @@ function setup_toggles() {
             toggle.classList.toggle("selected")
 
             apply_filters()
+
+            vibrate(50)
         }
     })
 }
 
-function setup_select_all_toggles() {
+function setupSelectAllToggles() {
     querySelectorAll(".select-all-toggles").forEach(button => {
         button.onclick = event => {
             vibrate(50)
@@ -501,6 +504,50 @@ function setup_select_all_toggles() {
             apply_filters()
         }
     })
+}
+
+function createBinaryToggles() {
+    // All Combinations vs Single Degree Only
+    document.querySelector(".filter-component[value='degree_be']").before(
+        createBinaryToggleElementHTML(
+            "All Combinations",
+            () => {
+                setExclusiveDegreeBoolean(false)
+                apply_filters()
+            },
+            "Single Degree Only",
+            () => {
+                setExclusiveDegreeBoolean(true)
+                apply_filters()
+            }
+        )
+    )
+}
+
+function createBinaryToggleElementHTML(option1, callback1, option2, callback2) {
+    let component = document.createElement("div")
+    component.className = "binary-toggle-component"
+    component.innerHTML = `
+    <div class="binary-toggle-container">
+        <button class="binary-toggle-button selected">${option1}</button>
+        <button class="binary-toggle-button">${option2}</button>
+    </div>
+    `
+
+    component.firstElementChild.firstElementChild.onclick = function() {
+        this.classList.add("selected")
+        this.nextElementSibling.classList.remove("selected")
+        callback1()
+        vibrate(25)
+    }
+    component.firstElementChild.lastElementChild.onclick = function() {
+        this.classList.add("selected")
+        this.previousElementSibling.classList.remove("selected")
+        callback2()
+        vibrate(25)
+    }
+    
+    return component
 }
 
 function setupViewMoreSection() {
@@ -554,7 +601,6 @@ function setupSortingButtons() {
         button.onclick = event => {
             if(button.classList.contains("selected")) return
 
-            vibrate(25)
             button.parentElement.querySelector(".selected").classList.remove("selected")
             button.classList.add("selected")
 
@@ -562,6 +608,8 @@ function setupSortingButtons() {
             document.querySelector("#sort-type-indicator").innerText = `Sort (${button.getAttribute("value")})`
 
             change_sorting(button.getAttribute("value"))
+            
+            vibrate(25)
         }
     })
 }
@@ -749,21 +797,25 @@ function getStudentComponentHTML(person_idx) {
 function setup_student_clicks() {
     querySelectorAll(".student-component").forEach(student_component => {
         student_component.onclick = event => {
-            vibrate(25)
-            
             if(student_component.classList.contains("expanded")) {
                 student_component.classList.remove("expanded")
+                vibrate(25)
                 return
             }
 
             student_component.classList.add("expanded")
 
-            if(student_component.querySelector(".student-info-grid")) return
+            if(student_component.querySelector(".student-info-grid")) {
+                vibrate(25)
+                return
+            }
             
             const everyone_index = parseInt(student_component.getAttribute("everyone-index"))
             student_component.innerHTML += getStudentInfoHTML(everyone_index)
 
             setupStudentPFPClicks()
+
+            vibrate(25)
         }
     })
 }
