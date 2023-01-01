@@ -880,7 +880,8 @@ function getAdminStudentInfoHTML(everyone_index) {
     ${optional("pfp", `
     <div class="info-tile-wrapper info--pfp">
         <div class="info-tile">
-            <div class="student__pfp" data-pfp="${field("pfp")}">
+            <div class="student__pfp">
+                <img src="${field("pfp")}">
             </div>
         </div>
     </div>
