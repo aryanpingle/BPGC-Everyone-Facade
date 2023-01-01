@@ -510,7 +510,7 @@ function createBinaryToggles() {
     // All Combinations vs Single Degree Only
     document.querySelector(".filter-component[value='degree_be']").before(
         createBinaryToggleElementHTML(
-            "All Combinations",
+            "All Students",
             () => {
                 setExclusiveDegreeBoolean(false)
                 apply_filters()
