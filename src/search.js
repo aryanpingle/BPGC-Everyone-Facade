@@ -95,14 +95,20 @@ async function handleAuthentication() {
 
     document.querySelector("#auth-overlay").style.display = ""
     await new Promise((resolve, reject) => {
-        google.accounts.id.initialize({
-            client_id: "1091212712262-c8ci56h65a3hsra7l55p2amtq7rue5ja.apps.googleusercontent.com",
-            callback: resolve
-        });
-        google.accounts.id.renderButton(
-            document.getElementById("auth-button"),
-            { theme: "outline", size: "large" }  // customization attributes
-        );
+        let intervalID = setInterval(() => {
+            if(typeof google == 'undefined') return;
+
+            // Since the google variable exists, stop the interval
+            clearInterval(intervalID)
+            google.accounts.id.initialize({
+                client_id: "1091212712262-c8ci56h65a3hsra7l55p2amtq7rue5ja.apps.googleusercontent.com",
+                callback: resolve
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("auth-button"),
+                { theme: "outline", size: "large" }  // customization attributes
+            );
+        }, 200);
     })
     signInConfirmed()
 }
