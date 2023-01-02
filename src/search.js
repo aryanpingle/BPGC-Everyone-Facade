@@ -94,6 +94,7 @@ async function handleAuthentication() {
     if(!document.querySelector("#auth-overlay")) return
 
     document.querySelector("#auth-overlay").style.display = ""
+    let response = null
     await new Promise((resolve, reject) => {
         let intervalID = setInterval(() => {
             if(typeof google == 'undefined') return;
@@ -102,7 +103,10 @@ async function handleAuthentication() {
             clearInterval(intervalID)
             google.accounts.id.initialize({
                 client_id: "1091212712262-c8ci56h65a3hsra7l55p2amtq7rue5ja.apps.googleusercontent.com",
-                callback: resolve
+                callback: (data) => {
+                    response = data
+                    resolve()
+                }
             });
             google.accounts.id.renderButton(
                 document.getElementById("auth-button"),
@@ -110,16 +114,35 @@ async function handleAuthentication() {
             );
         }, 200);
     })
-    signInConfirmed()
+    signInConfirmed(response)
 }
 
-function signInConfirmed() {
+function signInConfirmed(response) {
+    // Hide the auth overlay
     document.querySelector("#auth-overlay").classList.add("auth-confirmed")
-    localStorage.setItem("gsi", "yaas")
+    
+    // Parse the JWIT token
+    let user = JSON.parse(window.atob(response.credential.split(".")[1]))
+    // Save the user as signed in
+    localStorage.setItem("gsi", JSON.stringify(user))
+
+    handleSignedInUser()
 }
 
 function alreadySignedIn() {
+    // Remove the auth overlay entirely
     document.querySelector("#auth-overlay").remove()
+
+    handleSignedInUser()
+}
+
+function handleSignedInUser(response) {
+    let user = JSON.parse(localStorage.getItem("gsi"))
+
+    let email = user["email"]
+    let userBitsID = email.substring(email.indexOf("@"))
+
+    // Do something based off of the user ID
 }
 
 async function checkChangelog() {
