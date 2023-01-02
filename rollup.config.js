@@ -82,6 +82,7 @@ export default [
 					"src/css/search/search-results.css",
 					"src/css/search/update-alert.css",
 					"src/css/search/notification-overlay.css",
+					"src/css/search/auth-overlay.css",
 				]
 			}),
 
