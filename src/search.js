@@ -22,8 +22,14 @@ async function setup() {
     // ------
     // The first two calls result in a promise, so everything after their first await is executed after setup() is finished running
 
+    if(!!localStorage.getItem("gsi")) {
+        alreadySignedIn()
+    }
+
     // BEFORE BEFORE ANYTHING, FETCH THOSE DAMN FILES
-    handleDownloadingYears()
+    handleDownloadingYears().then(async () => {
+        await handleAuthentication()
+    })
     // BEFORE ANYTHING, make a fetch for the font
     setupFontLoad()
 
@@ -82,6 +88,32 @@ async function setup() {
         document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
     }, { passive: true })
+}
+
+async function handleAuthentication() {
+    if(!document.querySelector("#auth-overlay")) return
+
+    document.querySelector("#auth-overlay").style.display = ""
+    await new Promise((resolve, reject) => {
+        google.accounts.id.initialize({
+            client_id: "1091212712262-c8ci56h65a3hsra7l55p2amtq7rue5ja.apps.googleusercontent.com",
+            callback: resolve
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("auth-button"),
+            { theme: "outline", size: "large" }  // customization attributes
+        );
+    })
+    signInConfirmed()
+}
+
+function signInConfirmed() {
+    document.querySelector("#auth-overlay").classList.add("auth-confirmed")
+    localStorage.setItem("gsi", "yaas")
+}
+
+function alreadySignedIn() {
+    document.querySelector("#auth-overlay").remove()
 }
 
 async function checkChangelog() {

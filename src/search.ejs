@@ -55,6 +55,9 @@
     <!-- PWA -->
     <link rel="manifest" href="./manifest.json">
 
+    <!-- Google Auth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <!-- Font Inline -->
 </head>
 
@@ -62,6 +65,23 @@
     <div class="preloader">
         <div class="preloader-icon">
             <%- get_svg("src/static/images/logos/logo.svg") %> 
+        </div>
+    </div>
+    <div id="auth-overlay" style="display: none;">
+        <div class="auth-overlay__inner">
+            <header class="auth-header">
+                <span id="bpgc-text">BPGC</span>
+                <span id="everyone-text">EVERYONE</span>
+            </header>
+            <div class="auth-description">
+                (Use your BITS Gmail)
+            </div>
+            <div class="auth-container">
+                <div id="auth-button"></div>
+            </div>
+            <div class="auth-disclaimer">
+                * No personal data will be collected, this is just to verify that you are a BITSian
+            </div>
         </div>
     </div>
     <div class="page" style="display: none;">
