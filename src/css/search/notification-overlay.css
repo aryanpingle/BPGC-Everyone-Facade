@@ -13,7 +13,7 @@
     transition: opacity 250ms ease;
 }
 
-.preloader.loaded + .page > #notification-overlay.shown {
+.preloader.loaded ~ .page > #notification-overlay.shown {
     user-select: auto;
     pointer-events: auto;
 
