@@ -22,7 +22,7 @@ async function setup() {
     // ------
     // The first two calls result in a promise, so everything after their first await is executed after setup() is finished running
 
-    if(IS_DEV || !!localStorage.getItem("gsi")) {
+    if(IS_DEV || IS_ADMIN || !!localStorage.getItem("gsi")) {
         alreadySignedIn()
     }
 
@@ -137,7 +137,7 @@ function alreadySignedIn() {
 }
 
 function handleSignedInUser(response) {
-    if(IS_DEV) return
+    if(IS_DEV || IS_ADMIN) return
 
     let user = JSON.parse(localStorage.getItem("gsi"))
 
