@@ -61,8 +61,6 @@ async function setup() {
     setupSelectAllToggles()
     // Create & Setup Binary Toggles
     createBinaryToggles()
-    // View More and View All Buttons
-    setupViewMoreSection()
     // Sorting Dropdown
     setupSortingDropdown()
     // Sorting Buttons
@@ -87,6 +85,18 @@ async function setup() {
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
         document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
+    }, { passive: true })
+
+    // Setup a passive scroll listener on .results-section
+    // Loads more people when you reach 2*<result-section height> from the bottom
+    document.querySelector(".results-section").addEventListener("scroll", function(event) {
+        // this = (.results-section)
+
+        // If there are more results to be loaded and you've scrolled far enough
+        // Then load more results
+        if((getCurrentResultCount() < results.length) && (this.firstElementChild.clientHeight - 2*this.clientHeight < this.scrollTop)) {
+            viewMoreResults(MAX_RESULT_COUNT)
+        }
     }, { passive: true })
 }
 
@@ -614,13 +624,6 @@ function createBinaryToggleElementHTML(option1, callback1, option2, callback2) {
     return component
 }
 
-function setupViewMoreSection() {
-    const VIEW_MORE_BUTTON = document.querySelector(".view-more-button")
-    VIEW_MORE_BUTTON.onclick = event => viewMoreResults(MAX_RESULT_COUNT)
-    const VIEW_ALL_BUTTON = document.querySelector(".view-all-button")
-    VIEW_ALL_BUTTON.onclick = event => viewMoreResults()
-}
-
 function viewMoreResults(number_of_extra_results) {
     const CURRENT_RESULT_COUNT = getCurrentResultCount()
     const TOTAL_RESULTS = results.length
@@ -636,9 +639,6 @@ function viewMoreResults(number_of_extra_results) {
     document.querySelector(".results-container").append(...buffer_parent.children)
 
     setup_student_clicks()
-
-    // Since this changes the number of results shown, update the view more section
-    updateViewMoreSection()
 }
 
 function setupSortingDropdown() {
@@ -807,25 +807,22 @@ function sortResults(force_sorting) {
         results[i] = filtered[results_with_score[i][1]]
     }
 
-    // If force_sorting was passed
-    // Then preserve the number of results shown
-    displayResults(!!force_sorting)
+    displayResults()
 }
 
-function displayResults(preserve_count) {
+function displayResults() {
     // Show the number of results
     document.querySelector("#result-count").innerText = `${formattedNumber(results.length)} result${results.length==1?"":"s"}`
     
     // Get the HTML of the results
-    const CURRENT_RESULT_COUNT = preserve_count ? getCurrentResultCount() : MAX_RESULT_COUNT
-    const results_html = results.slice(0, CURRENT_RESULT_COUNT).map(getStudentComponentHTML).join("")
+    const results_html = results.slice(0, MAX_RESULT_COUNT).map(getStudentComponentHTML).join("")
     
     // Add the results' HTML to .results-container
     document.querySelector(".results-container").innerHTML = results_html
+    // Scroll to the top to avoid accidentally loading more
+    document.querySelector(".results-section").scrollTop = 0
 
     setup_student_clicks()
-
-    updateViewMoreSection()
 }
 
 function getStudentComponentHTML(person_idx) {
@@ -1015,38 +1012,7 @@ function setupStudentPFPClicks() {
  */
 
 function getCurrentResultCount() {
-    return document.querySelector(".results-container").children.length
-}
-
-function updateViewMoreSection() {
-    const CURRENT_RESULT_COUNT = getCurrentResultCount()
-    const TOTAL_RESULTS = results.length
-    const REMAINING_RESULTS = TOTAL_RESULTS - CURRENT_RESULT_COUNT
-
-    /**
-     * View More = If REMAINING > MAX_RESULT_COUNT 
-     * View All = If REMAINING <= MAX_RESULT_COUNT or (TOTAL_RESULTS < 300)
-     */
-
-    // If there are more results than can be loaded in a single try, then show the view-more-button
-    if(REMAINING_RESULTS > MAX_RESULT_COUNT) {
-        document.querySelector(".view-more-section").classList.add("show-view-more")
-        document.querySelector(".view-more-button__count").innerText = `[+${MAX_RESULT_COUNT}]`
-    }
-    else {
-        document.querySelector(".view-more-section").classList.remove("show-view-more")
-    }
-
-    // If there are enough results to be loaded in a single try,
-    // OR If the total number of results is low enough to be loaded without issues
-    // Then show the view-all-button
-    if(REMAINING_RESULTS != 0 && (REMAINING_RESULTS <= MAX_RESULT_COUNT || TOTAL_RESULTS < 300)) {
-        document.querySelector(".view-more-section").classList.add("show-view-all")
-        document.querySelector(".view-all-button__count").innerText = `[+${REMAINING_RESULTS}]`
-    }
-    else {
-        document.querySelector(".view-more-section").classList.remove("show-view-all")
-    }
+    return document.querySelector(".results-container").childElementCount
 }
 
 /**
