@@ -622,7 +622,7 @@ function setupViewMoreSection() {
 }
 
 function viewMoreResults(number_of_extra_results) {
-    const CURRENT_RESULT_COUNT = get_current_result_count()
+    const CURRENT_RESULT_COUNT = getCurrentResultCount()
     const TOTAL_RESULTS = results.length
 
     if(number_of_extra_results === undefined) {
@@ -817,7 +817,7 @@ function displayResults(preserve_count) {
     document.querySelector("#result-count").innerText = `${formattedNumber(results.length)} result${results.length==1?"":"s"}`
     
     // Get the HTML of the results
-    const CURRENT_RESULT_COUNT = preserve_count ? get_current_result_count() : MAX_RESULT_COUNT
+    const CURRENT_RESULT_COUNT = preserve_count ? getCurrentResultCount() : MAX_RESULT_COUNT
     const results_html = results.slice(0, CURRENT_RESULT_COUNT).map(getStudentComponentHTML).join("")
     
     // Add the results' HTML to .results-container
@@ -1014,12 +1014,12 @@ function setupStudentPFPClicks() {
  * @returns {number} The number of results currently displayed
  */
 
-function get_current_result_count() {
+function getCurrentResultCount() {
     return document.querySelector(".results-container").children.length
 }
 
 function updateViewMoreSection() {
-    const CURRENT_RESULT_COUNT = get_current_result_count()
+    const CURRENT_RESULT_COUNT = getCurrentResultCount()
     const TOTAL_RESULTS = results.length
     const REMAINING_RESULTS = TOTAL_RESULTS - CURRENT_RESULT_COUNT
 
