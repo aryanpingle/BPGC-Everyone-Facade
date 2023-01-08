@@ -3,9 +3,6 @@
     .results-container
         .student-component
         ...
-    .view-more-section
-        .view-more-button
-        .view-all-button
 */
 
 .results-section {
@@ -205,44 +202,4 @@
     font-size: 0.65em;
     font-weight: 300;
     margin-bottom: 5px;
-}
-
-/* View More Section */
-
-.view-more-section {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 0 1rem;
-}
-
-.view-more-section > button {
-    padding: 0.5em 0.5em;
-    font-size: 1em;
-    background-color: #121212;
-    border: 2px solid #ccc1;
-    color: #ccca;
-    text-transform: uppercase;
-
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.show-view-more .view-more-button,
-.show-view-all .view-all-button {
-    display: flex;
-}
-
-.view-more-section:not(.show-view-more, .show-view-all) {
-    display: none;
-}
-
-.view-more-section > button > span {
-    opacity: 0.5;
-    font-size: 0.65em;
-    margin-left: 5px;
 }
