@@ -2,6 +2,7 @@
 
 import { print, formattedNumber, sort_multiple, querySelectorAll, vibrate, sort_strings, sort_numbers, setupFontLoad } from "./js/helpers";
 import { toggle_filter, load_years, get_field_from_person, filter, toggle_all_in_field, getDay, setExclusiveDegreeBoolean } from "./js/everyone";
+import { scorer_id, scorer_name, scorer_phone, scorer_room } from "./js/scoring";
 import IS_ADMIN from "inject:IS_ADMIN"
 import IS_DEV from "inject:IS_DEV"
 import APP_VERSION from "inject:APP_VERSION"
@@ -1010,64 +1011,4 @@ function getAdminStudentInfoHTML(everyone_index) {
 
 function getCurrentResultCount() {
     return document.querySelector(".results-container").childElementCount
-}
-
-/**
- * Matches a query to the given text and returns its score
- * @returns List of 3 scores - [number of character matches, longest common substring, start index of LCS]
- */
-
-function scorer_name(query, text) {
-    if(query.length == 0) {
-        return [1, 0, 0]
-    }
-    text = text.toLowerCase()
-    let j = 0
-    let max_consec = [0, 0]
-    let consec = [0, 0]
-    for(let i = 0; i < text.length; ++i) {
-        if(text.charAt(i) == query.charAt(j)) {
-            consec = [1, i]
-            // Loop behind to see how consecutive this is
-            let k = i-1
-            while(k >= 0 && text.charAt(k) == query.charAt(j - (i-k))) {
-                ++consec[0]
-                consec[1] = k
-                --k
-            }
-            ++j // Advance the query index
-            // Maximise consectutive length first, then minimize the starting position
-            if(max_consec[0] < consec[0] || (max_consec[0] == consec[0] && max_consec[1] > consec[1])) {
-                max_consec = consec
-            }
-            if(j==query.length) break
-        }
-    }
-    
-    if(j == query.length) {
-        return [j, ...max_consec]
-    }
-    else return [0, 0, 0]
-}
-
-function scorer_id(query, id) {
-    query = query.toUpperCase()
-    if(id.includes(query)) {
-        return [query.length, query.length, id.indexOf(query)]
-    }
-    return [0, 0, 0]
-}
-
-function scorer_room(query, room) {
-    if(room == query) {
-        return [3, 3, 0]
-    }
-    return [0, 0, 0]
-}
-
-function scorer_phone(query, phone) {
-    if(phone.includes(query)) {
-        return [1, 0, 0]
-    }
-    return [0, 0, 0]
 }
