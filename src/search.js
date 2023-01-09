@@ -7,30 +7,31 @@ import IS_DEV from "inject:IS_DEV"
 import APP_VERSION from "inject:APP_VERSION"
 import CURRENT_CHANGELOG from "inject:CURRENT_CHANGELOG"
 
+// Global Variables
 let filtered = []
 let results = []
 let results_with_score = []
 let SORTING = "relevance"
-const MAX_RESULT_COUNT = 25
 let notifications_promise = null
 let notifications = null
+const MAX_RESULT_COUNT = 25
 
 setup()
 
 async function setup() {
-    // CAVEAT
-    // ------
-    // The first two calls result in a promise, so everything after their first await is executed after setup() is finished running
-
+    // First of all, check if the user has signed in
     if(IS_DEV || IS_ADMIN || !!localStorage.getItem("gsi")) {
         alreadySignedIn()
     }
 
-    // BEFORE BEFORE ANYTHING, FETCH THOSE DAMN FILES
+    // handleDownloadingYears() and setupFontLoad() are async functions
+    // Everything after their first await statements will be executed after setup() finishes running
+
+    // Make a fetch for the everyone files
     handleDownloadingYears().then(async () => {
         await handleAuthentication()
     })
-    // BEFORE ANYTHING, make a fetch for the font
+    // Make a fetch for the font
     setupFontLoad()
 
     // Analytics
@@ -660,6 +661,11 @@ function setupSortingDropdown() {
     }
 }
 
+/**
+ * For every '.sort-button', adds an onclick function
+ * Clicking on the button calls changeSorting() with the type of sorting
+ */
+
 function setupSortingButtons() {
     querySelectorAll(".sort-button").forEach(button => {
         button.onclick = event => {
@@ -671,7 +677,7 @@ function setupSortingButtons() {
             // Update the sorting type indicator
             document.querySelector("#sort-type-indicator").innerText = `Sort (${button.getAttribute("value")})`
 
-            change_sorting(button.getAttribute("value"))
+            changeSorting(button.getAttribute("value"))
             
             vibrate(25)
         }
@@ -684,7 +690,7 @@ function setupSortingButtons() {
  * @param {String} sorting_type The type of sorting to be performed
  */
 
-function change_sorting(sorting_type) {
+function changeSorting(sorting_type) {
     SORTING = sorting_type
     sortResults(SORTING)
 }
@@ -995,15 +1001,6 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     `.trim().replace(/\n\s*/g, "")
-}
-
-function setupStudentPFPClicks() {
-    querySelectorAll(".student__pfp").forEach(element => {
-        element.onclick = event => {
-            event.stopImmediatePropagation()
-            element.style.backgroundImage = `url('${element.getAttribute("data-pfp")}')`
-        }
-    })
 }
 
 /**
