@@ -13,30 +13,32 @@ export function scorer_name(query, text) {
     text = text.toLowerCase()
 
     let queryIndex = 0 // points to an index in `query`
-    let consec = [0, 0] // [<LCS length>, <start index of LCS>]
-    let max_consec = [0, 0] // Best consec (max LCS length; min LCS start index)
+    // let consec = [0, 0] // [<LCS length>, <start index of LCS>]
+    // let max_consec = [0, 0] // Best consec (max LCS length; min LCS start index)
+
+    let LCSLength_MAX = 0
+    let LCSStartIndex_MIN = 0
+    
+    let LCSLength = 0
+    let LCSStartIndex = 0
 
     for(let textIndex = 0; textIndex < text.length; ++textIndex) {
         if(text.charAt(textIndex) == query.charAt(queryIndex)) {
-            // Make a buffer consec value
-            // This will be compared to max_consec after calculation
-            consec = [1, textIndex]
-
             /* Loop behind to see how consecutive this region is */
 
-            let startIndexLCS = textIndex - 1
+            LCSLength = 1
+            LCSStartIndex = textIndex - 1
 
             // Keep moving one index behind as long as you can match the region in `query`
-            while(startIndexLCS >= 0 && text.charAt(startIndexLCS) == query.charAt(queryIndex - (textIndex - startIndexLCS))) {
-                ++consec[0]
-                consec[1] = startIndexLCS
-                
-                --startIndexLCS
+            while(LCSStartIndex >= 0 && text.charAt(LCSStartIndex) == query.charAt(queryIndex - (textIndex - LCSStartIndex))) {
+                ++LCSLength
+                --LCSStartIndex
             }
 
             // Maximise consecutive length first, then minimize the starting position
-            if((max_consec[0] < consec[0]) || (max_consec[0] == consec[0] && max_consec[1] > consec[1])) {
-                max_consec = consec
+            if((LCSLength_MAX < LCSLength) || (LCSLength_MAX == LCSLength && LCSStartIndex_MIN > LCSStartIndex)) {
+                LCSLength_MAX = LCSLength
+                LCSStartIndex_MIN = LCSStartIndex
             }
 
             // Advance the query index pointer
@@ -48,7 +50,7 @@ export function scorer_name(query, text) {
     }
     
     if(queryIndex == query.length) {
-        return [queryIndex, ...max_consec]
+        return [queryIndex, LCSLength_MAX, LCSStartIndex_MIN]
     }
     else return [0, 0, 0]
 }
