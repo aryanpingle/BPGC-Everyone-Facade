@@ -79,9 +79,7 @@ async function get_request(request_event) {
     // Only used in extreme situations like deadlocks
     // Example: When the data isn't updated and a non-existent field is being read
     if(url.includes("DROPTABLE")) {
-        const cache = await caches.open(EVERYONE_CACHE_NAME)
-        const cache_requests = await cache.keys()
-        await Promise.all(cache_requests.map(r => cache.delete(r)))
+        await caches.delete(EVERYONE_CACHE_NAME)
         
         return new Response(0, {
             status: 200

@@ -466,7 +466,7 @@ async function handleDownloadingYears() {
     
     print(`Years to be downloaded: ${years_to_be_downloaded.join(", ")}`)
 
-    const load_promise = load_years(...years_to_be_downloaded)
+    let load_promise = load_years(...years_to_be_downloaded)
 
     // Show the download component if there are some years in ALL_YEARS that aren't in years_to_be_downloaded
     if(years_to_be_downloaded.length != ALL_YEARS.length) {
@@ -498,7 +498,21 @@ async function handleDownloadingYears() {
         attachDownloadYearsOnclick(not_downloaded_years)
     }
 
-    await load_promise
+    try {
+        await load_promise
+    }
+    catch(err) {
+        print("DEADLOCK")
+
+        // Delete the EVERYONE cache completely
+        await window.caches.delete("EVERYONE-CACHE")
+
+        // Slight delay before reloading
+        await pause(300)
+        window.location.reload()
+
+        throw err
+    }
 
     document.querySelector(".page").style.display = "flex"
     document.querySelector(".preloader").classList.add("loaded")
@@ -507,6 +521,12 @@ async function handleDownloadingYears() {
     checkChangelog()
 
     apply_filters()
+}
+
+async function pause(ms) {
+    return new Promise((res, rej) => {
+        setTimeout(res, ms);
+    })
 }
 
 function attachDownloadYearsOnclick(not_downloaded_years) {
