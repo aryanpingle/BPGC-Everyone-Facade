@@ -94,6 +94,7 @@
 .badge-degree_be { --badge-hue: var(--hue-degree-be); }
 .badge-degree_msc { --badge-hue: var(--hue-degree-msc); }
 .badge-degree_h { --badge-hue: var(--hue-degree-h); }
+.badge-cgpa { --badge-hue: 30; }
 
 .badge-hostel {
     margin-left: auto;
@@ -145,7 +146,7 @@
 .info--h { --info-hue: var(--hue-degree-h); }
 .info--pfp { --info-hue: 195; }
 .info--bday { --info-hue: 57; }
-.info--cgpa { --info-hue: 325; }
+.info--cgpa { --info-hue: 30; }
 .info--blood { --info-hue: 0; }
 .info--gender { --info-hue: 300; }
 .info--phone { --info-hue: 30; }

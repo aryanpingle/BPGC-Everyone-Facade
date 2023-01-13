@@ -2,6 +2,7 @@
   "EVERYONE_FIELDS": [
     "name",
     "id",
+    "cgpa",
     "hostel",
     "room"
   ],
