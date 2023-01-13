@@ -75,8 +75,20 @@ async function get_request(request_event) {
     const request = request_event.request
     const url = request.url
 
+    // Clear the EVERYONE_CACHE
+    // Only used in extreme situations like deadlocks
+    // Example: When the data isn't updated and a non-existent field is being read
+    if(url.includes("DROPTABLE")) {
+        await caches.delete(EVERYONE_CACHE_NAME)
+        
+        return new Response(0, {
+            status: 200
+        })
+    }
+
     // For some files, there should be no caching
     if(url.containsAny(
+        "/gsi/",
         "gtag",
         "analytic",
         "screenshots/",

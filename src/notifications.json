@@ -16,5 +16,14 @@
         "icon-name": "2023.png",
         "start-date": "",
         "end-time": "Mon Jan 16 2023 00:00:00 GMT+0530"
+    },
+    {
+        "id": "cgpa1",
+        "title": "CGPA Update",
+        "description": "<b>NOTE: CGPA has been sourced from <a href='https://bit.ly/sem1cgpa' target='__blank'>bit.ly/sem1cgpa</a> - it cannot be verified</b><br><br>To view CGPA results, enable the option in the SETTINGS TAB",
+        "hue": 30,
+        "icon-name": "ranking.png",
+        "start-date": "",
+        "end-time": "Mon Jan 30 2023 00:00:00 GMT+0530"
     }
 ]

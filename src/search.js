@@ -15,6 +15,7 @@ let results_with_score = []
 let SORTING = "relevance"
 let notifications_promise = null
 let notifications = null
+let isCGPAEnabled = false
 const MAX_RESULT_COUNT = 25
 
 setup()
@@ -78,6 +79,15 @@ async function setup() {
     // Contact me link
     document.querySelector("#contact-me").onclick = event => {
         window.open("https://wa.me/919920424045?text=You are a God.", "_blank")
+    }
+
+    // Show / Hide CGPA based on preferences
+    if(localStorage.getItem("cgpa-preference") != null) {
+        isCGPAEnabled = localStorage.getItem("cgpa-preference") == "true"
+        if(isCGPAEnabled) {
+            document.querySelector("#binary-toggle_cgpa > .binary-toggle-container").firstElementChild.classList.remove("selected")
+            document.querySelector("#binary-toggle_cgpa > .binary-toggle-container").lastElementChild.classList.add("selected")
+        }
     }
 
     // Setup the search bar
@@ -456,7 +466,7 @@ async function handleDownloadingYears() {
     
     print(`Years to be downloaded: ${years_to_be_downloaded.join(", ")}`)
 
-    const load_promise = load_years(...years_to_be_downloaded)
+    let load_promise = load_years(...years_to_be_downloaded)
 
     // Show the download component if there are some years in ALL_YEARS that aren't in years_to_be_downloaded
     if(years_to_be_downloaded.length != ALL_YEARS.length) {
@@ -488,7 +498,21 @@ async function handleDownloadingYears() {
         attachDownloadYearsOnclick(not_downloaded_years)
     }
 
-    await load_promise
+    try {
+        await load_promise
+    }
+    catch(err) {
+        print("DEADLOCK")
+
+        // Delete the EVERYONE cache completely
+        await window.caches.delete("EVERYONE-CACHE")
+
+        // Slight delay before reloading
+        await pause(300)
+        window.location.reload()
+
+        throw err
+    }
 
     document.querySelector(".page").style.display = "flex"
     document.querySelector(".preloader").classList.add("loaded")
@@ -497,6 +521,12 @@ async function handleDownloadingYears() {
     checkChangelog()
 
     apply_filters()
+}
+
+async function pause(ms) {
+    return new Promise((res, rej) => {
+        setTimeout(res, ms);
+    })
 }
 
 function attachDownloadYearsOnclick(not_downloaded_years) {
@@ -598,11 +628,56 @@ function createBinaryToggles() {
             }
         )
     )
+    // Hide vs Show CGPA
+    document.querySelector(".footer").before(
+        createBinaryToggleElementHTML(
+            "Hide CGPA",
+            () => {
+                toggleCGPA(false)
+            },
+            "Show CGPA",
+            () => {
+                toggleCGPA(true)
+            },
+            30,
+            "binary-toggle_cgpa"
+        )
+    )
 }
 
-function createBinaryToggleElementHTML(option1, callback1, option2, callback2) {
+function toggleCGPA(state) {
+    if(state == undefined) {
+        isCGPAEnabled = !isCGPAEnabled
+    }
+    else {
+        isCGPAEnabled = state
+    }
+    
+    // Add / Remove CGPA sort button
+    if(isCGPAEnabled) {
+        document.querySelector('.sort-button[value="cgpa"]').style = ""
+    }
+    else {
+        document.querySelector('.sort-button[value="cgpa"]').style.display = "none"
+    }
+
+    localStorage.setItem("cgpa-preference", "" + isCGPAEnabled)
+
+    resolve_query()
+}
+
+function createBinaryToggleElementHTML(option1, callback1, option2, callback2, hue, id) {
+    if(hue == undefined) {
+        hue = 175
+    }
+    if(id == undefined) {
+        id = ""
+    }
+
     let component = document.createElement("div")
     component.className = "binary-toggle-component"
+    component.style.setProperty("--hue", "" + hue)
+    component.id = id
     component.innerHTML = `
     <div class="binary-toggle-container">
         <button class="binary-toggle-button selected">${option1}</button>
@@ -856,6 +931,10 @@ function getStudentComponentHTML(person_idx) {
                 "degree_h",
                 `<div class="student__badge badge-degree_h">${field("degree_h")}</div>`
             )}
+            ${!isCGPAEnabled ? "" : optional(
+                "cgpa",
+                `<div class="student__badge badge-cgpa">${parseFloat(field("cgpa")).toFixed(2)}</div>`
+            )}
             ${field("room") ? `<div class="student__badge badge-hostel">${field("hostel")} ${field("room")}</div>` : ""}
         </div>
     </div>
@@ -880,8 +959,6 @@ function setup_student_clicks() {
             
             const everyone_index = parseInt(student_component.getAttribute("everyone-index"))
             student_component.innerHTML += getStudentInfoHTML(everyone_index)
-
-            setupStudentPFPClicks()
 
             vibrate(25)
         }
@@ -932,6 +1009,14 @@ function getStudentInfoHTML(everyone_index) {
             </div>
         </div>
         `)}
+        ${!isCGPAEnabled ? "" : optional("cgpa", `
+        <div class="info-tile-wrapper info--cgpa">
+            <div class="info-tile">
+                <span>CGPA</span>
+                ${field("cgpa")}
+            </div>
+        </div>
+        `)}
         ${getAdminStudentInfoHTML(everyone_index)}
     </div>
     `.trim().replace(/\n\s*/g, "")
@@ -958,14 +1043,6 @@ function getAdminStudentInfoHTML(everyone_index) {
         <div class="info-tile">
             <span>Bday</span>
             ${field("bday-name")}
-        </div>
-    </div>
-    `)}
-    ${optional("cgpa", `
-    <div class="info-tile-wrapper info--cgpa">
-        <div class="info-tile">
-            <span>CGPA</span>
-            ${field("cgpa")}
         </div>
     </div>
     `)}
