@@ -124,7 +124,7 @@
                 <div class="sort-dropdown">
                     <button class="sort-button selected" value="relevance">Default</button>
                     <button class="sort-button" value="room">Room</button>
-                    <button class="sort-button" value="cgpa">CGPA</button>
+                    <button class="sort-button" value="cgpa" style="display: none;">CGPA</button>
                     <button class="sort-button" value="oldest">Oldest</button>
                     <button class="sort-button" value="youngest">Youngest</button>
                     <% if (IS_ADMIN) { %>
@@ -171,7 +171,7 @@
                 <!-- Now for normal filter components -->
 
                 <% FILTERS.forEach(({field, filter_name, filter_toggles}, index)=> { %>
-                    <div class="filter-component" value="<%= field %>">
+                    <div class="filter-component hue--<%= field %>" value="<%= field %>">
                         <header>
                             <%= filter_name %>
                                 <button class="single-image-button select-all-toggles" value="<%= field %>" aria-label="Select all <%= filter_name.toLowerCase() %>s" title="Select All">

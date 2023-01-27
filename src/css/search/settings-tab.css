@@ -305,6 +305,7 @@ a#skip-to-main > span {
 
 .filter-component {
     --filter-hue: 0;
+    --filter-hue: var(--hue);
     --filter-hsl: hsl(var(--filter-hue), 80%, 70%);
 
     position: relative;
@@ -314,13 +315,6 @@ a#skip-to-main > span {
     border-radius: var(--section-border-radius);
     background-color: hsl(var(--filter-hue), 100%, 5%);
 }
-
-.filter-component[value="year"] { --filter-hue: var(--hue-year); }
-.filter-component[value="hostel"] { --filter-hue: var(--hue-hostel); }
-.filter-component[value="degree_be"] { --filter-hue: var(--hue-degree-be); }
-.filter-component[value="degree_msc"] { --filter-hue: var(--hue-degree-msc); }
-.filter-component[value="degree_h"] { --filter-hue: var(--hue-degree-h); }
-.filter-component[value="gender"] { --filter-hue: 300; }
 
 @media (min-width: 1024px) {
     .filter-component {

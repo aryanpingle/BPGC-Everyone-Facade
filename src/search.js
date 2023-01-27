@@ -87,6 +87,8 @@ async function setup() {
         if(isCGPAEnabled) {
             document.querySelector("#binary-toggle_cgpa > .binary-toggle-container").firstElementChild.classList.remove("selected")
             document.querySelector("#binary-toggle_cgpa > .binary-toggle-container").lastElementChild.classList.add("selected")
+            // Enable sort by CGPA
+            document.querySelector('.sort-button[value="cgpa"]').style = ""
         }
     }
 
@@ -918,31 +920,29 @@ function getStudentComponentHTML(person_idx) {
     const field = (field_name) => get_field_from_person(field_name, person_idx)
     const optional = (field_name, text) => field(field_name) ? text : ""
 
-    const student_degrees = `${optional("degree_be", "be")} ${optional("degree_msc", "msc")} ${optional("degree_h", "h")}`.trim().split(" ").map(e=>`student--${e}`).join(" ")
-
     return `
-    <div class="student-component ${student_degrees}" everyone-index="${person_idx}">
+    <div class="student-component" everyone-index="${person_idx}">
         <div class="student__id">${field("id")}</div>
         <div class="student__name">${field("name")}</div>
         <div class="student__badges">
-            <div class="student__badge badge-year">${field("year")}</div>
+            <div class="student__badge hue--year" value="year">${field("year")}</div>
             ${optional(
                 "degree_msc",
-                `<div class="student__badge badge-degree_msc">${field("degree_msc")}</div>`
+                `<div class="student__badge hue--degree_msc" value="degree_msc">${field("degree_msc")}</div>`
             )}
             ${optional(
                 "degree_be",
-                `<div class="student__badge badge-degree_be">${field("degree_be")}</div>`
+                `<div class="student__badge hue--degree_be" value="degree_be">${field("degree_be")}</div>`
             )}
             ${optional(
                 "degree_h",
-                `<div class="student__badge badge-degree_h">${field("degree_h")}</div>`
+                `<div class="student__badge hue--degree_h" value="degree_h">${field("degree_h")}</div>`
             )}
             ${!isCGPAEnabled ? "" : optional(
                 "cgpa",
-                `<div class="student__badge badge-cgpa">${parseFloat(field("cgpa")).toFixed(2)}</div>`
+                `<div class="student__badge hue--cgpa" value="cgpa">${parseFloat(field("cgpa")).toFixed(2)}</div>`
             )}
-            ${field("room") ? `<div class="student__badge badge-hostel">${field("hostel")} ${field("room")}</div>` : ""}
+            ${!field("room") ? "" : `<div class="student__badge hue--hostel" value="hostel">${field("hostel")} ${field("room")}</div>`}
         </div>
     </div>
     `.trim().replace(/\n\s*/g, "")
@@ -978,14 +978,14 @@ function getStudentInfoHTML(everyone_index) {
 
     return `
     <div class="student-info-grid">
-        <div class="info-tile-wrapper info--year">
+        <div class="info-tile-wrapper hue--year" value="year">
             <div class="info-tile">
                 <span>Year</span>
                 ${field("year")}
             </div>
         </div>
         ${optional("room", `
-        <div class="info-tile-wrapper info--room">
+        <div class="info-tile-wrapper hue--hostel" value="hostel">
             <div class="info-tile">
                 <span>Room</span>
                 ${field("hostel")} ${field("room")}
@@ -993,7 +993,7 @@ function getStudentInfoHTML(everyone_index) {
         </div>
         `)}
         ${optional("degree_msc", `
-        <div class="info-tile-wrapper info--msc">
+        <div class="info-tile-wrapper hue--degree_msc" value="degree_msc">
             <div class="info-tile">
                 <span>M.Sc. Degree</span>
                 ${field("degree_msc-name")}
@@ -1001,7 +1001,7 @@ function getStudentInfoHTML(everyone_index) {
         </div>
         `)}
         ${optional("degree_be", `
-        <div class="info-tile-wrapper info--be">
+        <div class="info-tile-wrapper hue--degree_be" value="degree_be">
             <div class="info-tile">
                 <span>B.E. Degree</span>
                 ${field("degree_be-name")}
@@ -1009,7 +1009,7 @@ function getStudentInfoHTML(everyone_index) {
         </div>
         `)}
         ${optional("degree_h", `
-        <div class="info-tile-wrapper info--h">
+        <div class="info-tile-wrapper hue--degree_h" value="degree_h">
             <div class="info-tile">
                 <span>Higher Degree</span>
                 ${field("degree_h-name")}
@@ -1017,7 +1017,7 @@ function getStudentInfoHTML(everyone_index) {
         </div>
         `)}
         ${!isCGPAEnabled ? "" : optional("cgpa", `
-        <div class="info-tile-wrapper info--cgpa">
+        <div class="info-tile-wrapper hue--cgpa" value="cgpa">
             <div class="info-tile">
                 <span>CGPA</span>
                 ${field("cgpa")}
@@ -1037,7 +1037,7 @@ function getAdminStudentInfoHTML(everyone_index) {
 
     return `
     ${optional("pfp", `
-    <div class="info-tile-wrapper info--pfp">
+    <div class="info-tile-wrapper hue--pfp" value="pfp">
         <div class="info-tile">
             <div class="student__pfp">
                 <img src="${field("pfp")}">
@@ -1046,7 +1046,7 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     ${optional("bday", `
-    <div class="info-tile-wrapper info--bday">
+    <div class="info-tile-wrapper hue--bday" value="bday">
         <div class="info-tile">
             <span>Bday</span>
             ${field("bday-name")}
@@ -1054,7 +1054,7 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     ${optional("blood", `
-    <div class="info-tile-wrapper info--blood">
+    <div class="info-tile-wrapper hue--blood" value="blood">
         <div class="info-tile">
             <span>Blood</span>
             ${field("blood")}
@@ -1062,7 +1062,7 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     ${optional("gender", `
-    <div class="info-tile-wrapper info--gender">
+    <div class="info-tile-wrapper hue--gender" value="gender">
         <div class="info-tile">
             <span>Gender</span>
             ${field("gender")}
@@ -1070,7 +1070,7 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     ${optional("phone", `
-    <div class="info-tile-wrapper info--phone">
+    <div class="info-tile-wrapper hue--phone" value="phone">
         <div class="info-tile">
             <span>Phone</span>
             ${field("phone")}
@@ -1078,7 +1078,7 @@ function getAdminStudentInfoHTML(everyone_index) {
     </div>
     `)}
     ${optional("address", `
-    <div class="info-tile-wrapper info--address">
+    <div class="info-tile-wrapper hue--address" value="address">
         <div class="info-tile">
             <span>Address</span>
             ${field("address")}

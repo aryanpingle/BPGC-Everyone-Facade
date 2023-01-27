@@ -9,15 +9,27 @@
     font-size: 20px;
     font-weight: 500;
     
-    /* Variables */
-    --hue-year: 0;
-    --hue-hostel: 100;
-    --hue-degree-be: 175;
-    --hue-degree-msc: 210;
-    --hue-degree-h: 250;
+    /*********************************/
+    /*           VARIABLES           */
+    /*********************************/
+
+    /* Border Radii */
     --natural-border-radius: 5px;
     --section-border-radius: 15px;
 }
+
+.hue--year { --hue: 0; };
+.hue--hostel { --hue: 100; };
+.hue--degree_be { --hue: 175; };
+.hue--degree_msc { --hue: 210; };
+.hue--degree_h { --hue: 250; };
+.hue--pfp { --hue: 195; };
+.hue--bday { --hue: 57; };
+.hue--cgpa { --hue: 30; };
+.hue--blood { --hue: 0; };
+.hue--gender { --hue: 300; };
+.hue--phone { --hue: 30; };
+.hue--address { --hue: 170; };
 
 :root.font-loaded {
     font-family: 'Inconsolata', monospace;

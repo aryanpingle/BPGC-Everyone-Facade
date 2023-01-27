@@ -80,6 +80,9 @@
 }
 
 .student__badge {
+    --badge-hue: 0;
+    --badge-hue: var(--hue);
+
     margin-right: 5px;
     border-radius: var(--natural-border-radius);
     padding: 0.25em 0.5em;
@@ -89,14 +92,7 @@
     color: hsl(var(--badge-hue), 100%, 80%);
 }
 
-.badge-year { --badge-hue: var(--hue-year); }
-.badge-hostel { --badge-hue: var(--hue-hostel); }
-.badge-degree_be { --badge-hue: var(--hue-degree-be); }
-.badge-degree_msc { --badge-hue: var(--hue-degree-msc); }
-.badge-degree_h { --badge-hue: var(--hue-degree-h); }
-.badge-cgpa { --badge-hue: 30; }
-
-.badge-hostel {
+.student__badge[value="hostel"] {
     margin-left: auto;
 }
 
@@ -104,7 +100,7 @@
 
 /* 
 .student-info-grid
-    .info-tile-wrapper info--<smth>
+    .info-tile-wrapper value=<smth>
         .info-tile
             span
             <text>
@@ -134,28 +130,19 @@
     grid-column-end: span 2;
 }
 
-/* Span 3 */
-.info--be, .info--msc, .info--h {
+/* Span 4 */
+.info-tile-wrapper[value="degree_be"],
+.info-tile-wrapper[value="degree_msc"],
+.info-tile-wrapper[value="degree_h"],
+.info-tile-wrapper[value="phone"],
+.info-tile-wrapper[value="address"] {
     grid-column-end: span 4;
 }
 
-.info--year { --info-hue: var(--hue-year); }
-.info--room { --info-hue: var(--hue-hostel); }
-.info--be { --info-hue: var(--hue-degree-be); }
-.info--msc { --info-hue: var(--hue-degree-msc); }
-.info--h { --info-hue: var(--hue-degree-h); }
-.info--pfp { --info-hue: 195; }
-.info--bday { --info-hue: 57; }
-.info--cgpa { --info-hue: 30; }
-.info--blood { --info-hue: 0; }
-.info--gender { --info-hue: 300; }
-.info--phone { --info-hue: 30; }
-.info--address { --info-hue: 170; }
-
 /* Some Customs [?] */
 
-.info--pfp {
-    grid-row-end: span 2;
+.info-tile-wrapper[value="pfp"] {
+    grid-row-end: span 4;
 }
 
 .student__pfp {
@@ -173,17 +160,12 @@
     max-height: 100%;
 }
 
-.info--phone {
-    grid-column-end: span 4;
-}
-
-.info--address {
-    grid-column-end: span 4;
-}
-
 /* These are the containers for the actual text per tile */
 
 .info-tile {
+    --info-hue: 0;
+    --info-hue: var(--hue);
+
     --info-hsl-75: hsl(var(--info-hue), 100%, 75%);
     --info-hsl-03: hsla(var(--info-hue), 100%, 75%, 10%);
 
