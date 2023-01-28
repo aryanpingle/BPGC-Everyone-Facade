@@ -171,8 +171,8 @@ function handleSignedInUser(response) {
     let batch = userEmailID.substring(1, 5)
 
     // Send batch for analytics
-    gtag("event", `batch`, {
-        "value": batch
+    gtag("event", "batch_dimension", {
+        "batch": batch,
     })
 
     // Do something based off of the user ID
