@@ -22,25 +22,32 @@
 	],
 	"screenshots": [
 		{
-			"src": "./static/images/screenshots/settings.jpg",
-			"type": "image/jpg",
-			"sizes": "800x1600",
+			"src": "./static/images/screenshots/settings1.png",
+			"type": "image/png",
+			"sizes": "540x1170",
 			"platform": "android",
-			"label": "Settings"
+			"label": "Settings #1"
 		},
 		{
-			"src": "./static/images/screenshots/room-sort.jpg",
-			"type": "image/jpg",
-			"sizes": "800x1600",
+			"src": "./static/images/screenshots/settings2.png",
+			"type": "image/png",
+			"sizes": "540x1170",
 			"platform": "android",
-			"label": "View hostel residents"
+			"label": "Settings #2"
 		},
 		{
-			"src": "./static/images/screenshots/aryan-search.jpg",
-			"type": "image/jpg",
-			"sizes": "800x1600",
+			"src": "./static/images/screenshots/search1.png",
+			"type": "image/png",
+			"sizes": "540x1170",
 			"platform": "android",
-			"label": "Search for anyone"
+			"label": "Search for anyone #1"
+		},
+		{
+			"src": "./static/images/screenshots/search2.png",
+			"type": "image/png",
+			"sizes": "540x1170",
+			"platform": "android",
+			"label": "Search for anyone #2"
 		}
 	]
 }
