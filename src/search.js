@@ -922,7 +922,7 @@ function getStudentComponentHTML(person_idx) {
 
     return `
     <div class="student-component" everyone-index="${person_idx}">
-        <div class="student__id">${field("id")}</div>
+        <div class="student__meta">${field("id")}${(field("gradstatus")) }</div>
         <div class="student__name">${field("name")}</div>
         <div class="student__badges">
             <div class="student__badge hue--year" value="year">${field("year")}</div>

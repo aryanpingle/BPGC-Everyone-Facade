@@ -28,6 +28,9 @@ const BRANCH_CODES = {
     "": ""
 }
 
+// Current year if this is August or later, otherwise the previous year
+const ACADEMIC_YEAR = new Date().getFullYear() + (new Date().getMonth() >= 7 ? 0 : -1)
+
 const EVERYONE = {}
 EVERYONE_FIELDS.forEach(field => {
     EVERYONE[field] = []
@@ -184,6 +187,22 @@ export function get_field_from_person(field, person_idx) {
     // IDK what anything else could be
     else {
         throw new Error(`WTF is their branch: ${person_id}`)
+    }
+
+    if(field == "gradstatus") {
+        let gradstatus = ""
+
+        // Exclude PHD / Higher Degree
+        if(degree_h) return ""
+
+        // Graduates (Singlites)
+        if(!degree_msc && ACADEMIC_YEAR - year >= 4) gradstatus = "Graduate"
+        // Graduates (Dualites)
+        else if(degree_msc && ACADEMIC_YEAR - year >= 5) gradstatus = "Graduate"
+        // Undergraduates
+        else gradstatus = `Year ${(ACADEMIC_YEAR - year + 1)}`
+
+        return " • " + gradstatus
     }
 
     const include_name = field.endsWith("-name")

@@ -57,7 +57,7 @@
 
 /* Parts of the student component */
 
-.student__id {
+.student__meta {
     font-size: 0.5em;
     opacity: 0.5;
     margin-bottom: 10px;
