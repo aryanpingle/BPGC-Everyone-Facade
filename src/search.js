@@ -799,31 +799,30 @@ function resolve_query() {
     results_with_score = new Array(filtered.length).fill(0)
 
     // If the query is only 3 digits - room search
+    let scoring_type = null
+    let scoringFunction = null
     if(/^\d{1,3}$/.test(query)) {
-        for(let filtered_idx = 0; filtered_idx < results_with_score.length; ++filtered_idx) {
-            let person_idx = filtered[filtered_idx]
-            results_with_score[filtered_idx] = [scorer_room(query, get_field_from_person("room", person_idx)), filtered_idx]
-        }
+        scoring_type = "room"
+        scoringFunction = scorer_room
     }
     else if(IS_ADMIN && /\d{4,}/.test(query)) {
-        for(let filtered_idx = 0; filtered_idx < results_with_score.length; ++filtered_idx) {
-            let person_idx = filtered[filtered_idx]
-            results_with_score[filtered_idx] = [scorer_phone(query, get_field_from_person("phone", person_idx)), filtered_idx]
-        }
+        scoring_type = "phone"
+        scoringFunction = scorer_phone
     }
-    // Otherwise if there is a digit anywhere - id search
     else if(/\d/.test(query)) {
-        for(let filtered_idx = 0; filtered_idx < results_with_score.length; ++filtered_idx) {
-            let person_idx = filtered[filtered_idx]
-            results_with_score[filtered_idx] = [scorer_id(query, get_field_from_person("id", person_idx)), filtered_idx]
-        }
+        // Otherwise if there is a digit anywhere - id search
+        scoring_type = "id"
+        scoringFunction = scorer_id
     }
-    // Otherwise - name search
     else {
-        for(let filtered_idx = 0; filtered_idx < results_with_score.length; ++filtered_idx) {
-            let person_idx = filtered[filtered_idx]
-            results_with_score[filtered_idx] = [scorer_name(query, get_field_from_person("name", person_idx)), filtered_idx]
-        }
+        // Otherwise - name search
+        scoring_type = "name"
+        scoringFunction = scorer_name
+    }
+
+    for(let filtered_idx = 0; filtered_idx < results_with_score.length; ++filtered_idx) {
+        let person_idx = filtered[filtered_idx]
+        results_with_score[filtered_idx] = [scoringFunction(query, get_field_from_person(scoring_type, person_idx)), filtered_idx]
     }
     console.timeEnd("resolveQuery")
 
