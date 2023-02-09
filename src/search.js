@@ -17,6 +17,7 @@ let notifications_promise = null
 let notifications = null
 let isCGPAEnabled = false
 const MAX_RESULT_COUNT = 25
+let search_bar_handler = null
 
 setup()
 
@@ -95,11 +96,12 @@ async function setup() {
     // Setup the search bar
     let search_bar = document.querySelector("input#search-bar")
 
-    search_bar.addEventListener("keyup", () => {
+    search_bar_handler = () => {
         document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
         document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
         resolve_query()
-    }, { passive: true })
+    }
+    search_bar.addEventListener("keyup", search_bar_handler, { passive: true })
 
     // Setup a passive scroll listener on .results-section
     // Loads more people when you reach 2*<result-section height> from the bottom
@@ -112,6 +114,37 @@ async function setup() {
             viewMoreResults(MAX_RESULT_COUNT)
         }
     }, { passive: true })
+}
+
+/**
+ * @param {Function} func 
+ * @param {number} timeout 
+ * @returns {Function}
+ */
+function debounced(func, timeout=200) {
+    let lastCalledTime = 0
+    let isCallInQueue = false
+    return (...args) => {
+        let currentTime = +new Date()
+        if(currentTime >= (lastCalledTime + timeout)) {
+            // Since it's been long enough, call the function now
+            func.apply(this, args)
+            lastCalledTime = +currentTime
+            isCallInQueue = false
+        }
+        else if(!isCallInQueue) {
+            // Function was called recently, so schedule the next call
+            isCallInQueue = true
+            setTimeout(() => {
+                func.apply(this, args)
+                lastCalledTime = +new Date()
+                isCallInQueue = false
+            }, (timeout + lastCalledTime - currentTime))
+        }
+        else {
+            // Since call is already queued, no need to do anything
+        }
+    }
 }
 
 async function handleAuthentication() {
@@ -529,7 +562,32 @@ async function handleDownloadingYears() {
     // Now that the preloader is shown, check if there's an update available
     checkChangelog()
 
+    makeFirstCall()
+}
+
+function makeFirstCall() {
+    let stime = new Date()
     apply_filters()
+    const FIRST_CALL_DURATION = new Date() - stime
+    print(`First call: %c${FIRST_CALL_DURATION}ms`, "background-color: greenyellow; color: black; font-weight: 900;")
+
+    // If the first call took 150ms, we can assume the phone ain't great
+    if(FIRST_CALL_DURATION >= 150) {
+        console.warn("Adding debounce to searchbar")
+
+        // Setup the search bar
+        let search_bar = document.querySelector("input#search-bar")
+
+        // Remove the default event listener
+        search_bar.removeEventListener("keyup", search_bar_handler)
+        // Add the debounced event listener
+        search_bar_handler = debounced(() => {
+            document.querySelector(".search-or-clear-rel").classList.toggle("show-clear-button", search_bar.value.length != 0)
+            document.querySelector(".sort-button[value='relevance']").innerText = search_bar.value.length != 0 ? "Relevant" : "Default"
+            resolve_query()
+        }, 200)
+        search_bar.addEventListener("keyup", search_bar_handler, { passive: true })
+    }
 }
 
 async function pause(ms) {

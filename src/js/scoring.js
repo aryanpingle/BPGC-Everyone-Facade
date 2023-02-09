@@ -1,9 +1,42 @@
+let cachedWords = []
+let cachedQuery = ""
+
 /**
  * Matches a query to the given text and returns its score
+ * @param {string} text
  * @returns {number[]} List of 3 scores - [number of character matches, longest common substring, start index of LCS]
  */
+export function scorer_name(query, text, flag) {
+    if(flag == undefined) {
+        let queryWords = (query==cachedQuery) ? cachedWords : query.split(" ")
 
-export function scorer_name(query, text) {
+        // If query is only one word
+        if(queryWords.length != 2) return scorer_name(query, text, 1)
+
+        if(query != cachedQuery) {
+            cachedQuery = query
+            cachedWords = queryWords
+        }
+
+        const [w1, w2] = queryWords
+
+        let s1 = scorer_name(`${w1} ${w2}`, text, 1)
+        let s2 = scorer_name(`${w2} ${w1}`, text, 1)
+
+        // Maximize character matches
+        switch(Math.sign(s1[0] - s2[0])) {
+            case 1: return s1;
+            case -1: return s2;
+            // Maximize LCS length
+            default: switch(Math.sign(s1[1] - s2[1])) {
+                case 1: return s1;
+                case -1: return s2;
+                // Minimize start index of LCS
+                default: return s1[2] > s2[2] ? s2 : s1;
+            }
+        }
+    }
+
     // Since query is empty just match everything with the same score
     if(query.length == 0) {
         return [1, 0, 0]
@@ -13,8 +46,6 @@ export function scorer_name(query, text) {
     text = text.toLowerCase()
 
     let queryIndex = 0 // points to an index in `query`
-    // let consec = [0, 0] // [<LCS length>, <start index of LCS>]
-    // let max_consec = [0, 0] // Best consec (max LCS length; min LCS start index)
 
     let LCSLength_MAX = 0
     let LCSStartIndex_MIN = 0
