@@ -1007,6 +1007,9 @@ function getStudentComponentHTML(person_idx) {
 
 function setup_student_clicks() {
     querySelectorAll(".student-component").forEach(student_component => {
+        // If the student component already has an onclick event, it shouldn't set one more
+        if(typeof(student_component.onclick) == "function") return
+
         student_component.onclick = event => {
             if(student_component.classList.contains("expanded")) {
                 student_component.classList.remove("expanded")
