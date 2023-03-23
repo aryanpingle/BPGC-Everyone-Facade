@@ -148,6 +148,7 @@ function debounced(func, timeout=200) {
 }
 
 async function handleAuthentication() {
+    return
     if(!document.querySelector("#auth-overlay")) return
 
     document.querySelector("#auth-overlay").style.display = ""
@@ -194,7 +195,7 @@ function alreadySignedIn() {
 }
 
 function handleSignedInUser(response) {
-    if(IS_DEV || IS_ADMIN) return
+    return
 
     let user = JSON.parse(localStorage.getItem("gsi"))
 
